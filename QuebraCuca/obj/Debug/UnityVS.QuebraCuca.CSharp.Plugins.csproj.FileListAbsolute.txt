@@ -1,0 +1,9 @@
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\GitHub\QuebraCuca\obj\Debug\UnityVS.QuebraCuca.CSharp.Plugins.csprojResolveAssemblyReference.cache
+C:\GitHub\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.dll
+C:\GitHub\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.pdb

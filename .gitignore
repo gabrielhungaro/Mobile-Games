@@ -1,0 +1,31 @@
+# Unity3D .gitignore file.
+# Store this file at the root of your local repository.
+.DS_Store
+Library/AssetImportState
+Library/AssetServerCacheV3
+Library/FailedAssetImports.txt
+Library/ScriptAssemblies
+Library/ScriptMapper
+Library/assetDatabase3
+Library/cache
+Library/expandedItems
+Library/metadata
+Library/previews
+Library/guidmapper
+
+*.csproj
+*.pidb
+*.sln
+
+#.gitignore file
+Temp/*
+Library/*
+Build/*
+build/*
+
+#Un-ignore these specific files
+
+#ignoring pidb, they are just code completion caching data according to:
+# http://stackoverflow.com/questions/1...ops-pidb-files
+*.pidb
+*.userprefs
