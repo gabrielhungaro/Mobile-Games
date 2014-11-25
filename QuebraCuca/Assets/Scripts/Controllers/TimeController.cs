@@ -24,7 +24,6 @@ namespace Controllers
                 if (this.gameObject.GetComponent<Character>().GetIsShowing() == true && this.gameObject.GetComponent<Character>().GetIsHited() == false)
                 {
                     _ticks++;
-                    Debug.Log(_ticks);
                     if (_ticks * Time.deltaTime >= _timeShowingCharacter)
                     {
                         _ticks = 0;

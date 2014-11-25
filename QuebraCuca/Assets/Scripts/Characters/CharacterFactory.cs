@@ -13,7 +13,7 @@ namespace Characters
     public class CharacterFactory : MonoBehaviour
     {
         private float _timeToSpawnCharacter = 5;
-        private int _numbersOfCharactersToCreate = 2;
+        private int _numbersOfCharactersToCreate = 10;
         private int _numberOfCharactersLayers = 3;
         private List<GameObject> _listOfLeftCuca;
         private List<GameObject> _listOfRightCuca;
@@ -134,7 +134,7 @@ namespace Characters
                         offsetY = 0;
                     }
 
-                    if (_listOfCharacters.Count >= i + _numberOfCharactersInCenter)
+                    if (_listOfCharacters.Count > i + _numberOfCharactersInCenter)
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter];
                         charObj.name = "left_" + _listOfCharacters[i].name;
@@ -192,7 +192,7 @@ namespace Characters
                         offsetY = 0;
                     }
 
-                    if (_listOfCharacters.Count >= i + _numberOfCharactersInCenter + _numberOfCharactersInLeft)
+                    if (_listOfCharacters.Count > i + _numberOfCharactersInCenter + _numberOfCharactersInLeft)
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft];
                         charObj.name = "right_" + _listOfCharacters[i].name;
