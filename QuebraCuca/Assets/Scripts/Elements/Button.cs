@@ -45,6 +45,12 @@ namespace Elements
             UIEventListener.Get(this.gameObject).onClick += OnMouseDown;
         }
 
+        void Update()
+        {
+            this.gameObject.GetComponent<UI2DSprite>().UpdateAnchors();
+            this.gameObject.GetComponent<UI2DSprite>().MakePixelPerfect();
+        }
+
         public void OnMouseDown(GameObject g)
         {
             SoundManager.PlaySoundByName(SoundConstants.SFX_BUTTON);

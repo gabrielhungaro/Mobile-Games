@@ -7,3 +7,14 @@ C:\GitHub\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEditor.xml
 C:\GitHub\QuebraCuca\obj\Debug\UnityVS.QuebraCuca.CSharp.Plugins.csprojResolveAssemblyReference.cache
 C:\GitHub\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.dll
 C:\GitHub\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.pdb
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\GitHub\Mobile-Games\QuebraCuca\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+C:\GitHub\Mobile-Games\QuebraCuca\obj\Debug\UnityVS.QuebraCuca.CSharp.Plugins.csprojResolveAssemblyReference.cache
+C:\GitHub\Mobile-Games\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.dll
+C:\GitHub\Mobile-Games\QuebraCuca\obj\Debug\Assembly-CSharp-firstpass.pdb
