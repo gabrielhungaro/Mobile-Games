@@ -29,6 +29,7 @@
 *suo
 
 #Foulders
+Temp/
 bin/
 obj/
 Library/
