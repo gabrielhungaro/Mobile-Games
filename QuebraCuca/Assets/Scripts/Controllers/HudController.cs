@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Constants;
-using Scenes;
+using States;
 
 namespace Controllers
 {
@@ -22,6 +22,8 @@ namespace Controllers
 
         void Start()
         {
+            GameObject _uiRoot = GameStateFactory.GetUiRoot();
+
             _hudFont = Resources.Load<Font>(PathConstants._fontPath + "Ed-Gothic");
             _fontSize = 80;
             _pointsController = PointsController.Instance();
@@ -36,7 +38,7 @@ namespace Controllers
             _pointsHud.GetComponent<UILabel>().fontSize = _fontSize;
             _pointsHud.GetComponent<UILabel>().color = hudColor;
             _pointsHud.GetComponent<UILabel>().MakePixelPerfect();
-            _pointsHud.GetComponent<UILabel>().SetAnchor(SceneManager.GetUiRoot());
+            _pointsHud.GetComponent<UILabel>().SetAnchor(_uiRoot);
             _pointsHud.GetComponent<UILabel>().leftAnchor.absolute = -595;
             _pointsHud.GetComponent<UILabel>().rightAnchor.absolute = -337;
             _pointsHud.GetComponent<UILabel>().bottomAnchor.absolute = 666;
@@ -52,7 +54,7 @@ namespace Controllers
             _lifeHud.GetComponent<UILabel>().fontSize = _fontSize;
             _lifeHud.GetComponent<UILabel>().color = hudColor;
             _lifeHud.GetComponent<UILabel>().MakePixelPerfect();
-            _lifeHud.GetComponent<UILabel>().SetAnchor(SceneManager.GetUiRoot());
+            _lifeHud.GetComponent<UILabel>().SetAnchor(_uiRoot);
             _lifeHud.GetComponent<UILabel>().leftAnchor.absolute = 158;
             _lifeHud.GetComponent<UILabel>().rightAnchor.absolute = 384;
             _lifeHud.GetComponent<UILabel>().bottomAnchor.absolute = 666;
@@ -69,7 +71,7 @@ namespace Controllers
             _pointsObj.GetComponent<UILabel>().fontSize = _fontSize;
             _pointsObj.GetComponent<UILabel>().color = textColor;
             _pointsObj.GetComponent<UILabel>().MakePixelPerfect();
-            _pointsObj.GetComponent<UILabel>().SetAnchor(SceneManager.GetUiRoot());
+            _pointsObj.GetComponent<UILabel>().SetAnchor(_uiRoot);
             _pointsObj.GetComponent<UILabel>().leftAnchor.absolute = -299;
             _pointsObj.GetComponent<UILabel>().rightAnchor.absolute = -219;
             _pointsObj.GetComponent<UILabel>().bottomAnchor.absolute = 666;
@@ -85,7 +87,7 @@ namespace Controllers
             _lifesObj.GetComponent<UILabel>().fontSize = _fontSize;
             _lifesObj.GetComponent<UILabel>().color = textColor;
             _lifesObj.GetComponent<UILabel>().MakePixelPerfect();
-            _lifesObj.GetComponent<UILabel>().SetAnchor(SceneManager.GetUiRoot());
+            _lifesObj.GetComponent<UILabel>().SetAnchor(_uiRoot);
             _lifesObj.GetComponent<UILabel>().leftAnchor.absolute = 345;
             _lifesObj.GetComponent<UILabel>().rightAnchor.absolute = 445;
             _lifesObj.GetComponent<UILabel>().bottomAnchor.absolute = 666;
@@ -98,10 +100,16 @@ namespace Controllers
         void Update()
         {
             _points = PointsController.GetPoints();
-            _pointsObj.GetComponent<UILabel>().text = _points.ToString();
+            if (_pointsObj != null)
+            {
+                _pointsObj.GetComponent<UILabel>().text = _points.ToString();
+            }
 
             _lifes = LifesController.GetLifes();
-            _lifesObj.GetComponent<UILabel>().text = _lifes.ToString();
+            if (_lifesObj != null)
+            {
+                _lifesObj.GetComponent<UILabel>().text = _lifes.ToString();
+            }
         }
     }
 }

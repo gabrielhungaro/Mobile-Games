@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.State;
+using AquelaFrameWork.Core.Asset;
+using AquelaFrameWork.Utils;
+using AquelaFrameWork.View;
+
 using UnityEngine;
-using Constants;
-using Scenes;
-using Elements;
+using States;
 using Controllers;
+using Constants;
 
 namespace Characters
 {
-    public class CharacterFactory : MonoBehaviour
+    public class CharacterFactory : ASingleton<CharacterFactory>
     {
         private float _timeToSpawnCharacter = 5;
         private int _numbersOfCharactersToCreate = 10;
@@ -21,20 +27,15 @@ namespace Characters
         private int _numberOfCharactersInLeft = 8;
         private int _numberOfCharactersInRight = 8;
         private int _numberOfCharactersInCenter = 9;
-        //private int _numberOfCharacters
         private int _numberOfCharacters;
         private int _ticks;
         private List<GameObject> _listOfCharacters;
-
-        private CharacterFactory()
-        {
-            //CreatePullOfCharacters();
-            //CreateCharacter();
-        }
+        GameObject _uiRoot;
 
         void Start()
         {
             //CreateCharacter();
+            _uiRoot = GameStateFactory.GetUiRoot();
             CreatePullOfCharacters();
         }
 
@@ -48,10 +49,41 @@ namespace Characters
             for (int i = 0; i < _numbersOfCharactersToCreate; i++)
             {
                 _listOfCharacters.Add(CreateCharacter());
-            } 
+            }
             UpdateCenterPosition();
             UpdateLeftPosition();
             UpdateRightPosition();
+        }
+
+        private GameObject CreateCharacter()
+        {
+            GameObject character = new GameObject();
+            character.name = "Character";
+            character.AddComponent<Character>();
+            character.AddComponent<TimeController>();
+            //character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
+            character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
+            character.AddComponent<Rigidbody>().useGravity = false;
+            character.GetComponent<Rigidbody>().isKinematic = false;
+            character.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+            character.GetComponent<UI2DSprite>().MakePixelPerfect();
+            character.AddComponent<BoxCollider>().size = new Vector3(character.GetComponent<UI2DSprite>().width,
+                                                                    character.GetComponent<UI2DSprite>().height);
+            UIEventListener.Get(character).onClick += OnClick;
+            character.GetComponent<UI2DSprite>().alpha = 0;
+            _numberOfCharacters++;
+            return character;
+        }
+
+        private void OnClick(GameObject go)
+        {
+            if (go.GetComponent<Character>().GetIsHited() == false)
+            {
+                go.GetComponent<Character>().SetIsHited(true);
+                SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
+                this.gameObject.GetComponent<CharacterManager>().HideCharacter(go);
+                PointsController.AddPoints(PointsController.GetPointsToAdd());
+            }
         }
 
         private void UpdateCenterPosition()
@@ -86,7 +118,7 @@ namespace Characters
 
                     charObj = _listOfCharacters[i];
                     charObj.name = "center_" + _listOfCharacters[i].name;
-                    charObj.GetComponent<UI2DSprite>().SetAnchor(SceneManager.GetUiRoot());
+                    charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
                     charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = -384 + (col * 250) - offsetX;
                     charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -108 + (col * 250) - offsetX;
                     charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = -388 - (line * 150);
@@ -103,7 +135,7 @@ namespace Characters
                         col = 0;
                         line++;
                     }
-                    
+
                 }
             }
         }
@@ -138,15 +170,11 @@ namespace Characters
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter];
                         charObj.name = "left_" + _listOfCharacters[i].name;
-                        charObj.GetComponent<UI2DSprite>().SetAnchor(SceneManager.GetUiRoot());
+                        charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 4400 - (col * 130);
                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -5568 - (col * 130);
                         charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = 4140 - (line * 350) - offsetY;
                         charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -3156 - (line * 350) - offsetY;
-                        /*_listOfCharacters[i + _numberOfCharactersInCenter].GetComponent<UI2DSprite>().leftAnchor.absolute = -575 + (col * 130);
-                        _listOfCharacters[i + _numberOfCharactersInCenter].GetComponent<UI2DSprite>().rightAnchor.absolute = -575 + (col * 130);
-                        _listOfCharacters[i + _numberOfCharactersInCenter].GetComponent<UI2DSprite>().bottomAnchor.absolute = -168 - (line * 135);
-                        _listOfCharacters[i + _numberOfCharactersInCenter].GetComponent<UI2DSprite>().topAnchor.absolute = -168 - (line * 135);*/
                         charObj.transform.Rotate(new Vector3(0f, 0f, 90f));
                         charObj.GetComponent<UI2DSprite>().UpdateAnchors();
                         charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -185,10 +213,12 @@ namespace Characters
                     {
                         offsetY = 200;
                     }
-                    else if(col == 2)
+                    else if (col == 2)
                     {
                         offsetY = 100;
-                    }else{
+                    }
+                    else
+                    {
                         offsetY = 0;
                     }
 
@@ -196,7 +226,7 @@ namespace Characters
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft];
                         charObj.name = "right_" + _listOfCharacters[i].name;
-                        charObj.GetComponent<UI2DSprite>().SetAnchor(SceneManager.GetUiRoot());
+                        charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 5520 + (col * 130);
                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -4450 + (col * 130);
                         charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = 4141 - (line * 350) - offsetY;
@@ -222,37 +252,6 @@ namespace Characters
             }
         }
 
-        private GameObject CreateCharacter()
-        {
-            GameObject character = new GameObject();
-            character.name = "Character";
-            character.AddComponent<Character>();
-            character.AddComponent<TimeController>();
-            character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
-            character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
-            character.AddComponent<Rigidbody>().useGravity = false;
-            character.GetComponent<Rigidbody>().isKinematic = false;
-            character.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-            character.GetComponent<UI2DSprite>().MakePixelPerfect();
-            character.AddComponent<BoxCollider>().size = new Vector3(character.GetComponent<UI2DSprite>().width,
-                                                                    character.GetComponent<UI2DSprite>().height);
-            UIEventListener.Get(character).onClick += OnClick;
-            character.GetComponent<UI2DSprite>().alpha = 0;
-            _numberOfCharacters++;
-            return character;
-        }
-
-        private void OnClick(GameObject go)
-        {
-            if (go.GetComponent<Character>().GetIsHited() == false)
-            {
-                go.GetComponent<Character>().SetIsHited(true);
-                SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
-                this.gameObject.GetComponent<CharacterManager>().HideCharacter(go);
-                PointsController.AddPoints(PointsController.GetPointsToAdd());
-            }
-        }
-
         public void MyUpdate()
         {
             _ticks++;
@@ -266,14 +265,6 @@ namespace Characters
                 {
                     _listOfCharacters[i].GetComponent<UI2DSprite>().MakePixelPerfect();
                 }*/
-            }
-        }
-
-        private void UpdatePixelPerfect() 
-        {
-            for (int i = 0; i < _listOfCharacters.Count; i++)
-            {
-                _listOfCharacters[i].GetComponent<UI2DSprite>().MakePixelPerfect();
             }
         }
 

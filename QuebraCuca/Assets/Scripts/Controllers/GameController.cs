@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Characters;
-using Scenes;
+using States;
 
 namespace Controllers
 {
@@ -41,7 +41,7 @@ namespace Controllers
         private void EndGame()
         {
             Debug.Log("acabando do jogo");
-            SceneManager.ChangeScene(SceneManager.START_SCENE);
+            GameStateFactory.ChangeScene(GameStateFactory.START_SCENE);
             //Application.LoadLevel(SceneManager.START_SCENE);
         }
     }

@@ -25,7 +25,7 @@ namespace Controllers
 
         public void Init()
         {
-            this.name = "SoundManager";
+            //this.name = "SoundManager";
             Debug.Log("[ SOUND_MANAGER ] - START");
             this.gameObject.AddComponent<AudioListener>();
             //Dictionary of sound's lists and types
