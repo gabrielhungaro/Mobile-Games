@@ -21,7 +21,6 @@ namespace States
         protected override void Awake()
         {
             m_stateID = AState.EGameState.MENU;
-            Initialize(STATE_EVERYTHING);
         }
 
         public override void BuildState()
@@ -30,13 +29,9 @@ namespace States
             _camera = new GameObject();
             _camera.name = "StateCam";
             _camera.AddComponent<MyCamera>();
-            _camera.transform.parent = this.gameObject.transform.parent;
+            
+            //_camera.transform.parent = this.gameObject.transform.parent;
 
-            base.BuildState();
-        }
-
-        void Start()
-        {
             _background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetStartScenePath() + "startScene");
@@ -54,6 +49,8 @@ namespace States
             _startButton.GetComponent<Button>().SetRightAnchorPoint(57);
             _startButton.GetComponent<Button>().SetTopAnchorPoint(-720);
             _startButton.GetComponent<Button>().SetBottomAnchorPoint(-588);
+
+            base.BuildState();
         }
 
         private void OnClick()

@@ -19,7 +19,6 @@ namespace States
         protected override void Awake()
         {
             m_stateID = AState.EGameState.MENU;
-            Initialize(STATE_EVERYTHING);
         }
 
         public override void BuildState()

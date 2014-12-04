@@ -33,7 +33,6 @@ namespace States
         protected override void Awake()
         {
             m_stateID = AState.EGameState.GAME;
-            Initialize(STATE_EVERYTHING);
         }
 
         public override void BuildState()
@@ -63,6 +62,7 @@ namespace States
             _background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "background");
+            _background.GetComponent<UI2DSprite>().SetAnchor(_camera);
             _background.GetComponent<UI2DSprite>().MakePixelPerfect();
             _background.AddComponent<Rigidbody>().useGravity = false;
             _background.GetComponent<Rigidbody>().isKinematic = true;
