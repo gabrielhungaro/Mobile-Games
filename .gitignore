@@ -23,6 +23,11 @@
 *.out
 *.app
 
+#Visual Studio
+.csproj
+.sln
+.suo
+
 #Foulders
 bin/
 obj/
