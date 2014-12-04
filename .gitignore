@@ -24,9 +24,9 @@
 *.app
 
 #Visual Studio
-.csproj
-.sln
-.suo
+*csproj
+*sln
+*suo
 
 #Foulders
 bin/
