@@ -13,7 +13,6 @@ namespace Elements
 
         void Awake()
         {
-            Debug.Log("criando camera");
             this.gameObject.name = "uiRoot";
             this.gameObject.AddComponent<UIRoot>();
             this.gameObject.AddComponent<UIPanel>();

@@ -37,13 +37,11 @@ namespace States
 
         public override void BuildState()
         {
-            Debug.Log("BuildState gameState");
-            _camera = new GameObject();
-            _camera.name = "StateCam";
-            _camera.AddComponent<MyCamera>();
+            CreateCamera();
 
-            /*if (this.gameObject.GetComponent<GameController>() == false)
-                this.gameObject.AddComponent<GameController>();*/
+            if (this.gameObject.GetComponent<GameController>() == false)
+                this.gameObject.AddComponent<GameController>();
+            this.gameObject.GetComponent<GameController>().SetAnchorTarget(_camera);
 
             if (this.gameObject.GetComponent<IndexController>() == false)
                 this.gameObject.AddComponent<IndexController>().Start();
@@ -52,13 +50,20 @@ namespace States
 
             if (this.gameObject.GetComponent<HudController>() == false)
                 this.gameObject.AddComponent<HudController>();
+            this.gameObject.GetComponent<HudController>().SetAnchorTarget(_camera);
 
             base.BuildState();
         }
 
+        private void CreateCamera()
+        {
+            _camera = new GameObject();
+            _camera.name = "StateCam";
+            _camera.AddComponent<MyCamera>();
+        }
+
         private void CreateBackground()
         {
-            Debug.Log("CreateBackground gameState");
             _background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "background");
@@ -221,7 +226,6 @@ namespace States
 
         public override void AFUpdate(double deltaTime)
         {
-            Debug.Log("AFUpdate gameState");
             if (this.gameObject.GetComponent<GameController>())
             {
                 this.gameObject.GetComponent<GameController>().MyUpdate();
@@ -229,7 +233,6 @@ namespace States
             _ticks++;
             if (_ticks >= 10 && _ticks <= 11)
             {
-                Debug.Log("testando se tem parede " + _leftWall3);
                 _leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _rightWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _floor3.GetComponent<UI2DSprite>().MakePixelPerfect();

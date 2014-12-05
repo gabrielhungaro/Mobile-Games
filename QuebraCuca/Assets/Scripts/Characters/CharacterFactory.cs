@@ -35,7 +35,6 @@ namespace Characters
         void Start()
         {
             //CreateCharacter();
-            _uiRoot = GameStateFactory.GetUiRoot();
             CreatePullOfCharacters();
         }
 
@@ -62,7 +61,7 @@ namespace Characters
             character.AddComponent<Character>();
             character.AddComponent<TimeController>();
             //character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
-            character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
+            //character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
             character.AddComponent<Rigidbody>().useGravity = false;
             character.GetComponent<Rigidbody>().isKinematic = false;
             character.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
@@ -271,6 +270,11 @@ namespace Characters
         public List<GameObject> GetListOfCharacters()
         {
             return _listOfCharacters;
+        }
+
+        internal void SetAnchorTarget(GameObject value)
+        {
+            _uiRoot = value;
         }
     }
 }

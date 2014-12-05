@@ -11,11 +11,12 @@ namespace Controllers
     public class GameController : MonoBehaviour
     {
         private bool gameEnded;
+        private GameObject _uiRoot;
 
         void Start()
         {
             gameEnded = false;
-            this.gameObject.AddComponent<CharacterFactory>();
+            this.gameObject.AddComponent<CharacterFactory>().SetAnchorTarget(_uiRoot);
             this.gameObject.AddComponent<CharacterManager>();
             LifesController lifesController = LifesController.Instance();
         }
@@ -41,8 +42,13 @@ namespace Controllers
         private void EndGame()
         {
             Debug.Log("acabando do jogo");
-            GameStateFactory.ChangeScene(GameStateFactory.START_SCENE);
+            //GameStateFactory.ChangeScene(GameStateFactory.START_SCENE);
             //Application.LoadLevel(SceneManager.START_SCENE);
+        }
+
+        internal void SetAnchorTarget(GameObject value)
+        {
+            _uiRoot = value;
         }
     }
 }

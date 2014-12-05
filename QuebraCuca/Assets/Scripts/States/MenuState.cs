@@ -25,19 +25,14 @@ namespace States
 
         public override void BuildState()
         {
-            Debug.Log("BuildState menu state");
             _camera = new GameObject();
             _camera.name = "StateCam";
             _camera.AddComponent<MyCamera>();
-            
-            //_camera.transform.parent = this.gameObject.transform.parent;
 
             _background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetStartScenePath() + "startScene");
             _background.GetComponent<UI2DSprite>().MakePixelPerfect();
-
-            Debug.Log("criando state");
 
             _startButton = new GameObject();
             _startButton.name = "startButton";
@@ -56,8 +51,6 @@ namespace States
         private void OnClick()
         {
             m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
-            //SceneManager.ChangeScene(SceneManager.GAME_SCENE);
-            //Application.LoadLevel(SceneManager.GAME_SCENE);
         }
 
         override public void Destroy()

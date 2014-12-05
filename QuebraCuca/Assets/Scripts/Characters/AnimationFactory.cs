@@ -21,7 +21,6 @@ namespace Characters
 
         public AFStatesController BuildAnimation(string spritePath, string animationStateName, bool isDefaultState)
         {
-            Debug.Log("path: " + spritePath);
             AFTextureAtlas heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
             m_heroStates = AFObject.Create<AFStatesController>("Hero Animation Controller");
 
@@ -30,7 +29,7 @@ namespace Characters
             m_heroStates.Add(animationStateName, animation, isDefaultState);
 
             if(m_heroStates.gameObject.GetComponent<Rigidbody2D>() == null){
-                m_heroStates.gameObject.AddComponent<Rigidbody2D>();
+                //m_heroStates.gameObject.AddComponent<Rigidbody2D>();
             }
             //m_heroStates.transform.localScale = new UnityEngine.Vector3(3, 3, 3);
 
