@@ -8,6 +8,7 @@ using AquelaFrameWork.Core.State;
 using AquelaFrameWork.Core.Asset;
 using AquelaFrameWork.Utils;
 using AquelaFrameWork.View;
+using AquelaFrameWork.Components;
 
 using UnityEngine;
 using States;
@@ -65,11 +66,12 @@ namespace Characters
             character.AddComponent<Rigidbody>().useGravity = false;
             character.GetComponent<Rigidbody>().isKinematic = false;
             character.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-            character.GetComponent<UI2DSprite>().MakePixelPerfect();
-            character.AddComponent<BoxCollider>().size = new Vector3(character.GetComponent<UI2DSprite>().width,
-                                                                    character.GetComponent<UI2DSprite>().height);
+            //character.GetComponent<UI2DSprite>().MakePixelPerfect();
+            character.AddComponent<BoxCollider2D>();
+            character.AddComponent<AFBoxColider2DResizer>();
             UIEventListener.Get(character).onClick += OnClick;
-            character.GetComponent<UI2DSprite>().alpha = 0;
+            //adicionar anchor no character
+            //character.GetComponent<SpriteRenderer>().alpha = 0;
             _numberOfCharacters++;
             return character;
         }
