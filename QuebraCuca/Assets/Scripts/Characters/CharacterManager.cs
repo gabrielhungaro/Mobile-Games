@@ -3,14 +3,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using AquelaFrameWork.Core;
+
+using States;
+
 namespace Characters
 {
-    public class CharacterManager : MonoBehaviour
+    public class CharacterManager : ASingleton<CharacterManager>
     {
 
         private int _timeBetweenCharacters = 1;
         private int _ticks;
-        private List<GameObject> _listOfCharacters;
+        private List<Character> _listOfCharacters;
         private int _charsOnScreen;
 
         public delegate void OnAnimationEvent(UITweener tweener);
@@ -20,12 +24,13 @@ namespace Characters
         private float _timeInTween = 0.2f;
         private float _distToTween = 50;
         private float _timeShowing = 2f;
-
-        void Start(){
-            _listOfCharacters = FindObjectOfType<CharacterFactory>().GetListOfCharacters();
+        
+        public void Initialize()
+        {
+            _listOfCharacters = FindObjectOfType<GameState>().GetListOfCharacters();
         }
 
-        public void MyUpdate()
+        public override void AFUpdate(double time)
         {
             _ticks++;
             if(_ticks * Time.deltaTime >= _timeBetweenCharacters){
@@ -49,12 +54,12 @@ namespace Characters
             }
         }
 
-        private void ShowCharacter(GameObject obj)
+        private void ShowCharacter(Character obj)
         {
             if (obj != null)
             {
-                obj.GetComponent<Character>().SetIsShowing(true);
-                obj.GetComponent<UI2DSprite>().alpha = 1;
+                obj.SetIsShowing(true);
+                //obj.GetComponent<UI2DSprite>().alpha = 1;
 
                 Vector3 posToTween = new Vector3(0, 0, 0);
 
@@ -74,7 +79,7 @@ namespace Characters
                             break;
                     }
                 }
-                TweenPosition objTween = TweenPosition.Begin(obj, _timeInTween, posToTween);
+                TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
                 objToApplyTween.obj = obj;
@@ -90,34 +95,32 @@ namespace Characters
             //HideCharacter(charObj);
         }
 
-        public void HideCharacter(GameObject obj)
+        public void HideCharacter(Character obj)
         {
             if (obj != null)
             {
                 Debug.Log("[ CHARACTER_MANAGER ] - HIDE_CHARACTER");
                 Vector3 posToTween = new Vector3(0, 0, 0);
 
-                obj.GetComponent<Character>().SetIsShowing(false);
-                obj.GetComponent<Character>().SetIsHited(false);
+                obj.SetIsShowing(false);
+                obj.SetIsHited(false);
 
-                if (obj.GetComponent<Character>())
+                string[] charPosition = obj.name.Split(char.Parse("_"));
+                switch (charPosition[0])
                 {
-                    string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
-                    switch (charPosition[0])
-                    {
-                        case "left":
-                            posToTween = new Vector3(obj.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                        case "center":
-                            posToTween = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y - _distToTween, obj.transform.localPosition.z);
-                            break;
-                        case "right":
-                            posToTween = new Vector3(obj.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                    }
+                    case "left":
+                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.gameObject.transform.localPosition.y, obj.gameObject.transform.localPosition.z);
+                        break;
+                    case "center":
+                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.gameObject.transform.localPosition.y - _distToTween, obj.gameObject.transform.localPosition.z);
+                        break;
+                    case "right":
+                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.gameObject.transform.localPosition.y, obj.gameObject.transform.localPosition.z);
+                        break;
                 }
 
-                TweenPosition objTween = TweenPosition.Begin(obj, _timeInTween, posToTween);
+
+                TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
                 objToApplyTween.obj = obj;
@@ -135,7 +138,7 @@ namespace Characters
             {
                 /*charObj.GetComponent<Character>().SetIsShowing(false);
                 charObj.GetComponent<Character>().SetIsHited(false);*/
-                charObj.GetComponent<UI2DSprite>().alpha = 0;
+                //charObj.GetComponent<UI2DSprite>().alpha = 0;
                 _charsOnScreen--;
             }
             else
@@ -144,9 +147,9 @@ namespace Characters
             }
         }
 
-        private GameObject RandomCharacterToShow()
+        private Character RandomCharacterToShow()
         {
-            GameObject _character = null;
+            Character _character = null;
             if (_charsOnScreen < _listOfCharacters.Count)
             {
                 int randomChar = Random.Range(0, _listOfCharacters.Count);

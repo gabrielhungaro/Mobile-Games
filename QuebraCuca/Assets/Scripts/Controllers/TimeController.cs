@@ -19,19 +19,19 @@ namespace Controllers
 
         void Update()
         {
-            if (FindObjectOfType<GameScene>())
-            {
-                if (this.gameObject.GetComponent<Character>().GetIsShowing() == true && this.gameObject.GetComponent<Character>().GetIsHited() == false)
-                {
-                    _ticks++;
-                    if (_ticks * Time.deltaTime >= _timeShowingCharacter)
-                    {
-                        _ticks = 0;
-                        FindObjectOfType<CharacterManager>().HideCharacter(this.gameObject);
-                        LifesController.RemoveLife();
-                    }
-                }
-            }
+//             if (FindObjectOfType<Ga>())
+//             {
+//                 if (this.gameObject.GetComponent<Character>().GetIsShowing() == true && this.gameObject.GetComponent<Character>().GetIsHited() == false)
+//                 {
+//                     _ticks++;
+//                     if (_ticks * Time.deltaTime >= _timeShowingCharacter)
+//                     {
+//                         _ticks = 0;
+//                         FindObjectOfType<CharacterManager>().HideCharacter(this.gameObject);
+//                         LifesController.RemoveLife();
+//                     }
+//                 }
+//             }
         }
     }
 }

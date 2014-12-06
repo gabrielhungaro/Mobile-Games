@@ -13,8 +13,12 @@ using AquelaFrameWork.Core.Asset;
 
 namespace Characters
 {
-    public class Character : MonoBehaviour
+    public class Character : AFObject
     {
+        public static readonly string STATE_IDLE = "idle";
+        public static readonly string STATE_HITED = "hited";
+        public static readonly string STATE_ANGRY = "angry";
+
 
         private string _imagePath;
         private int _characterDepth;
@@ -23,12 +27,24 @@ namespace Characters
         private Vector3 _initialPosition;
         private AFStatesController _characterAnimations;
 
-        void Start()
+        public void Initialize()
         {
-            _characterAnimations = AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", "idle", true);
-            _characterAnimations = AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", "hited", false);
-            _characterAnimations = AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", "angry", false);
-            //_characterAnimations.Add(
+            _characterAnimations = AFObject.Create<AFStatesController>();
+            _characterAnimations.Add(STATE_HITED , AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_HITED ) ,false);
+            _characterAnimations.Add(STATE_ANGRY, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_ANGRY), false);
+            _characterAnimations.Add(STATE_IDLE, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_IDLE), true);
+            _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
+        }
+
+        public AFStatesController GetCharacterAnimation()
+        {
+            return _characterAnimations;
+        }
+
+        public override void AFUpdate(double time)
+        {
+            
+            _characterAnimations.AFUpdate(time);
         }
 
         public void SetIsHited(bool value)

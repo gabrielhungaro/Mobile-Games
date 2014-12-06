@@ -6,32 +6,35 @@ using UnityEngine;
 using Characters;
 using States;
 
+using AquelaFrameWork.Core;
+
 namespace Controllers
 {
-    public class GameController : MonoBehaviour
+    public class GameController : AFObject
     {
         private bool gameEnded;
         private GameObject _uiRoot;
 
-        void Start()
+        private CharacterManager _characterManger;
+        private CharacterFactory _characterFactory;
+
+        public void Initialize()
         {
             gameEnded = false;
-            this.gameObject.AddComponent<CharacterFactory>().SetAnchorTarget(_uiRoot);
-            this.gameObject.AddComponent<CharacterManager>();
+            
+            _characterFactory = CharacterFactory.Instance;
+            _characterManger =  CharacterManager.Instance;
+
+            _characterManger.Initialize();
+
             LifesController lifesController = LifesController.Instance();
         }
 
-        public void MyUpdate()
+        public override void AFUpdate(double time)
         {
-            if (this.gameObject.GetComponent<CharacterFactory>())
-            {
-                this.gameObject.GetComponent<CharacterFactory>().MyUpdate();
-            }
-            if (this.gameObject.GetComponent<CharacterManager>())
-            {
-                this.gameObject.GetComponent<CharacterManager>().MyUpdate();
-            }
-
+            _characterFactory.AFUpdate(time);
+            _characterManger.AFUpdate(time);
+            
             if (LifesController.GetLifes() == 0 && gameEnded == false)
             {
                 gameEnded = true;

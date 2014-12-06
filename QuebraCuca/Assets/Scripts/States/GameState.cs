@@ -10,10 +10,24 @@ using Elements;
 using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.State;
 
+using Characters;
+
 namespace States
 {
     public class GameState : AState
     {
+
+        private float _timeToSpawnCharacter = 5;
+        private int _numbersOfCharactersToCreate = 1;
+        private int _numberOfCharactersLayers = 3;
+        private List<GameObject> _listOfLeftCuca;
+        private List<GameObject> _listOfRightCuca;
+        private List<GameObject> _listOfCenterCuca;
+        private int _numberOfCharactersInLeft = 8;
+        private int _numberOfCharactersInRight = 8;
+        private int _numberOfCharactersInCenter = 9;
+       
+        private int _ticks = 0;
 
         private GameObject _background;
         private GameObject _leftWall1;
@@ -27,9 +41,17 @@ namespace States
         private GameObject _floor3;
         private GameObject _roof;
         private GameObject _pointsBg;
-        private int _ticks;
+
+        //private int _ticks;
+        
         private GameObject _camera;
 
+        private List<Character> _listOfCharacters;
+
+        GameObject _uiRoot;
+
+        private GameController _controller;
+        private Character m_char;
         protected override void Awake()
         {
             m_stateID = AState.EGameState.GAME;
@@ -38,11 +60,13 @@ namespace States
         public override void BuildState()
         {
             CreateCamera();
+            CreatePullOfCharacters();
 
-            if (this.gameObject.GetComponent<GameController>() == false)
-                this.gameObject.AddComponent<GameController>();
-            this.gameObject.GetComponent<GameController>().SetAnchorTarget(_camera);
-
+            _controller = AFObject.Create<GameController>();
+            _controller.gameObject.transform.parent = this.gameObject.transform;
+            _controller.Initialize();
+            _controller.SetAnchorTarget(_camera);
+           
             if (this.gameObject.GetComponent<IndexController>() == false)
                 this.gameObject.AddComponent<IndexController>().Start();
 
@@ -53,6 +77,25 @@ namespace States
             this.gameObject.GetComponent<HudController>().SetAnchorTarget(_camera);
 
             base.BuildState();
+        }
+
+        private void CreatePullOfCharacters()
+        {
+            _listOfCharacters = new List<Character>();
+
+            Character character;
+
+            for (int i = 0; i < _numbersOfCharactersToCreate; i++)
+            {
+                m_char = character = CharacterFactory.Instance.CreateCharacter();
+                _listOfCharacters.Add(character);
+                Add(character);
+                character.Initialize();
+            }
+            
+            UpdateCenterPosition();
+            UpdateLeftPosition();
+            UpdateRightPosition();
         }
 
         private void CreateCamera()
@@ -226,10 +269,8 @@ namespace States
 
         public override void AFUpdate(double deltaTime)
         {
-            if (this.gameObject.GetComponent<GameController>())
-            {
-                this.gameObject.GetComponent<GameController>().MyUpdate();
-            }
+            _controller.AFUpdate(deltaTime);
+
             _ticks++;
             if (_ticks >= 10 && _ticks <= 11)
             {
@@ -246,7 +287,209 @@ namespace States
                 _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
             }
 
+            if (Input.GetKey("right"))
+            {
+                m_char.GetCharacterAnimation().GoTo("idle");
+            }
+
+            if (Input.GetKey("left"))
+            {
+                m_char.GetCharacterAnimation().GoTo("angry");
+            }
+
             base.AFUpdate(deltaTime);
+        }
+
+        private void UpdateCenterPosition()
+        {
+            int col = 0;
+            int line = 0;
+            float characterScale;
+            float totalOfcols = 3;
+            int offsetX = 0;
+            Character charObj;
+            for (int i = 0; i < _numberOfCharactersInCenter; i++)
+            {
+                if (i < _listOfCharacters.Count)
+                {
+                    characterScale = 1 - ((totalOfcols - line) / 10);
+                    if (line == 1 && col != 1)
+                    {
+                        offsetX = 60;
+                        if (col == 2)
+                            offsetX *= -1;
+                    }
+                    else if (line == 2 && col != 1)
+                    {
+                        offsetX = 170;
+                        if (col == 2)
+                            offsetX *= -1;
+                    }
+                    else
+                    {
+                        offsetX = 0;
+                    }
+
+                    charObj = _listOfCharacters[i];
+                    charObj.name = "center_" + _listOfCharacters[i].name;
+//                     charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
+//                     charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = -384 + (col * 250) - offsetX;
+//                     charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -108 + (col * 250) - offsetX;
+//                     charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = -388 - (line * 150);
+//                     charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -4 - (line * 145);
+//                     charObj.GetComponent<UI2DSprite>().UpdateAnchors();
+//                     charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
+                    charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
+                    charObj.gameObject.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+
+                    col++;
+                    //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_listOfCharacters[i].gameObject, line + 1);
+                    if (col == 3)
+                    {
+                        col = 0;
+                        line++;
+                    }
+
+                }
+            }
+        }
+
+        private void UpdateLeftPosition()
+        {
+            int col = 0;
+            int line = 0;
+            float characterScale;
+            float totalOfcols = 3;
+            int offsetY = 0;
+            Character charObj;
+            for (int i = 0; i < _numberOfCharactersInLeft; i++)
+            {
+                if (i < _listOfCharacters.Count)
+                {
+                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    if (col == 1)
+                    {
+                        offsetY = 200;
+                    }
+                    else if (col == 2)
+                    {
+                        offsetY = 100;
+                    }
+                    else
+                    {
+                        offsetY = 0;
+                    }
+
+                    if (_listOfCharacters.Count > i + _numberOfCharactersInCenter)
+                    {
+                        charObj = _listOfCharacters[i + _numberOfCharactersInCenter];
+                        charObj.name = "left_" + _listOfCharacters[i].name;
+//                         charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
+//                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 4400 - (col * 130);
+//                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -5568 - (col * 130);
+//                         charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = 4140 - (line * 350) - offsetY;
+//                         charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -3156 - (line * 350) - offsetY;
+                        charObj.transform.Rotate(new Vector3(0f, 0f, 90f));
+//                         charObj.GetComponent<UI2DSprite>().UpdateAnchors();
+//                         charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
+                        charObj.transform.localScale = new Vector3(characterScale, characterScale, 1);
+                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+                        col++;
+                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_listOfCharacters[i + _numberOfCharactersInCenter].gameObject, col);
+                        if (col == 3)
+                        {
+                            col = 0;
+                            line++;
+                        }
+                        else if (col == 1 && line == 2)
+                        {
+                            col++;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UpdateRightPosition()
+        {
+            int col = 0;
+            int line = 0;
+            float characterScale;
+            float totalOfcols = 3;
+            int offsetY = 0;
+            Character charObj;
+            for (int i = 0; i < _numberOfCharactersInRight; i++)
+            {
+                if (i < _listOfCharacters.Count)
+                {
+                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    if (col == 1)
+                    {
+                        offsetY = 200;
+                    }
+                    else if (col == 2)
+                    {
+                        offsetY = 100;
+                    }
+                    else
+                    {
+                        offsetY = 0;
+                    }
+
+                    if (_listOfCharacters.Count > i + _numberOfCharactersInCenter + _numberOfCharactersInLeft)
+                    {
+                        charObj = _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft];
+                        charObj.name = "right_" + _listOfCharacters[i].name;
+//                         charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
+//                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 5520 + (col * 130);
+//                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -4450 + (col * 130);
+//                         charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = 4141 - (line * 350) - offsetY;
+//                         charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -3155 - (line * 350) - offsetY;
+//                         charObj.GetComponent<UI2DSprite>().UpdateAnchors();
+                         charObj.transform.Rotate(new Vector3(0f, -180f, -90f));
+//                         charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
+                        charObj.transform.localScale = new Vector3(characterScale, characterScale, 1);
+                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].transform.localPosition);
+                        col++;
+                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].gameObject, col);
+                        if (col == 3)
+                        {
+                            col = 0;
+                            line++;
+                        }
+                        else if (col == 1 && line == 2)
+                        {
+                            col++;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void MyUpdate()
+        {
+            _ticks++;
+            if (_ticks >= 10 && _ticks <= 11)
+            {
+                //UpdatePixelPerfect();
+                UpdateCenterPosition();
+                UpdateLeftPosition();
+                UpdateRightPosition();
+                /*for (int i = 0; i < _numberOfCharacters; i++)
+                {
+                    _listOfCharacters[i].GetComponent<UI2DSprite>().MakePixelPerfect();
+                }*/
+            }
+        }
+
+        public List<Character> GetListOfCharacters()
+        {
+            return _listOfCharacters;
+        }
+
+        internal void SetAnchorTarget(GameObject value)
+        {
+            _uiRoot = value;
         }
 
     }

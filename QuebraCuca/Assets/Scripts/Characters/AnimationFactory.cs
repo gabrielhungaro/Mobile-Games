@@ -16,36 +16,14 @@ namespace Characters
 {
     public class AnimationFactory : ASingleton<AnimationFactory>
     {
-        AFMovieClip animation;
-        AFStatesController m_heroStates;
 
-        public AFStatesController BuildAnimation(string spritePath, string animationStateName, bool isDefaultState)
+        public AFMovieClip BuildAnimation(string spritePath, string animationStateName)
         {
-            AFTextureAtlas heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
-            m_heroStates = AFObject.Create<AFStatesController>("Hero Animation Controller");
-
-            animation = AFObject.Create<AFMovieClip>(animationStateName);
-            animation.Init(heroAtlas.GetSprites(animationStateName));
-            m_heroStates.Add(animationStateName, animation, isDefaultState);
-
-            if(m_heroStates.gameObject.GetComponent<Rigidbody2D>() == null){
-                //m_heroStates.gameObject.AddComponent<Rigidbody2D>();
-            }
-            //m_heroStates.transform.localScale = new UnityEngine.Vector3(3, 3, 3);
-
-            return m_heroStates;
-        }
-
-        public AFMovieClip BuildMovieClipAnimation(string spritePath, string animationStateName, bool isDefaultState)
-        {
-            AFTextureAtlas heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
-
-            animation = AFObject.Create<AFMovieClip>(animationStateName);
-            animation.Init(heroAtlas.GetSprites(animationStateName));
-
-            m_heroStates.Add(animationStateName, animation, isDefaultState);
-
-            return animation;
+            AFMovieClip L_animation;
+            AFTextureAtlas L_heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
+            L_animation = AFObject.Create<AFMovieClip>(animationStateName);
+            L_animation.Init(L_heroAtlas.GetSprites(animationStateName));
+            return L_animation;
         }
 
     }

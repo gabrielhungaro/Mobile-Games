@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 90d839770baeee54097f3c167e390010
+guid: fe330a842cbe72f4da29b0d8c6ce1caf
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -8,15 +8,16 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Orc Shoulderpad
-    11100000: //RootNode
+    9500000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -27,7 +28,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -59,6 +60,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
-  additionalBone: 1
+  animationType: 2
+  additionalBone: 0
   userData: 

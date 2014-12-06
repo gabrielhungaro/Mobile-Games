@@ -23,6 +23,9 @@
 *.out
 *.app
 
+#Unity Files Project
+*.unityproj
+
 #Visual Studio
 *csproj
 *sln
