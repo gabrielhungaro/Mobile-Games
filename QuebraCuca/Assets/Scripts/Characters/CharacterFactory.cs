@@ -26,13 +26,16 @@ namespace Characters
             try
             {
                 Character character = AFObject.Create<Character>();
-                GameObject characterGO = AFObject.Create<Character>().gameObject;
+                //GameObject characterGO = AFObject.Create<Character>().gameObject;
 
-                characterGO.AddComponent<TimeController>();
-                characterGO.AddComponent<BoxCollider2D>();
-                characterGO.AddComponent<AFBoxColider2DResizer>();
-                UIEventListener.Get(characterGO).onClick += OnClick;
+                character.gameObject.AddComponent<TimeController>();
+                character.gameObject.AddComponent<BoxCollider2D>();
+                character.gameObject.AddComponent<AFBoxColider2DResizer>();
+                //character.gameObject.AddComponent<UIWidget>();
+                UIEventListener.Get(character.gameObject).onClick += OnClick;
+                //character.gameObject.GetComponent<UIWidget>().MakePixelPerfect();
                 _numberOfCharacters++;
+                //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(characterGO, 1);
                 //character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
                 //character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
                 //character.AddComponent<Rigidbody2D>().use = false;
@@ -58,6 +61,7 @@ namespace Characters
             {
                 Character character =  go.GetComponent<Character>();
                 character.SetIsHited(true);
+                character.GetCharacterAnimation().GoTo("hited");
                 SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
                 CharacterManager.Instance.HideCharacter(character);
                 PointsController.AddPoints(PointsController.GetPointsToAdd());

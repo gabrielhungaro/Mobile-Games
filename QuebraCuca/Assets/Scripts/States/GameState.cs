@@ -18,7 +18,7 @@ namespace States
     {
 
         private float _timeToSpawnCharacter = 5;
-        private int _numbersOfCharactersToCreate = 1;
+        private int _numbersOfCharactersToCreate = 10;
         private int _numberOfCharactersLayers = 3;
         private List<GameObject> _listOfLeftCuca;
         private List<GameObject> _listOfRightCuca;
@@ -59,18 +59,17 @@ namespace States
 
         public override void BuildState()
         {
+            if (this.gameObject.GetComponent<IndexController>() == false)
+                this.gameObject.AddComponent<IndexController>().Start();
+
             CreateCamera();
+            CreateBackground();
             CreatePullOfCharacters();
 
             _controller = AFObject.Create<GameController>();
             _controller.gameObject.transform.parent = this.gameObject.transform;
             _controller.Initialize();
             _controller.SetAnchorTarget(_camera);
-           
-            if (this.gameObject.GetComponent<IndexController>() == false)
-                this.gameObject.AddComponent<IndexController>().Start();
-
-            CreateBackground();
 
             if (this.gameObject.GetComponent<HudController>() == false)
                 this.gameObject.AddComponent<HudController>();
@@ -248,7 +247,7 @@ namespace States
             _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
             FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);
 
-            _pointsBg = new GameObject();
+            /*_pointsBg = new GameObject();
             _pointsBg.name = "_pointsBg";
             _pointsBg.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "pointsBg");
             _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -259,7 +258,7 @@ namespace States
             _pointsBg.GetComponent<UI2DSprite>().topAnchor.absolute = -3063;
             _pointsBg.GetComponent<UI2DSprite>().UpdateAnchors();
             _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsBg, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsBg, 3);*/
         }
 
         private void OnClickBG(GameObject go)
@@ -284,7 +283,10 @@ namespace States
                 _leftWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _rightWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
+
+                UpdateCenterPosition();
+                UpdateLeftPosition();
+                UpdateRightPosition();
             }
 
             if (Input.GetKey("right"))
@@ -312,7 +314,7 @@ namespace States
             {
                 if (i < _listOfCharacters.Count)
                 {
-                    characterScale = 1 - ((totalOfcols - line) / 10);
+                    characterScale = 1  - ((totalOfcols - line) / 10);
                     if (line == 1 && col != 1)
                     {
                         offsetX = 60;
@@ -364,7 +366,7 @@ namespace States
             Character charObj;
             for (int i = 0; i < _numberOfCharactersInLeft; i++)
             {
-                if (i < _listOfCharacters.Count)
+                if ((i + _numberOfCharactersInCenter) < _listOfCharacters.Count)
                 {
                     characterScale = 1 - ((totalOfcols - col) / 10);
                     if (col == 1)
@@ -383,7 +385,7 @@ namespace States
                     if (_listOfCharacters.Count > i + _numberOfCharactersInCenter)
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter];
-                        charObj.name = "left_" + _listOfCharacters[i].name;
+                        charObj.name = "left_" + _listOfCharacters[i + _numberOfCharactersInCenter].name;
 //                         charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
 //                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 4400 - (col * 130);
 //                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -5568 - (col * 130);
@@ -393,9 +395,9 @@ namespace States
 //                         charObj.GetComponent<UI2DSprite>().UpdateAnchors();
 //                         charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
                         charObj.transform.localScale = new Vector3(characterScale, characterScale, 1);
-                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter].transform.localPosition);
                         col++;
-                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_listOfCharacters[i + _numberOfCharactersInCenter].gameObject, col);
+                        //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_listOfCharacters[i + _numberOfCharactersInCenter].gameObject, col);
                         if (col == 3)
                         {
                             col = 0;
@@ -420,7 +422,7 @@ namespace States
             Character charObj;
             for (int i = 0; i < _numberOfCharactersInRight; i++)
             {
-                if (i < _listOfCharacters.Count)
+                if ((i + _numberOfCharactersInCenter + _numberOfCharactersInLeft) < _listOfCharacters.Count)
                 {
                     characterScale = 1 - ((totalOfcols - col) / 10);
                     if (col == 1)
@@ -439,7 +441,7 @@ namespace States
                     if (_listOfCharacters.Count > i + _numberOfCharactersInCenter + _numberOfCharactersInLeft)
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft];
-                        charObj.name = "right_" + _listOfCharacters[i].name;
+                        charObj.name = "right_" + _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].name;
 //                         charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
 //                         charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = 5520 + (col * 130);
 //                         charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -4450 + (col * 130);

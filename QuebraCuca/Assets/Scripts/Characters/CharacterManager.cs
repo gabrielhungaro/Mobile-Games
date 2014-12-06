@@ -22,7 +22,7 @@ namespace Characters
 
         public GameObject currentCharacterTweening;
         private float _timeInTween = 0.2f;
-        private float _distToTween = 50;
+        private float _distToTween = 1;
         private float _timeShowing = 2f;
         
         public void Initialize()
@@ -82,7 +82,7 @@ namespace Characters
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
-                objToApplyTween.obj = obj;
+                objToApplyTween.obj = obj.gameObject;
 
                 EventDelegate del = new EventDelegate(this, "CompleteShowTween");
                 del.parameters.SetValue(objToApplyTween, 0);
@@ -123,7 +123,7 @@ namespace Characters
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
-                objToApplyTween.obj = obj;
+                objToApplyTween.obj = obj.gameObject;
 
                 EventDelegate del = new EventDelegate(this, "CompleteHideTween");
                 del.parameters.SetValue(objToApplyTween, 0);
