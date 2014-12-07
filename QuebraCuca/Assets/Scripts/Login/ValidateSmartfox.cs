@@ -12,8 +12,6 @@ public class ValidateSmartfox : MonoBehaviour {
     private InputField m_passText;
     private Button m_loginButton;
 
-    public static readonly string IS_PLAYER_SUBSCRIBER = "isPlayerSubscriber";
-
     void Awake()
     {
         AFServer.Instance.InitSmarfoxServer();
@@ -22,7 +20,8 @@ public class ValidateSmartfox : MonoBehaviour {
 
 	void Start () 
     {
-        PlayerPrefs.SetInt(IS_PLAYER_SUBSCRIBER, 0);
+        //if( PlayerPrefs.GetInt(IS_PLAYER_SUBSCRIBER) != null && )
+        //PlayerPrefs.SetInt(IS_PLAYER_SUBSCRIBER, 0);
 
         m_loginText = GameObject.Find("login_txt").GetComponent<InputField>();
         m_passText = GameObject.Find("password_txt").GetComponent<InputField>();
@@ -42,18 +41,13 @@ public class ValidateSmartfox : MonoBehaviour {
 
     public void OnLoginHandler( Sfs2X.Core.BaseEvent ev )
     {
-        PlayerPrefs.SetInt(IS_PLAYER_SUBSCRIBER, 1);
+        PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 1);
+        PlayerInfo.IsSubscriber = true;
     }
 
     public void OnLoginErrorHandler(Sfs2X.Core.BaseEvent ev)
     {
-        PlayerPrefs.SetInt(IS_PLAYER_SUBSCRIBER, 0);
+        PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 0);
+        PlayerInfo.IsSubscriber = false;
     }
-
-	// Update is called once per frame
-	void Update () {
-
-        Debug.Log("Is Player Subscriber? => " + (PlayerPrefs.GetInt(IS_PLAYER_SUBSCRIBER) == 1 ? true : false));
-
-	}
 }
