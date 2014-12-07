@@ -7,6 +7,7 @@ using Constants;
 
 using States;
 using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.Asset;
 using AquelaFrameWork.Core.State;
 
 namespace Controllers
@@ -33,6 +34,12 @@ namespace Controllers
             //SoundManager.PlaySoundByName(SoundConstants.BG_SOUND);
 
             base.Initialize();
+
+            AFSingleTransition tras = AFObject.Create<AFSingleTransition>();
+            SpriteRenderer sr = tras.gameObject.AddComponent<SpriteRenderer>();
+            sr.sprite = AFAssetManager.Instance.CreateSpriteFromTexture("Common/High/loadingscreen");
+            sr.transform.localScale = new Vector3(1, 1, 1);
+            m_stateManager.AddTransition(tras);
         }
     }
 }
