@@ -35,7 +35,7 @@ namespace Characters
             _ticks++;
             if(_ticks * Time.deltaTime >= _timeBetweenCharacters){
                 _ticks = 0;
-                ShowCharacter(RandomCharacterToShow());
+                //ShowCharacter(RandomCharacterToShow());
                 _charsOnScreen++;
             }
 

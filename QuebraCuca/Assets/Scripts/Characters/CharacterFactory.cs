@@ -31,7 +31,7 @@ namespace Characters
                 character.gameObject.AddComponent<TimeController>();
                 character.gameObject.AddComponent<BoxCollider2D>();
                 character.gameObject.AddComponent<AFBoxColider2DResizer>();
-                //character.gameObject.AddComponent<UIWidget>();
+                character.gameObject.AddComponent<UIAnchor>();
                 UIEventListener.Get(character.gameObject).onClick += OnClick;
                 //character.gameObject.GetComponent<UIWidget>().MakePixelPerfect();
                 _numberOfCharacters++;
