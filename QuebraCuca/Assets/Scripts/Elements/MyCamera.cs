@@ -45,5 +45,10 @@ namespace Elements
             return this.gameObject;
         }
 
+        public Camera GetCamera()
+        {
+            return _camera.GetComponent<Camera>();
+        }
+
     }
 }

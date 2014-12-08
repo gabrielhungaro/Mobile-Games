@@ -7,7 +7,10 @@ using Controllers;
 using Elements;
 using Constants;
 
+using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.State;
+using AquelaFrameWork.View;
+using AquelaFrameWork.Core.Asset;
 
 namespace States
 {
@@ -55,6 +58,7 @@ namespace States
 
         override public void Destroy()
         {
+            GameObject.Destroy(_startButton);
             GameObject.Destroy(_camera);
             base.Destroy();
         }

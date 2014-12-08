@@ -9,6 +9,8 @@ using Elements;
 
 using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.State;
+using AquelaFrameWork.View;
+using AquelaFrameWork.Core.Asset;
 
 using Characters;
 
@@ -106,7 +108,7 @@ namespace States
 
         private void CreateBackground()
         {
-            _background = new GameObject();
+            /*_background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "background");
             _background.GetComponent<UI2DSprite>().SetAnchor(_camera);
@@ -115,9 +117,15 @@ namespace States
             _background.GetComponent<Rigidbody>().isKinematic = true;
             _background.AddComponent<BoxCollider>().size = new Vector3(_background.GetComponent<UI2DSprite>().width,
                                                                     _background.GetComponent<UI2DSprite>().height);
-            UIEventListener.Get(_background).onClick += OnClickBG;
+            UIEventListener.Get(_background).onClick += OnClickBG;*/
 
-            _leftWall3 = new GameObject();
+            AFMovieClip _backgroundTeste = AFObject.Create<AFMovieClip>();
+            _backgroundTeste.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "background");
+            _backgroundTeste.gameObject.AddComponent<UIAnchor>().uiCamera = _camera.GetComponent<MyCamera>().GetCamera();
+            //+backgroundTeste.gameObject.GetComponent<UIAnchor>().container = _camera.GetComponent<MyCamera>().GetUiRoot();
+            _backgroundTeste.gameObject.GetComponent<UIAnchor>().side = UIAnchor.Side.Center;
+
+            /*_leftWall3 = new GameObject();
             _leftWall3.name = "_leftWall3";
             _leftWall3.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall3");
             _leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -128,9 +136,22 @@ namespace States
             _leftWall3.GetComponent<UI2DSprite>().topAnchor.absolute = 3452;
             _leftWall3.GetComponent<UI2DSprite>().UpdateAnchors();
             _leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 1);*/
 
-            _rightWall3 = new GameObject();
+            AFMovieClip _leftWall3 = AFObject.Create<AFMovieClip>();
+            _leftWall3.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall3");
+            _leftWall3.gameObject.AddComponent<UIAnchor>().uiCamera = _camera.GetComponent<MyCamera>().GetCamera();
+            //+backgroundTeste.gameObject.GetComponent<UIAnchor>().container = _camera.GetComponent<MyCamera>().GetUiRoot();
+            _leftWall3.gameObject.GetComponent<UIAnchor>().side = UIAnchor.Side.TopLeft;
+            float offset = (_backgroundTeste.gameObject.GetComponent<SpriteRenderer>().sprite.rect.width * (_leftWall3.gameObject.GetComponent<SpriteRenderer>().sprite.rect.width / 2)) / _leftWall3.gameObject.GetComponent<SpriteRenderer>().sprite.rect.width;
+
+            _leftWall3.gameObject.GetComponent<UIAnchor>().pixelOffset = new Vector2(offset * (-1), 0);
+            Debug.Log("left X: " + _leftWall3.gameObject.GetComponent<SpriteRenderer>().sprite.rect.width);
+            Debug.Log("back X: " + _backgroundTeste.gameObject.GetComponent<SpriteRenderer>().sprite.rect.width);
+            Debug.Log("camera teste: " + _camera.GetComponent<MyCamera>().GetCamera().rect.width);
+            Debug.Log("offset: " + offset);
+
+            /*_rightWall3 = new GameObject();
             _rightWall3.name = "_rightWall3";
             _rightWall3.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall3");
             _rightWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -141,9 +162,12 @@ namespace States
             _rightWall3.GetComponent<UI2DSprite>().topAnchor.absolute = -388;
             _rightWall3.GetComponent<UI2DSprite>().UpdateAnchors();
             _rightWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 1);*/
+            AFMovieClip _rightWall3 = AFObject.Create<AFMovieClip>();
+            _rightWall3.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall3");
 
-            _floor3 = new GameObject();
+
+            /*_floor3 = new GameObject();
             _floor3.name = "_floor3";
             _floor3.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor3");
             _floor3.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -154,9 +178,12 @@ namespace States
             _floor3.GetComponent<UI2DSprite>().topAnchor.absolute = -4129;
             _floor3.GetComponent<UI2DSprite>().UpdateAnchors();
             _floor3.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 1);*/
 
-            _leftWall2 = new GameObject();
+            AFMovieClip _floor3 = AFObject.Create<AFMovieClip>();
+            _floor3.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "floor3");
+
+            /*_leftWall2 = new GameObject();
             _leftWall2.name = "_leftWall2";
             _leftWall2.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall2");
             _leftWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -167,9 +194,12 @@ namespace States
             _leftWall2.GetComponent<UI2DSprite>().topAnchor.absolute = 3402;
             _leftWall2.GetComponent<UI2DSprite>().UpdateAnchors();
             _leftWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 2);*/
 
-            _rightWall2 = new GameObject();
+            AFMovieClip _leftWall2 = AFObject.Create<AFMovieClip>();
+            _leftWall2.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall2");
+
+            /*_rightWall2 = new GameObject();
             _rightWall2.name = "_rightWall2";
             _rightWall2.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall2");
             _rightWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -180,9 +210,12 @@ namespace States
             _rightWall2.GetComponent<UI2DSprite>().topAnchor.absolute = 3402;
             _rightWall2.GetComponent<UI2DSprite>().UpdateAnchors();
             _rightWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 2);*/
 
-            _floor2 = new GameObject();
+            AFMovieClip _rightWall2 = AFObject.Create<AFMovieClip>();
+            _rightWall2.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall2");
+
+            /*_floor2 = new GameObject();
             _floor2.name = "_floor2";
             _floor2.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor2");
             _floor2.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -193,9 +226,12 @@ namespace States
             _floor2.GetComponent<UI2DSprite>().topAnchor.absolute = -4212;
             _floor2.GetComponent<UI2DSprite>().UpdateAnchors();
             _floor2.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 2);*/
 
-            _leftWall1 = new GameObject();
+            AFMovieClip _floor2 = AFObject.Create<AFMovieClip>();
+            _floor2.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "floor2");
+
+            /*_leftWall1 = new GameObject();
             _leftWall1.name = "_leftWall1";
             _leftWall1.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall1");
             _leftWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -206,9 +242,12 @@ namespace States
             _leftWall1.GetComponent<UI2DSprite>().topAnchor.absolute = -3076;
             _leftWall1.GetComponent<UI2DSprite>().UpdateAnchors();
             _leftWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 3);*/
 
-            _rightWall1 = new GameObject();
+            AFMovieClip _leftWall1 = AFObject.Create<AFMovieClip>();
+            _leftWall1.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall1");
+
+            /*_rightWall1 = new GameObject();
             _rightWall1.name = "_rightWall1";
             _rightWall1.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall1");
             _rightWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -219,9 +258,12 @@ namespace States
             _rightWall1.GetComponent<UI2DSprite>().topAnchor.absolute = -3073;
             _rightWall1.GetComponent<UI2DSprite>().UpdateAnchors();
             _rightWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 3);*/
 
-            _floor1 = new GameObject();
+            AFMovieClip _rightWall1 = AFObject.Create<AFMovieClip>();
+            _rightWall1.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall1");
+
+            /*_floor1 = new GameObject();
             _floor1.name = "_floor1";
             _floor1.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor1");
             _floor1.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -232,9 +274,12 @@ namespace States
             _floor1.GetComponent<UI2DSprite>().topAnchor.absolute = -4393;
             _floor1.GetComponent<UI2DSprite>().UpdateAnchors();
             _floor1.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 3);*/
 
-            _roof = new GameObject();
+            AFMovieClip _floor1 = AFObject.Create<AFMovieClip>();
+            _floor1.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "floor1");
+
+            /*_roof = new GameObject();
             _roof.name = "_roof";
             _roof.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "roof1");
             _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -245,7 +290,10 @@ namespace States
             _roof.GetComponent<UI2DSprite>().topAnchor.absolute = -3073;
             _roof.GetComponent<UI2DSprite>().UpdateAnchors();
             _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);*/
+
+            AFMovieClip _roof = AFObject.Create<AFMovieClip>();
+            _roof.gameObject.AddComponent<SpriteRenderer>().sprite = AFAssetManager.Instance.Load<Sprite>(PathConstants.GetGameScenePath() + "roof1");
 
             /*_pointsBg = new GameObject();
             _pointsBg.name = "_pointsBg";
@@ -273,7 +321,7 @@ namespace States
             _ticks++;
             if (_ticks >= 10 && _ticks <= 11)
             {
-                _leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
+                /*_leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _rightWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _floor3.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _floor2.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -282,7 +330,7 @@ namespace States
                 _rightWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _leftWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
                 _rightWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
+                _roof.GetComponent<UI2DSprite>().MakePixelPerfect();*/
 
                 UpdateCenterPosition();
                 UpdateLeftPosition();
@@ -308,8 +356,9 @@ namespace States
             int line = 0;
             float characterScale;
             float totalOfcols = 3;
-            int offsetX = 0;
+            float offsetX = 0;
             Character charObj;
+            UIAnchor charAnchor;
             for (int i = 0; i < _numberOfCharactersInCenter; i++)
             {
                 if (i < _listOfCharacters.Count)
@@ -317,15 +366,15 @@ namespace States
                     characterScale = 1  - ((totalOfcols - line) / 10);
                     if (line == 1 && col != 1)
                     {
-                        offsetX = 60;
+                        offsetX = 20f/100f;
                         if (col == 2)
-                            offsetX *= -1;
+                            offsetX *= -1f;
                     }
                     else if (line == 2 && col != 1)
                     {
-                        offsetX = 170;
+                        offsetX = 40f/100f;
                         if (col == 2)
-                            offsetX *= -1;
+                            offsetX *= -1f;
                     }
                     else
                     {
@@ -334,13 +383,24 @@ namespace States
 
                     charObj = _listOfCharacters[i];
                     charObj.name = "center_" + _listOfCharacters[i].name;
-//                     charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
-//                     charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = -384 + (col * 250) - offsetX;
-//                     charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -108 + (col * 250) - offsetX;
-//                     charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = -388 - (line * 150);
-//                     charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -4 - (line * 145);
-//                     charObj.GetComponent<UI2DSprite>().UpdateAnchors();
-//                     charObj.GetComponent<UI2DSprite>().MakePixelPerfect();
+
+                    charAnchor = charObj.GetComponent<UIAnchor>();
+                    if(charAnchor != null){
+                        charAnchor.uiCamera = _camera.GetComponent<MyCamera>().GetCamera();
+                        charAnchor.side = UIAnchor.Side.Center;
+                        charAnchor.container = _camera.GetComponent<MyCamera>().GetUiRoot();
+                        charAnchor.relativeOffset = new Vector2(-0.5f + (col * 0.5f) - offsetX, -1f + (line * -0.5f));
+                    }
+
+                    
+                    //charObj.GetComponent<UIAnchor>().
+                    /*charObj.GetComponent<UI2DSprite>().SetAnchor(_uiRoot);
+                    charObj.GetComponent<UI2DSprite>().leftAnchor.absolute = -384 + (col * 250) - offsetX;
+                    charObj.GetComponent<UI2DSprite>().rightAnchor.absolute = -108 + (col * 250) - offsetX;
+                    charObj.GetComponent<UI2DSprite>().bottomAnchor.absolute = -388 - (line * 150);
+                    charObj.GetComponent<UI2DSprite>().topAnchor.absolute = -4 - (line * 145);
+                    charObj.GetComponent<UI2DSprite>().UpdateAnchors();
+                    charObj.GetComponent<UI2DSprite>().MakePixelPerfect();*/
                     charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
                     charObj.gameObject.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i].transform.localPosition);
 
@@ -468,7 +528,7 @@ namespace States
             }
         }
 
-        public void MyUpdate()
+        /*public void MyUpdate()
         {
             _ticks++;
             if (_ticks >= 10 && _ticks <= 11)
@@ -477,12 +537,8 @@ namespace States
                 UpdateCenterPosition();
                 UpdateLeftPosition();
                 UpdateRightPosition();
-                /*for (int i = 0; i < _numberOfCharacters; i++)
-                {
-                    _listOfCharacters[i].GetComponent<UI2DSprite>().MakePixelPerfect();
-                }*/
             }
-        }
+        }*/
 
         public List<Character> GetListOfCharacters()
         {
