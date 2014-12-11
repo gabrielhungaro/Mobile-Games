@@ -15,8 +15,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
     {
         private GameObject _pointsHud;
         private GameObject _pointsObj;
-        private GameObject _lifeHud;
         private GameObject _lifesObj;
+        private GameObject _lifeHUD;
         private Font _hudFont;
         private int _fontSize;
         private PointsController _pointsController;
@@ -24,7 +24,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         private int _lifes;
         private GameObject _anchorTarget;
         private List<GameObject> _listOfLifes;
-        private GameObject _lifeHUD;
+        
         private int _offSetX = 20;
 
         void Start()
@@ -158,6 +158,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
                     }
                 }
             }
+        }
+
+        public void Destroy()
+        {
+            GameObject.Destroy(_pointsHud);
+            GameObject.Destroy(_pointsObj);
+            GameObject.Destroy(_lifesObj);
+            GameObject.Destroy(_lifeHUD);
         }
 
         public void SetAnchorTarget(GameObject value)

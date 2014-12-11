@@ -51,8 +51,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private List<Character> _listOfCharacters;
 
-        GameObject _uiRoot;
-
         private GameController _controller;
         private Character m_char;
         protected override void Awake()
@@ -584,18 +582,24 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             }
         }
 
-        public override void AFDestroy() 
+        override public void Destroy()
         {
-            Destroy(_leftWall3);
-            Destroy(_rightWall3);
-            Destroy(_floor3);
-            Destroy(_floor2);
-            Destroy(_floor1);
-            Destroy(_leftWall2);
-            Destroy(_rightWall2);
-            Destroy(_leftWall1);
-            Destroy(_rightWall1);
-            Destroy(_roof);
+            GameObject.Destroy(_floor3);
+            GameObject.Destroy(_floor2);
+            GameObject.Destroy(_floor1);
+
+            GameObject.Destroy(_leftWall1);
+            GameObject.Destroy(_leftWall3);
+            GameObject.Destroy(_leftWall2);
+
+            GameObject.Destroy(_rightWall2);
+            GameObject.Destroy(_rightWall3);
+            GameObject.Destroy(_rightWall1);
+
+            GameObject.Destroy(_roof);
+            GameObject.Destroy(_camera);
+
+            this.gameObject.GetComponent<HudController>().Destroy();
 
             base.AFDestroy();
         }
@@ -603,11 +607,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         public List<Character> GetListOfCharacters()
         {
             return _listOfCharacters;
-        }
-
-        internal void SetAnchorTarget(GameObject value)
-        {
-            _uiRoot = value;
         }
     }
 }
