@@ -21,8 +21,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         public static readonly string STATE_HITED = "hited";
         public static readonly string STATE_ANGRY = "angry";
 
-        private bool _hited;
-        private bool _isShowing;
+        private bool _hited = false;
+        private bool _isShowing = false;
         private Vector3 _initialPosition;
         private AFStatesController _characterAnimations;
         private bool _isRotated = false;
