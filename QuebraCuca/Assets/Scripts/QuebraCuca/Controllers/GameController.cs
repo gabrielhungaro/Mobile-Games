@@ -47,12 +47,18 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         {
             Debug.Log("acabando do jogo");
             //GameStateFactory.ChangeScene(GameStateFactory.START_SCENE);
+            //m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
             //Application.LoadLevel(SceneManager.START_SCENE);
         }
 
         internal void SetAnchorTarget(GameObject value)
         {
             _uiRoot = value;
+        }
+
+        public bool GetIsEndGame()
+        {
+            return gameEnded;
         }
     }
 }

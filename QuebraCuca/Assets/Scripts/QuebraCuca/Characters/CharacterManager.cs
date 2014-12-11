@@ -67,7 +67,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                 //if (obj.GetComponent<Character>())
                 //{
                 UI2DSprite objSprite = (obj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                Debug.Log("objToShow: " + obj);
+                //Debug.Log("objToShow: " + obj);
                     string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
                     switch (charPosition[0])
                     {

@@ -298,6 +298,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             UpdateCharacterScale();
             UpdateSpritesPosition();
 
+            if (_controller != null)
+            {
+                if (_controller.GetIsEndGame())
+                {
+                    m_engine.GetStateManger().GotoState(AState.EGameState.MENU);
+                }
+            }
+
             base.AFUpdate(deltaTime);
         }
 
@@ -574,6 +582,22 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 sp.transform.localPosition = _listOfCharacters[i].transform.position;
                 //UnityEngine.Debug.Log("sp.position: " + sp.transform.position + " || go.position: " + _listOfCharacters[i].gameObject.transform.localPosition);
             }
+        }
+
+        public override void AFDestroy() 
+        {
+            Destroy(_leftWall3);
+            Destroy(_rightWall3);
+            Destroy(_floor3);
+            Destroy(_floor2);
+            Destroy(_floor1);
+            Destroy(_leftWall2);
+            Destroy(_rightWall2);
+            Destroy(_leftWall1);
+            Destroy(_rightWall1);
+            Destroy(_roof);
+
+            base.AFDestroy();
         }
 
         public List<Character> GetListOfCharacters()
