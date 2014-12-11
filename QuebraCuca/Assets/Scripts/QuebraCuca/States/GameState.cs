@@ -350,9 +350,12 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                     sp.topAnchor.absolute = -389 - (line * 45);
                     sp.UpdateAnchors();
                     sp.MakePixelPerfect();
+                    GameObject nullGo = null;
+                    sp.SetAnchor(nullGo);
 
                     charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
                     charObj.SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+                    charObj.SetScale(characterScale);
 
                     charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
 
@@ -418,10 +421,15 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         }
                         sp.UpdateAnchors();
                         sp.MakePixelPerfect();
+
+                        GameObject nullGo = null;
+                        sp.SetAnchor(nullGo);
+
                         sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
 
                         charObj.SetIsRotated(true);
                         charObj.SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter].transform.localPosition);
+                        charObj.SetScale(characterScale);
 
                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
 
@@ -494,7 +502,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         sp.UpdateAnchors();
                         sp.MakePixelPerfect();
 
+                        GameObject nullGo = null;
+                        sp.SetAnchor(nullGo);
+
                         sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
+                        charObj.SetScale(characterScale);
                         charObj.SetIsRotated(true);
                         charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].transform.localPosition);
                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
@@ -550,6 +562,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             {
                 UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
                 sp.MakePixelPerfect();
+                sp.transform.localScale = new Vector3(_listOfCharacters[i].GetScale(), _listOfCharacters[i].GetScale(), 1);
             }
         }
 
@@ -558,7 +571,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             for (int i = 0; i < _listOfCharacters.Count; i++)
             {
                 UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                sp.transform.position = _listOfCharacters[i].transform.localPosition;
+                sp.transform.localPosition = _listOfCharacters[i].transform.position;
+                //UnityEngine.Debug.Log("sp.position: " + sp.transform.position + " || go.position: " + _listOfCharacters[i].gameObject.transform.localPosition);
             }
         }
 
@@ -571,6 +585,5 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             _uiRoot = value;
         }
-
     }
 }

@@ -72,13 +72,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                     switch (charPosition[0])
                     {
                         case "left":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
+                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
                             break;
                         case "center":
                             posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.transform.localPosition.y + _distToTween, obj.transform.localPosition.z);
                             break;
                         case "right":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
+                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
                             break;
                     }
                 //}

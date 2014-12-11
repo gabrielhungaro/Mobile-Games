@@ -28,6 +28,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         private bool _isRotated = false;
         private UI2DSprite _uiSprite;
         private bool _hitedAnimationIsComplete;
+        private float _characterScale;
 
         public void Initialize()
         {
@@ -107,6 +108,16 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         public bool GetHitedAnimationIsComplete()
         {
             return _hitedAnimationIsComplete;
+        }
+
+        public void SetScale(float value)
+        {
+            _characterScale = value;
+        }
+
+        public float GetScale()
+        {
+            return _characterScale;
         }
     }
 }
