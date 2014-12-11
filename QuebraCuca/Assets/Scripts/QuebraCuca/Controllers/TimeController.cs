@@ -27,9 +27,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
                     _ticks++;
                     if (_ticks * Time.deltaTime >= _timeShowingCharacter)
                     {
-                        UnityEngine.Debug.Log("perdeu vida");
                         _ticks = 0;
-                        //FindObjectOfType<CharacterManager>().HideCharacter(this.gameObject);
+                        FindObjectOfType<CharacterManager>().HideCharacter(this.gameObject.GetComponent<Character>());
                         LifesController.RemoveLife();
                     }
                 }
