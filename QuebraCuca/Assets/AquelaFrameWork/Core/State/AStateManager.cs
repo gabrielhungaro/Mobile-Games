@@ -29,11 +29,6 @@ namespace AquelaFrameWork.Core.State
 
         protected IStateTransition m_transition;
 
-        virtual protected void Awake()
-        {
-            gameObject.transform.parent = AFEngine.Instance.gameObject.transform;
-        }
-
         virtual public void Initialize( IStateFactory factory )
         {
             //TODO: Verify if factory is null case yes throw some error

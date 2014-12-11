@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -10,6 +11,32 @@ namespace AquelaFrameWork.Core.Asset
 
     public class AFAssetManager : ASingleton<AFAssetManager>
     {
+        public static readonly int DEFAULT_SCREEN_DPI = 160;
+
+#if UNITY_EDITOR
+        public enum EPlataform
+        {
+            IOS = 0,
+            ANDROID,
+            WINDOWSP8,
+            EDITOR
+        }
+
+        public static readonly int DPI_IPHONE_3 = 163;
+        public static readonly int DPI_IPHONE_4_5 = 326;
+        public static readonly int DPI_IPHONE_6 = 401;
+        public static readonly int DPI_IPAD_3 = 264;
+        public static readonly int DPI_IPAD_1_2 = 132;
+        public static readonly int DPI_IPAD_RETINA = 324;
+        public static readonly int DPI_GALAXY_S5 = 432;
+        public static readonly int DPI_GALAXY_S4 = 441;
+        public static readonly int DPI_LUMIA_720 = 217;
+        public static readonly int DPI_LUMIA_520 = 233;
+        
+        public static int SimulatedDPI { get; set; }
+        public static EPlataform SimulatePlatform { get; set; }
+#endif
+
         public static string iphonePath = "IOS/";
         public static string androidPath = "Android/";
         public static string windowsPhone8Path = "WP8/";
@@ -33,10 +60,11 @@ namespace AquelaFrameWork.Core.Asset
         protected Dictionary<string , object> m_custom = new Dictionary<string,object>();
 
         protected Dictionary<string, AFPool> m_pool = new Dictionary<string, AFPool>();
-        void Awake()
-        {
-            gameObject.transform.parent = AFEngine.Instance.gameObject.transform;
-        }
+
+//         public void Awake()
+//         {
+//             gameObject.transform.parent = AFEngine.Instance.gameObject.transform;
+//         }
 
         public T Load<T>(string path) where T : UnityEngine.Object
         {
@@ -333,11 +361,34 @@ namespace AquelaFrameWork.Core.Asset
                 return androidPath;
             #elif UNITY_WP8
                 return windowsPhone8Path;
+            #elif UNITY_EDITOR
+                return GetEditorPath();
             #else
-            return GetCommumPath();
-            #endif
+                return GetCommumPath();
+            #endif  
         }
 
+#if UNITY_EDITOR
+
+        public static string GetEditorPath()
+        {
+            if( SimulatePlatform != null )
+            {
+                switch(SimulatePlatform)
+                {
+                    case EPlataform.IOS:
+                        return iphonePath;
+                    case EPlataform.ANDROID:
+                        return androidPath;
+                    case EPlataform.WINDOWSP8:
+                        return windowsPhone8Path;
+                }
+
+            }
+            return commumPath;
+        }
+
+#endif
         public static string GetPathTargetPlatformWithResolution()
         {
             return ( GetPathTargetPlatform() + GetResolutionFolder() );
@@ -347,20 +398,27 @@ namespace AquelaFrameWork.Core.Asset
         public static string GetResolutionFolder()
         {
             UnityEngine.Debug.Log("DPI DA TELA: " + Screen.dpi);
+            float DPI;
 
-            if (Screen.dpi > 290 )
+#if UNITY_EDITOR
+            DPI = Screen.dpi <= 0 ? SimulatedDPI : Screen.dpi;
+#else
+            DPI = Screen.dpi <= 0 ? DEFAULT_SCREEN_DPI : Screen.dpi;
+#endif //UNITY_EDITOR
+
+            if (DPI > 290)
             {
                 return DIRECTORY_NAME_XHIGH;
             }
-            else if (Screen.dpi > 200 && Screen.dpi <= 290 )
+            else if (DPI > 200 && Screen.dpi <= 290)
             {
                 return DIRECTORY_NAME_HIGH;
             }
-            else if ( Screen.dpi >= 150  && Screen.dpi <= 200 )
+            else if (DPI >= 150 && Screen.dpi <= 200)
             {
                 return DIRECTORY_NAME_MEDIUM;
             }
-            else if( Screen.dpi < 150 )
+            else if (DPI < 150)
             {
                 return DIRECTORY_NAME_LOW;
             }

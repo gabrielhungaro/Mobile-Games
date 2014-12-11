@@ -204,6 +204,9 @@ namespace AquelaFrameWork.Core
         /// </summary>
         virtual public void Initialize()
         {
+            AFAssetManager.Instance.gameObject.transform.parent = gameObject.transform;
+            m_stateManager.gameObject.transform.parent = gameObject.transform;
+
             SetRunning( true );
         }
 
