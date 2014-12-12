@@ -29,6 +29,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _characterManger.Initialize();
 
             LifesController lifesController = LifesController.Instance();
+            lifesController.SetInitialLifes();
         }
 
         public override void AFUpdate(double time)

@@ -30,6 +30,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 
         private LifesController()
         {
+            SetInitialLifes();
+        }
+
+        public void SetInitialLifes()
+        {
             _initialLife = 3;
             _lifes = _initialLife;
         }

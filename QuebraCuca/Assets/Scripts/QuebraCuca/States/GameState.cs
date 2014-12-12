@@ -102,9 +102,17 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private void CreateCamera()
         {
-            _camera = new GameObject();
-            _camera.name = "StateCam";
-            _camera.AddComponent<MyCamera>();
+            //if (FindObjectOfType<MyCamera>() == null)
+            //{
+                _camera = new GameObject();
+                _camera.name = "StateCam";
+                _camera.AddComponent<MyCamera>();
+            /*}
+            else
+            {
+                _camera = FindObjectOfType<MyCamera>().gameObject;
+                _camera.name = "StateCam";
+            }*/
         }
 
         private void CreateBackground()
@@ -584,6 +592,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         override public void AFDestroy()
         {
+            AFEngine.Instance.gameObject.transform.parent = null;
+
             GameObject.Destroy(_floor3);
             GameObject.Destroy(_floor2);
             GameObject.Destroy(_floor1);

@@ -28,12 +28,12 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Elements
             _camera.AddComponent<UICamera>();
 
             //_camera.AddComponent<Camera>();
-            _camera.AddComponent<CameraSizeHandler>();
             _camera.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
             _camera.GetComponent<Camera>().isOrthoGraphic = CameraController.ORTHOGRAPHIC;
             _camera.GetComponent<Camera>().orthographicSize = CameraController.ORTHOGRAPHIC_SIZE;
             _camera.GetComponent<Camera>().nearClipPlane = CameraController.NEAR_CLIP_PLANE;
             _camera.GetComponent<Camera>().farClipPlane = CameraController.FAR_CLIP_PLANE;
+            _camera.AddComponent<CameraSizeHandler>();
         }
 
         void Start()

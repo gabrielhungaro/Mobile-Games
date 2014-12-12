@@ -29,13 +29,23 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         public override void BuildState()
         {
-            _camera = new GameObject();
-            _camera.name = "StateCam";
-            _camera.AddComponent<MyCamera>();
+            //if (FindObjectOfType<MyCamera>() == null)
+            //{
+                _camera = new GameObject();
+                _camera.name = "StateCam";
+                _camera.AddComponent<MyCamera>();
+                /*DontDestroyOnLoad(_camera);
+            }
+            else
+            {
+                _camera = FindObjectOfType<MyCamera>().gameObject;
+            }*/
 
             _background = new GameObject();
             _background.name = "background";
             _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetStartScenePath() + "startScene");
+            _background.GetComponent<UI2DSprite>().MakePixelPerfect();
+            _background.GetComponent<UI2DSprite>().SetAnchor(_camera/*.GetComponent<MyCamera>().GetCamera().gameObject*/);
             _background.GetComponent<UI2DSprite>().MakePixelPerfect();
 
             _startButton = new GameObject();
