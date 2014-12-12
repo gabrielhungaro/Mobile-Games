@@ -57,7 +57,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
         }
 
-        override public void Destroy()
+        override public void AFDestroy()
         {
             GameObject.Destroy(_startButton);
             GameObject.Destroy(_camera);

@@ -31,7 +31,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _paths = PathConstants.Instance();
             _sounds = SoundConstants.Instance();
 
-            this.gameObject.AddComponent<SoundManager>().Init();
+            GameObject _soundManager = new GameObject();
+            _soundManager.name = "SoundManager";
+            _soundManager.AddComponent<SoundManager>().Init();
             //SoundManager.PlaySoundByName(SoundConstants.BG_SOUND);
 
             base.Initialize();
