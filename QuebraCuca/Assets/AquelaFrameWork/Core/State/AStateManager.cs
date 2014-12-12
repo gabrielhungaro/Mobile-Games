@@ -62,7 +62,7 @@ namespace AquelaFrameWork.Core.State
             {
                 if (m_currentState.IsDestroyable())
                 {
-                    m_currentState.Destroy();
+                    m_currentState.AFDestroy();
 
                     if (m_currentState is AState)
                         Destroy( ( m_currentState as AState).gameObject );
@@ -103,5 +103,15 @@ namespace AquelaFrameWork.Core.State
         virtual public void Pause() { m_currentState.Pause(); }
         virtual public void Resume() { m_currentState.Resume(); }
 
+
+        virtual public override void AFDestroy()
+        {
+            if( m_currentState != null )
+            {
+                m_currentState.AFDestroy();
+            }
+
+            base.AFDestroy();
+        }
     }
 }

@@ -294,5 +294,41 @@ namespace AquelaFrameWork.Core.State
             return L_list;
         }
 
+        override public void AFDestroy()
+        {
+
+            m_stateManger = null;
+            m_soundManager = null;
+            m_assetManager = null;
+            m_input = null;
+            m_engine = null;
+
+            for (int i = 0; i < m_objects.Count; ++i)
+                m_objects[i].AFDestroy();
+
+            m_objects.Clear();
+            m_objects = null;
+
+            OnStart.RemoveAll();
+            OnStart = null;
+
+            OnDestroy.RemoveAll();
+            OnDestroy = null;
+            
+            OnInitialized.RemoveAll();
+            OnInitialized = null;
+
+            OnPause.RemoveAll();
+            OnPause = null;
+
+            OnObjectAdded.RemoveAll();
+            OnObjectAdded = null;
+            
+            OnObjectRemoved.RemoveAll();
+            OnObjectRemoved = null;
+            
+            base.AFDestroy();
+        }
+
     }
 }

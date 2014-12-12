@@ -32,6 +32,8 @@ namespace AquelaFrameWork.Core.State
         bool IsDestroyable();
         void SetDestroyable(bool value);
 
+        void AFDestroy();
+
 		AFObject Add( AFObject obj );
 		Entity AddEntity( Entity entity, object view = null);
 		void Remove( AFObject obj );
