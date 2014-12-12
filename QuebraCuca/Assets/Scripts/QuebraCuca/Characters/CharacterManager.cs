@@ -49,8 +49,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             {
                 if (_listOfCharacters[i].GetComponent<Character>().GetIsHited() == true && _listOfCharacters[i].GetComponent<Character>().GetIsShowing() == true && _listOfCharacters[i].GetComponent<Character>().GetHitedAnimationIsComplete() == true)
                 {
-                    Debug.Log("VOU ESCONDER");
-                    //HideCharacter(_listOfCharacters[i]);
+                    HideCharacter(_listOfCharacters[i]);
                 }
             }
         }
@@ -60,6 +59,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             if (obj != null)
             {
                 obj.SetIsShowing(true);
+                obj.SetIsHited(false);
                 //obj.GetComponent<UI2DSprite>().alpha = 1;
 
                 Vector3 posToTween = new Vector3(0, 0, 0);
@@ -67,7 +67,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                 //if (obj.GetComponent<Character>())
                 //{
                 UI2DSprite objSprite = (obj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                Debug.Log("objToShow: " + obj);
+                //Debug.Log("objToShow: " + obj);
                     string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
                     switch (charPosition[0])
                     {

@@ -60,7 +60,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
 
         private void OnClick(GameObject go)
         {
-            if (go.GetComponent<Character>().GetIsHited() == false)
+            if (go.GetComponent<Character>().GetIsHited() == false && go.GetComponent<Character>().GetIsShowing() == true)
             {
                 Character character =  go.GetComponent<Character>();
                 character.SetIsHited(true);

@@ -6,6 +6,8 @@ using UnityEngine;
 
 using com.globo.sitio.mobilegames.QuebraCuca.Characters;
 
+using AquelaFrameWork.View;
+
 namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 {
     public class IndexController : MonoBehaviour
@@ -45,7 +47,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             {
                 foreach (GameObject obj in _listOfLayers[i])
                 {
-                    if (obj.GetComponent<Character>())
+                    if (obj.GetComponent<AFMovieCLipNGUI>())
                     {
                         obj.GetComponent<UIWidget>().depth = i;
                     }
