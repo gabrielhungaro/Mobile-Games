@@ -582,7 +582,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             }
         }
 
-        override public void Destroy()
+        override public void AFDestroy()
         {
             GameObject.Destroy(_floor3);
             GameObject.Destroy(_floor2);

@@ -104,7 +104,7 @@ namespace AquelaFrameWork.Core.State
         virtual public void Resume() { m_currentState.Resume(); }
 
 
-        virtual public override void AFDestroy()
+        public override void AFDestroy()
         {
             if( m_currentState != null )
             {
