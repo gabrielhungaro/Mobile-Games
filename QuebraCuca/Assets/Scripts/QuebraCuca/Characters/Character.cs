@@ -44,15 +44,20 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             }
         }
 
+        public override void AFUpdate(double time)
+        {
+            
+            _characterAnimations.AFUpdate(time);
+        }
+
         public AFStatesController GetCharacterAnimation()
         {
             return _characterAnimations;
         }
 
-        public override void AFUpdate(double time)
+        public void SetCharacterAnimation(AFStatesController value)
         {
-            
-            _characterAnimations.AFUpdate(time);
+            _characterAnimations = value;
         }
 
         public void SetIsHited(bool value)
