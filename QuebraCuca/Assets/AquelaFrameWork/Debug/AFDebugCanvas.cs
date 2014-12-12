@@ -10,8 +10,11 @@ using UnityEngine.UI;
 
 public class AFDebugCanvas : AFObject
 {
-    private GameObject m_textField;
+    private GameObject m_textFieldGameObj;
     private GameObject m_debugCanvas;
+
+ 
+    private Text m_textField;
 
     public void Awake()
     {
@@ -25,17 +28,32 @@ public class AFDebugCanvas : AFObject
         this.gameObject.AddComponent<CanvasScaler>();
         this.gameObject.AddComponent<GraphicRaycaster>();
 
-        m_textField = new GameObject("AFDebugText");
-        this.m_textField.transform.parent = this.gameObject.transform;
+        m_textFieldGameObj = new GameObject("AFDebugText");
+        this.m_textFieldGameObj.transform.parent = this.gameObject.transform;
 
-        rectTrans = m_textField.AddComponent<RectTransform>();
-        m_textField.AddComponent<CanvasRenderer>();
-        m_textField.AddComponent<Text>().font = Resources.Load<Font>("Fonts/ANDALEMO");
+        rectTrans = m_textFieldGameObj.AddComponent<RectTransform>();
+        m_textFieldGameObj.AddComponent<CanvasRenderer>();
+
+        m_textField = m_textFieldGameObj.AddComponent<Text>();
+        m_textField.font = Resources.Load<Font>("Fonts/ANDALEMO");
+        m_textField.color = Color.gray;
+        //m_textField.AddComponent<Text>().color = Color.black;
         
         rectTrans.anchorMax = new Vector2(0, 1);
         rectTrans.anchorMin = new Vector2(0, 1);
         rectTrans.sizeDelta = new Vector2(800, 300);
         rectTrans.position = new Vector3(408, (Screen.height - (rectTrans.rect.size.y / 2) ), 1);
     }
+
+    public Text GettextFild()
+    {
+        return m_textField;
+    }
+
+    public void SetTextColor( Color color )
+    {
+        m_textField.color = color;
+    }
+
 }
 

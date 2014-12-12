@@ -12,16 +12,49 @@ using System.Collections;
 
 public class AFDebug
 {
-     protected static bool m_initialize = false;
+    protected static bool m_initialize = false;
     protected static string m_log = "";
     protected static uint m_bufferIndex = 0;
 
-    protected static AFDebugSettings m_settings;
-   
-
-    public static void SetSettings(AFDebugSettings settings)
+    private static AFDebugCanvas m_debugCanvas = AFObject.Create<AFDebugCanvas>("AFDebugCanvas");
+    public static AFDebugCanvas DebugCanvas
     {
-        m_settings = settings;
+        get
+        {
+            return m_debugCanvas;
+        }
+    }
+
+    private static AFDebugSettings m_settings = new AFDebugSettings()
+        {
+            LogFilePath = "Assets/Logs",
+            Configs = AFDebugSettings.OUTPUT_UNITY | AFDebugSettings.OUTPUT_SCREEN,
+            TextColor = Color.red,
+            MaxCharacters = 1000,
+        };
+
+
+
+    public static void SetLogPath( string path )
+    {
+
+    }
+
+    public static void SetScreenTextColor(Color color)
+    {
+        m_settings.TextColor = color;
+
+        UpdateCanvas();
+    }
+
+    private static void UpdateCanvas()
+    {
+        m_debugCanvas.GettextFild().color = m_settings.TextColor;
+    }
+
+    public static void SetConfigs( uint flags )
+    {
+        m_settings.Configs = flags;
     }
 
 
@@ -58,18 +91,6 @@ public class AFDebug
     
     private static void LogMessage(string message , string type)
     {
-        if(m_settings != null)
-        {
-            m_settings = new AFDebugSettings() 
-            {
-                LogFilePath = "Assets/Logs",
-                Configs = AFDebugSettings.OUTPUT_FILE | AFDebugSettings.OUTPUT_UNITY | AFDebugSettings.OUTPUT_SCREEN | AFDebugSettings.LOG_LOCAL_FILE,
-                TextColor = 0xFF0000,
-                MaxCharacters = 1000,
-                DebugCanvas = AFObject.Create<AFDebugCanvas>("AFDebugCanvas")//Resources.Load<GameObject>("Common/AFDebugCanvas")
-            };
-        }
-
         message = type + " " + message + Environment.NewLine;
         m_log += message;
 

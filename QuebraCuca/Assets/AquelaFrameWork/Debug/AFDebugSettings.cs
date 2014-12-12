@@ -11,12 +11,9 @@ public class AFDebugSettings
 
     public const uint LOG_LOCAL_FILE = 0x8;
 
-
     public bool HasSeparator { get; set; }
     public int MaxCharacters { get; set; }
-    public uint TextColor { get; set; }
+    public Color TextColor { get; set; }
     public uint Configs { get; set; }
     public string LogFilePath { get; set; }
-    public AFObject DebugCanvas { get; set; }
-
 }
