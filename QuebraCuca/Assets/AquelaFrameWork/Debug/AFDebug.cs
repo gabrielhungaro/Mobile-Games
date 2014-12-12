@@ -15,6 +15,7 @@ public class AFDebug
     protected static bool m_initialize = false;
     protected static string m_log = "";
     protected static uint m_bufferIndex = 0;
+    protected static bool isDebug = true;
 
     private static AFDebugCanvas m_debugCanvas = AFObject.Create<AFDebugCanvas>("AFDebugCanvas");
     public static AFDebugCanvas DebugCanvas
@@ -91,24 +92,28 @@ public class AFDebug
     
     private static void LogMessage(string message , string type)
     {
-        message = type + " " + message + Environment.NewLine;
-        m_log += message;
-
-        if ((m_settings.Configs & AFDebugSettings.OUTPUT_SCREEN) == AFDebugSettings.OUTPUT_SCREEN)
+        if (isDebug)
         {
-            GameObject go = GameObject.Find("AFDebugText");
 
-            if (m_log.Length > m_settings.MaxCharacters)
-                go.GetComponent<Text>().text = m_log.Substring(m_log.Length - m_settings.MaxCharacters);
-            else
-                go.GetComponent<Text>().text = m_log;
+            message = type + " " + message + Environment.NewLine;
+            m_log += message;
+
+            if ((m_settings.Configs & AFDebugSettings.OUTPUT_SCREEN) == AFDebugSettings.OUTPUT_SCREEN)
+            {
+                GameObject go = GameObject.Find("AFDebugText");
+
+                if (m_log.Length > m_settings.MaxCharacters)
+                    go.GetComponent<Text>().text = m_log.Substring(m_log.Length - m_settings.MaxCharacters);
+                else
+                    go.GetComponent<Text>().text = m_log;
+            }
+
+            if ((m_settings.Configs & AFDebugSettings.LOG_LOCAL_FILE) == AFDebugSettings.LOG_LOCAL_FILE)
+            {
+                AFLogFileWriter.LogInFile(message);
+            }
+
+            m_bufferIndex++;
         }
-
-        if ((m_settings.Configs & AFDebugSettings.LOG_LOCAL_FILE) == AFDebugSettings.LOG_LOCAL_FILE)
-        {
-            AFLogFileWriter.LogInFile(message);
-        }
-
-        m_bufferIndex++;
     }
 }

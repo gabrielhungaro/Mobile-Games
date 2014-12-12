@@ -29,7 +29,6 @@ public class StartState : AquelaFrameWork.Core.State.AState
     [SerializeField]
     private UnityEngine.GameObject m_interface;
 
-
     [SerializeField]
     private Button m_bateRebateButton;
 
@@ -58,7 +57,6 @@ public class StartState : AquelaFrameWork.Core.State.AState
         m_quebraCucaButton = m_btQuebraCuca.GetComponent<Button>();
         m_cataBalaoButton = m_btCataBalao.GetComponent<Button>();
 
-
         SetButtonView(m_btBateRebate.GetComponent<Image>(), "Scenes/StartScene/BateRebate" );
         SetButtonView(m_btCataBalao.GetComponent<Image>(), "Scenes/StartScene/Button_CataBalao");
         SetButtonView(m_btQuebraCuca.GetComponent<Image>(), "Scenes/StartScene/QuebraCuca");
@@ -67,34 +65,6 @@ public class StartState : AquelaFrameWork.Core.State.AState
         m_bateRebateButton.onClick.AddListener(() => { OnBaterebateButtonCLickHandler(); });
         m_quebraCucaButton.onClick.AddListener(() => { OnQuebraCucaButtonCLickHandler(); });
         m_cataBalaoButton.onClick.AddListener(() => { OnCataBalaoButtonCLickHandler(); });
-
-
-//        if (login)
-//        {
-//            m_loginInterface = Instantiate(login) as GameObject;
-//        }
-//        else
-//        {
-//            UnityEngine.Debug.LogError("Login not found: Data/LoginInterface");
-//        }
-//         m_loginInterface.name = "Interface de Login";
-//         Add(m_loginInterface);
-//         AFDebug.Log(m_loginInterface.name);
-// 
-//         AFServer.Instance.InitSmarfoxServer();
-//         UnityEngine.Debug.Log(AFServer.Instance);
-// 
-
-       
-
-//        m_loginButton.onClick.AddListener(() => { OnLoginButtonClickHandler(); });
-
-//        SetLoginButtonArt();
-        
-
-//         AFServer.Instance.onLogin += OnLoginHandler;
-//         AFServer.Instance.onLoginError += OnLoginErrorHandler;
-//         AFServer.Instance.Connect();
     }
 
     private void OnBaterebateButtonCLickHandler()

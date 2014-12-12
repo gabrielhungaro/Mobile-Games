@@ -11,21 +11,12 @@ public class StartSceneMain : AFEngine
 
     public override void Initialize()
     {
-        AFDebug.SetConfigs( AFDebugSettings.OUTPUT_SCREEN | AFDebugSettings.OUTPUT_UNITY );
+        //AFDebug.SetConfigs( AFDebugSettings.OUTPUT_SCREEN | AFDebugSettings.OUTPUT_UNITY );
 
         m_stateManager = AFObject.Create<AFStateManager>();
         m_stateManager.Initialize(new StartStateFactory());
         m_stateManager.GotoState(AState.EGameState.MENU);
 
-//         _resolutionController = ResolutionController.Instance();
-//         _paths = PathConstants.Instance();
-//         _sounds = SoundConstants.Instance();
-// 
-//         this.gameObject.AddComponent<SoundManager>().Init();
-//         //SoundManager.PlaySoundByName(SoundConstants.BG_SOUND);
-// 
-//         base.Initialize();
-// 
         base.Initialize();
 
 
