@@ -25,28 +25,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             try
             {
                 Character character = AFObject.Create<Character>();
-                //GameObject characterGO = AFObject.Create<Character>().gameObject;
 
                 character.gameObject.AddComponent<TimeController>();
-                //character.gameObject.AddComponent<BoxCollider2D>();
-                //character.gameObject.AddComponent<AFBoxColider2DResizer>();
                 character.gameObject.AddComponent<BoxCollider>();
                 character.gameObject.AddComponent<AnimationController>();
 
-                //character.gameObject.AddComponent<UIWidget>();
-                UIEventListener.Get(character.gameObject).onClick += OnClick;
-                //character.GetCharacterAnimation().GetCurrentState().GetComponent<UI2DSprite>().MakePixelPerfect();
-                //character.gameObject.GetComponent<UIWidget>().MakePixelPerfect();
+                //UIEventListener.Get(character.gameObject).onClick += OnClick;
                 _numberOfCharacters++;
-                //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(characterGO, 1);
-                //character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
-                //character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
-                //character.AddComponent<Rigidbody2D>().use = false;
-                // character.GetComponent<Rigidbody2D>().isKinematic = false;
-                //character.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
-                //character.GetComponent<UI2DSprite>().MakePixelPerfect();
-                //adicionar anchor no character
-                //character.GetComponent<SpriteRenderer>().alpha = 0;
                 
                 return character;
             }

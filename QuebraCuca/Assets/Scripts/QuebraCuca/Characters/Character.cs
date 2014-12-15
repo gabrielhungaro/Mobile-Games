@@ -7,6 +7,7 @@ using UnityEngine;
 
 using com.globo.sitio.mobilegames.QuebraCuca.Elements;
 using com.globo.sitio.mobilegames.QuebraCuca.Constants;
+using com.globo.sitio.mobilegames.QuebraCuca.Controllers;
 
 using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.State;
@@ -26,7 +27,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         private Vector3 _initialPosition;
         private AFStatesController _characterAnimations;
         private bool _isRotated = false;
-        private UI2DSprite _uiSprite;
+        private Sprite _sprite;
         private bool _hitedAnimationIsComplete;
         private float _characterScale;
 
@@ -37,10 +38,22 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             _characterAnimations.Add(STATE_ANGRY, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_ANGRY), false);
             _characterAnimations.Add(STATE_IDLE, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_IDLE), true);
             _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
-            _uiSprite = (_characterAnimations.GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+            _sprite = _characterAnimations.GetCurrentState().GetSprite();
             this.gameObject.AddComponent<BoxColliderResizer>().Initialize();
             if(this.gameObject.GetComponent<AnimationController>()){
                 this.gameObject.GetComponent<AnimationController>().Initialize();
+            }
+        }
+
+        void OnMouseDown()
+        {
+            if (GetIsHited() == false && GetIsShowing() == true)
+            {
+                SetIsHited(true);
+                GetCharacterAnimation().GoTo(Character.STATE_HITED);
+                SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
+                //CharacterManager.Instance.HideCharacter(character);
+                PointsController.AddPoints(PointsController.GetPointsToAdd());
             }
         }
 
@@ -100,9 +113,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             return _isRotated;
         }
 
-        public UI2DSprite GetUi2DSprite()
+        public Sprite GetSprite()
         {
-            return _uiSprite;
+            return _sprite;
         }
 
         public void SetHitedAnimationIsComplete(bool value)

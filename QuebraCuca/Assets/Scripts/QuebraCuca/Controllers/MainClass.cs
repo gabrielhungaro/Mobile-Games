@@ -25,7 +25,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 
             m_stateManager.Initialize( new GameStateFactory() );
 
-            m_stateManager.GotoState( AState.EGameState.MENU );
+            m_stateManager.GotoState( AState.EGameState.GAME );
 
             _resolutionController = ResolutionController.Instance();
             _paths = PathConstants.Instance();

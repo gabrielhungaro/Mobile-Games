@@ -13,13 +13,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
     public class BoxColliderResizer : MonoBehaviour
     {
 
-        private UI2DSprite sprite;
+        private Sprite sprite;
 
         public void Initialize()
         {
             if (this.gameObject.GetComponent<Character>())
             {
-                sprite = this.gameObject.GetComponent<Character>().GetUi2DSprite();
+                sprite = this.gameObject.GetComponent<Character>().GetSprite();
             }
         }
 
@@ -29,11 +29,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             {
                 if (this.gameObject.GetComponent<Character>().GetIsRotated())
                 {
-                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.sprite2D.bounds.size.y * 100, sprite.sprite2D.bounds.size.x * 100);
+                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.y * 100, sprite.bounds.size.x * 100);
                 }
                 else
                 {
-                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.sprite2D.bounds.size.x * 100, sprite.sprite2D.bounds.size.y * 100);
+                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.x * 100, sprite.bounds.size.y * 100);
                 }
             }
         }
