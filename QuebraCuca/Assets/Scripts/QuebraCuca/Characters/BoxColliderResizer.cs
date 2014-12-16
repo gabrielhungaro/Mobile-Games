@@ -29,11 +29,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             {
                 if (this.gameObject.GetComponent<Character>().GetIsRotated())
                 {
-                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.y * 100, sprite.bounds.size.x * 100);
+                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.y, sprite.bounds.size.x);
                 }
                 else
                 {
-                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.x * 100, sprite.bounds.size.y * 100);
+                    this.gameObject.GetComponent<BoxCollider>().size = new Vector2(sprite.bounds.size.x, sprite.bounds.size.y);
                 }
             }
         }
