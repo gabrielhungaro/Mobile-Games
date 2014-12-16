@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 using com.globo.sitio.mobilegames.QuebraCuca.Constants;
 
@@ -31,11 +32,35 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         {
             _hudFont = Resources.Load<Font>(PathConstants._fontPath + "Ed-Gothic");
             _fontSize = 80;
+            Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
+
             _pointsController = PointsController.Instance();
             _points = PointsController.GetPoints();
             _lifes = LifesController.GetLifes();
 
-            Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
+            GameObject canvas = new GameObject();
+            canvas.name = "Canvas";
+            Canvas canvasComponent = canvas.AddComponent<Canvas>();
+            CanvasScaler scalerComponent = canvas.AddComponent<CanvasScaler>();
+            GraphicRaycaster raycasterComponent = canvas.AddComponent<GraphicRaycaster>();
+
+            canvasComponent.renderMode = RenderMode.ScreenSpaceOverlay;
+            scalerComponent.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scalerComponent.referenceResolution = new Vector2(2048, 1536);
+            scalerComponent.matchWidthOrHeight = .5f;
+
+            _pointsHud = new GameObject();
+            _pointsHud.transform.parent = canvas.transform;
+            _pointsHud.name = "PointsHud";
+            _pointsHud.AddComponent<CanvasRenderer>();
+            Text textComponent = _pointsHud.AddComponent<Text>();
+            textComponent.text = "PONTOS:";
+            textComponent.font = _hudFont;
+            textComponent.fontSize = _fontSize;
+            textComponent.color = hudColor;
+            //_pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, String("PONTOS:").Length);
+
+            /*Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
             _pointsHud = new GameObject();
             _pointsHud.name = "_pointsHud";
             _pointsHud.AddComponent<UILabel>().text = "PONTOS";
@@ -50,7 +75,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _pointsHud.GetComponent<UILabel>().topAnchor.absolute = 766;
             _pointsHud.GetComponent<UILabel>().UpdateAnchors();
             _pointsHud.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsHud, 4);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsHud, 4);*/
 
             /*_lifeHud = new GameObject();
             _lifeHud.name = "_lifeHud";
@@ -68,7 +93,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _lifeHud.GetComponent<UILabel>().MakePixelPerfect();
             FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_lifeHud, 4);*/
 
-            Color textColor = new Color(24f / 255f, 174f / 255f, 16f / 255f, 255 / 255f);
+            /*Color textColor = new Color(24f / 255f, 174f / 255f, 16f / 255f, 255 / 255f);
             _pointsObj = new GameObject();
             _pointsObj.name = "_points";
             _pointsObj.AddComponent<UILabel>().text = _points.ToString();
@@ -83,7 +108,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _pointsObj.GetComponent<UILabel>().topAnchor.absolute = 766;
             _pointsObj.GetComponent<UILabel>().UpdateAnchors();
             _pointsObj.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsObj, 4);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsObj, 4);*/
 
             /*_lifesObj = new GameObject();
             _lifesObj.name = "_lifes";
@@ -101,7 +126,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _lifesObj.GetComponent<UILabel>().MakePixelPerfect();
             FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_lifesObj, 4);*/
 
-            CreateLifeHud();
+            //CreateLifeHud();
         }
 
         public void CreateLifeHud()
@@ -133,7 +158,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             }
         }
 
-        void Update()
+        /*void Update()
         {
             _points = PointsController.GetPoints();
             if (_pointsObj != null)
@@ -158,7 +183,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
                     }
                 }
             }
-        }
+        }*/
 
         public void Destroy()
         {

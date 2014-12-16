@@ -30,6 +30,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         private Sprite _sprite;
         private bool _hitedAnimationIsComplete;
         private float _characterScale;
+        private int _index;
 
         public void Initialize()
         {
@@ -54,6 +55,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                 SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
                 //CharacterManager.Instance.HideCharacter(character);
                 PointsController.AddPoints(PointsController.GetPointsToAdd());
+                FindObjectOfType<IndexController>().AddObjectToLIstByIndex(GetCharacterAnimation().GetCurrentState().gameObject, GetIndex());
             }
         }
 
@@ -136,6 +138,16 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         public float GetScale()
         {
             return _characterScale;
+        }
+
+        public void SetIndex(int value)
+        {
+            _index = value;
+        }
+
+        public int GetIndex()
+        {
+            return _index;
         }
     }
 }

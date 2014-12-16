@@ -23,7 +23,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
 
         public GameObject currentCharacterTweening;
         private float _timeInTween = 0.2f;
-        private float _distToTween = 100f;
+        private float _distToTween = .8f;
         private float _timeShowing = 2f;
         
         public void Initialize()
@@ -36,7 +36,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             _ticks++;
             if(_ticks * Time.deltaTime >= _timeBetweenCharacters){
                 _ticks = 0;
-                //ShowCharacter(RandomCharacterToShow());
+                ShowCharacter(RandomCharacterToShow());
                 _charsOnScreen++;
             }
 
@@ -60,27 +60,23 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             {
                 obj.SetIsShowing(true);
                 obj.SetIsHited(false);
-                //obj.GetComponent<UI2DSprite>().alpha = 1;
 
                 Vector3 posToTween = new Vector3(0, 0, 0);
 
-                //if (obj.GetComponent<Character>())
-                //{
-                //Debug.Log("objToShow: " + obj);
-                    string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
-                    switch (charPosition[0])
-                    {
-                        case "left":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                        case "center":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.transform.localPosition.y + _distToTween, obj.transform.localPosition.z);
-                            break;
-                        case "right":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                    }
-                //}
+                string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
+                switch (charPosition[0])
+                {
+                    case "left":
+                        posToTween = new Vector3(obj.GetInitialPosition().x + _distToTween, obj.GetInitialPosition().y, obj.GetInitialPosition().z);
+                        break;
+                    case "center":
+                        posToTween = new Vector3(obj.GetInitialPosition().x, obj.GetInitialPosition().y + _distToTween, obj.GetInitialPosition().z);
+                        break;
+                    case "right":
+                        posToTween = new Vector3(obj.GetInitialPosition().x - _distToTween, obj.GetInitialPosition().y, obj.GetInitialPosition().z);
+                        break;
+                }
+
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
@@ -107,20 +103,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                 obj.SetIsShowing(false);
                 obj.SetIsHited(false);
 
-                string[] charPosition = obj.name.Split(char.Parse("_"));
-                switch (charPosition[0])
-                {
-                    case "left":
-                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.gameObject.transform.localPosition.y, obj.gameObject.transform.localPosition.z);
-                        break;
-                    case "center":
-                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.gameObject.transform.localPosition.y - _distToTween, obj.gameObject.transform.localPosition.z);
-                        break;
-                    case "right":
-                        posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.gameObject.transform.localPosition.y, obj.gameObject.transform.localPosition.z);
-                        break;
-                }
-
+                posToTween = obj.GetInitialPosition();
 
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
@@ -140,7 +123,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             {
                 /*charObj.GetComponent<Character>().SetIsShowing(false);
                 charObj.GetComponent<Character>().SetIsHited(false);*/
-                //charObj.GetComponent<UI2DSprite>().alpha = 0;
                 _charsOnScreen--;
             }
             else

@@ -21,7 +21,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
     {
 
         private float _timeToSpawnCharacter = 5;
-        private int _numbersOfCharactersToCreate = 17;
+        private int _numbersOfCharactersToCreate = 25;
         private int _numberOfCharactersLayers = 3;
         private int _numberOfCharactersInLeft = 8;
         private int _numberOfCharactersInRight = 8;
@@ -72,9 +72,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             _controller.Initialize();
             _controller.SetAnchorTarget(_camera);
 
-            /*if (this.gameObject.GetComponent<HudController>() == false)
+            if (this.gameObject.GetComponent<HudController>() == false)
                 this.gameObject.AddComponent<HudController>();
-            this.gameObject.GetComponent<HudController>().SetAnchorTarget(_camera);*/
+            this.gameObject.GetComponent<HudController>().SetAnchorTarget(_camera);
 
             base.BuildState();
         }
@@ -135,61 +135,61 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             _leftWall3.name = "_leftWall3";
             _leftWall3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall3");
             _leftWall3.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall3.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _leftWall3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 1);
 
             _rightWall3 = new GameObject();
             _rightWall3.name = "_rightWall3";
             _rightWall3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall3");
             _rightWall3.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall3.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 1);
 
             _floor3 = new GameObject();
             _floor3.name = "_floor3";
             _floor3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor3");
             _floor3.transform.localPosition = new Vector3( 0, ( _backgroundHeight / -2f ) + _floor3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 1);
 
             _leftWall2 = new GameObject();
             _leftWall2.name = "_leftWall2";
             _leftWall2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall2");
             _leftWall2.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall2.GetComponent<SpriteRenderer>().bounds.size.x / 2f, (_backgroundHeight / 2f) - _leftWall2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 2);
 
             _rightWall2 = new GameObject();
             _rightWall2.name = "_rightWall2";
             _rightWall2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall2");
             _rightWall2.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall2.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 2);
 
             _floor2 = new GameObject();
             _floor2.name = "_floor2";
             _floor2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor2");
             _floor2.transform.localPosition = new Vector3(0, (_backgroundHeight / -2f) + _floor2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 2);
 
             _leftWall1 = new GameObject();
             _leftWall1.name = "_leftWall1";
             _leftWall1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall1");
             _leftWall1.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall1.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _leftWall1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 3);
 
             _rightWall1 = new GameObject();
             _rightWall1.name = "_rightWall1";
             _rightWall1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall1");
             _rightWall1.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall1.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 3);
 
             _floor1 = new GameObject();
             _floor1.name = "_floor1";
             _floor1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor1");
             _floor1.transform.localPosition = new Vector3(0, (_backgroundHeight / -2f) + _floor1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 3);
 
             _roof = new GameObject();
             _roof.name = "_roof";
             _roof.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "roof1");
             _roof.transform.localPosition = new Vector3(0, (_backgroundHeight / 2f) - _roof.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);
 
             Resources.UnloadUnusedAssets();
 
@@ -297,15 +297,16 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         charObj.name = "center_" + _listOfCharacters[i].name;
                     }
                     Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
-                    charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x) + (col * charSpr.bounds.size.x) -offsetX, (-charSpr.bounds.size.y) - (line * (charSpr.bounds.size.y / 2)), 0);
+                    charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x) + (col * charSpr.bounds.size.x) -offsetX, (-charSpr.bounds.size.y * 1.2f) - (line * (charSpr.bounds.size.y / 2)), 0);
                     charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
-                    charObj.SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+                    charObj.SetInitialPosition(charObj.transform.localPosition);
                     charObj.SetScale(characterScale);
 
                     //charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
 
                     col++;
-                    //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, line + 1);
+                    charObj.SetIndex(line + 2);
+                    FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                     if (col == 3)
                     {
                         col = 0;
@@ -321,6 +322,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             int line = 0;
             float characterScale;
             float totalOfcols = 3;
+            float offsetX = 0;
             float offsetY = 0;
             Character charObj;
 
@@ -332,10 +334,12 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                     if (col == 1)
                     {
                         offsetY = 2f;
+                        offsetX = .5f;
                     }
                     else if (col == 2)
                     {
-                        offsetY = 1f;
+                        offsetY = .8f;
+                        offsetX = .6f;
                     }
                     else
                     {
@@ -353,40 +357,25 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                             charObj.name = "left_" + _listOfCharacters[i + _numberOfCharactersInCenter].name;
                         }
 
-                        Resolution res = Screen.currentResolution;
-                        UnityEngine.Debug.Log("resolution: " + res.height);
-
                         Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
-                        charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x * 3) + (col * charSpr.bounds.size.x), (charSpr.bounds.size.y) - (line * (charSpr.bounds.size.y / 2)) - offsetY, 0);
+                        charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x * 3f) - (col * ((charSpr.bounds.size.x / 2f) + offsetX)), (charSpr.bounds.size.y * 1.5f) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
 
-                        /*UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-
-                        sp.SetAnchor(_camera);
-                        sp.leftAnchor.absolute = 4400 - (col * 130);
-                        sp.rightAnchor.absolute = -5568 - (col * 130);
-                        sp.bottomAnchor.absolute = 4140 - (line * 350) - offsetY;
-                        sp.topAnchor.absolute = -3156 - (line * 350) - offsetY;
                         if (!charObj.GetIsRotated())
                         {
-                            sp.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
+                            charObj.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
                         }
-                        sp.UpdateAnchors();
-                        sp.MakePixelPerfect();
-
-                        GameObject nullGo = null;
-                        sp.SetAnchor(nullGo);*/
 
                         charObj.transform.localScale = new Vector3(characterScale, characterScale, 1);
 
                         charObj.SetIsRotated(true);
-                        charObj.SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter].transform.localPosition);
+                        charObj.SetInitialPosition(charObj.transform.localPosition);
                         charObj.SetScale(characterScale);
 
                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(charObj.transform.position.x, charObj.transform.position.y);
 
-
                         col++;
-                        //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
+                        charObj.SetIndex(col + 1);
+                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                         if (col == 3)
                         {
                             col = 0;
@@ -407,7 +396,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             int line = 0;
             float characterScale;
             float totalOfcols = 3;
-            int offsetY = 0;
+            float offsetX = 0;
+            float offsetY = 0;
             Character charObj;
             for (int i = 0; i < _numberOfCharactersInRight; i++)
             {
@@ -416,11 +406,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                     characterScale = 1 - ((totalOfcols - col) / 10);
                     if (col == 1)
                     {
-                        offsetY = 200;
+                        offsetY = 2f;
+                        offsetX = .5f;
                     }
                     else if (col == 2)
                     {
-                        offsetY = 100;
+                        offsetY = .8f;
+                        offsetX = .7f;
                     }
                     else
                     {
@@ -439,31 +431,23 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                             charObj.name = "right_" + _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].name;
                         }
 
-                        UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+                        Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
+                        charObj.transform.localPosition = new Vector3((charSpr.bounds.size.x * 2.8f) + (col * ((charSpr.bounds.size.x / 2f) + offsetX)), (charSpr.bounds.size.y * 1.5f) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
 
-                        sp.SetAnchor(_camera);
-                        sp.leftAnchor.absolute = 5520 + (col * 130);
-                        sp.rightAnchor.absolute = -4450 + (col * 130);
-                        sp.bottomAnchor.absolute = 4141 - (line * 350) - offsetY;
-                        sp.topAnchor.absolute = -3155 - (line * 350) - offsetY;
                         if (!charObj.GetIsRotated())
                         {
-                            sp.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
+                            charObj.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
                         }
-                        sp.UpdateAnchors();
-                        sp.MakePixelPerfect();
 
-                        GameObject nullGo = null;
-                        sp.SetAnchor(nullGo);
-
-                        sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
+                        charObj.transform.localScale = new Vector3(characterScale, characterScale, 1);
                         charObj.SetScale(characterScale);
                         charObj.SetIsRotated(true);
-                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].transform.localPosition);
-                        charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
+                        charObj.GetComponent<Character>().SetInitialPosition(charObj.transform.localPosition);
+                        charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(charObj.transform.position.x, charObj.transform.position.y);
                         
                         col++;
-                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
+                        charObj.SetIndex(col + 1);
+                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                         if (col == 3)
                         {
                             col = 0;

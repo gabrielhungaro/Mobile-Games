@@ -47,13 +47,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             {
                 foreach (GameObject obj in _listOfLayers[i])
                 {
-                    if (obj.GetComponent<AFMovieCLipNGUI>())
+                    if (obj.GetComponent<AFMovieClip>())
                     {
-                        obj.GetComponent<UIWidget>().depth = i;
+                        obj.GetComponent<SpriteRenderer>().sortingOrder = i;
                     }
                     else
                     {
-                        obj.GetComponent<UIWidget>().depth = i+1;
+                        obj.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
                     }
                 }
             }
