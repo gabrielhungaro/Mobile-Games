@@ -39,12 +39,14 @@ namespace AquelaFrameWork.View
 
         protected ISpriteContainer m_spriteRender;
 
+        protected string m_name = "";
+
         virtual public void SetSpriteCotnainer( ISpriteContainer spriteContainer )
         {
             m_spriteRender = spriteContainer;
         }
 
-        virtual public void Init(UnityEngine.Sprite[] sprites, float fps = 12)
+        virtual public void Init(UnityEngine.Sprite[] sprites, float fps = 12, string name = "")
         {
             //m_spriteRender = this.gameObject.AddComponent<SpriteRenderer>() as ISpriteContainer;
 
@@ -75,6 +77,18 @@ namespace AquelaFrameWork.View
             }
 
             m_spriteRender.sprite = m_sprites[0];
+
+            SetName(name);
+        }
+
+        public string GetName()
+        {
+            return m_name;
+        }
+
+        public void SetName( string name )
+        {
+            m_name = name;
         }
 
         public void AdvanceTime(double time)
@@ -211,6 +225,11 @@ namespace AquelaFrameWork.View
         public override void AFUpdate(double time)
         {
             AdvanceTime(time);           
+        }
+
+        virtual public void UpdateSpriteContainer()
+        {
+            throw new InvalidOperationException("This function must be overridden");
         }
 
         private void UpdateStartTimes()

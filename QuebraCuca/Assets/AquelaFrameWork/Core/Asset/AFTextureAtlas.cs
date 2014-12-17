@@ -124,13 +124,24 @@ namespace AquelaFrameWork.Core.Asset
                 UnityEngine.Debug.LogWarning("THE SPRITE WAS NOT FOUND: " + name);
                 return null;
             }
-           
-            Sprite L_sprite = Sprite.Create(
-                m_texture ,
+
+            Sprite L_sprite;
+
+            if( txInfo.GetSprite() == null )
+            {
+                L_sprite = Sprite.Create(
+                m_texture,
                 txInfo.GetFrame(),
                 txInfo.GetPivot(),
                 100.0f);
 
+                txInfo.SetSprite(L_sprite);
+            }
+            else
+            {
+                L_sprite = Instantiate(txInfo.GetSprite()) as Sprite;
+            }
+            
             return L_sprite;
         }
 
@@ -280,6 +291,11 @@ namespace AquelaFrameWork.Core.Asset
         private void AddTextureInfo( AFTextureInfo info )
         {
             m_texturesInfo[info.GetName()] = info;
+        }
+
+        public bool IsNull()
+        {
+            return ((this as object) == null);
         }
 
     }

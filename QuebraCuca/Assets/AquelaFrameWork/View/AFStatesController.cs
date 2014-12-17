@@ -38,6 +38,7 @@ namespace AquelaFrameWork.View
         {
             if (m_states.ContainsKey(stateID)) UnityEngine.Debug.LogWarning("The state was not here");
             return m_states[stateID]; 
+            
         }
 
         public void Add(string name, AMovieClip state, bool defaultState = false)
@@ -47,9 +48,12 @@ namespace AquelaFrameWork.View
 
         public void Add(int name, AMovieClip state, bool defaultState = false)
         {
-            if (m_states.ContainsKey(name)) throw new Exception("The State " + name + " already was created");
-
-            state.transform.parent = this.gameObject.transform;
+            if (m_states.ContainsKey(name))
+            {
+                AFDebug.LogWarning("The State " + name + " already was created"); 
+                
+                return;
+            }
 
             if (!defaultState)
             {
@@ -77,16 +81,21 @@ namespace AquelaFrameWork.View
             SetNameOfCurrentState();
 #endif //UNITY_EDITOR
 
+            //Setting StatesController to owner this object
+            state.gameObject.transform.parent = this.gameObject.transform;
         }
 
 //This is for help with inpector in Unity3d Editor only
 #if UNITY_EDITOR
         public void SetNameOfCurrentState()
         {
-            
-                string L_name = m_currentState.name;
-                L_name = L_name.Substring(34);
-                currentStateName = L_name;
+            currentStateName = m_currentState.name;
+//                 string L_name = m_currentState.name;
+// 
+//                 if (L_name.Length < )
+// 
+//                 L_name = L_name.Substring(34);
+//                 currentStateName = L_name;
            
         }
 #endif //UNITY_EDITOR
@@ -202,7 +211,11 @@ namespace AquelaFrameWork.View
 
         public AMovieClip GetCurrentState()
         {
-            return m_states[m_currentStateID];
+            if(m_states.ContainsKey(m_currentStateID))
+                return m_states[m_currentStateID];
+            
+            AFDebug.LogError("O ID: " + m_currentStateID + " Nao foi encontrado");
+            return m_states[m_defaultStateID];
         }
         public int GetCurrentStateID()
         {
@@ -212,6 +225,29 @@ namespace AquelaFrameWork.View
         public int GetLastStateID()
         {
             return m_lastStateID;
+        }
+
+        public void TakeContollOfAllAnimationChildren()
+        {
+             for (int i = 0; i < this.gameObject.transform.childCount; ++i)
+             {
+                 this.transform.GetChild(i).gameObject.SetActive(true);
+             }
+
+            AMovieClip[] L_list = this.gameObject.GetComponentsInChildren<AMovieClip>();
+            AMovieClip movieclip;
+            bool isDefault = false;
+            for( int i = 0; i < L_list.Length; ++ i )
+            {
+                movieclip = L_list[i];
+                if (i == 0)
+                    isDefault = true;
+                else
+                    isDefault = false;
+
+                Add(movieclip.gameObject.name, movieclip, isDefault);
+            }
+
         }
 
     }

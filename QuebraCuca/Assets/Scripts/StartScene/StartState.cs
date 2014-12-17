@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using AquelaFrameWork.Core.Asset;
-using AquelaFrameWork.Server;
+//using AquelaFrameWork.Server;
 
 public class StartState : AquelaFrameWork.Core.State.AState
 {
@@ -92,17 +92,17 @@ public class StartState : AquelaFrameWork.Core.State.AState
         //AFServer.Instance.Login(m_btBateRebate.text, m_btCataBalao.text);
     }
 
-    public void OnLoginHandler(Sfs2X.Core.BaseEvent ev)
-    {
-        //PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 1);
-        //PlayerInfo.IsSubscriber = true;
-    }
-
-    public void OnLoginErrorHandler(Sfs2X.Core.BaseEvent ev)
-    {
-       // PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 0);
-       // PlayerInfo.IsSubscriber = false;
-    }
+//     public void OnLoginHandler(Sfs2X.Core.BaseEvent ev)
+//     {
+//         //PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 1);
+//         //PlayerInfo.IsSubscriber = true;
+//     }
+// 
+//     public void OnLoginErrorHandler(Sfs2X.Core.BaseEvent ev)
+//     {
+//        // PlayerPrefs.SetInt(PlayerInfo.PLAYERPREFS_IS_PLAYER_SUBSCRIBER, 0);
+//        // PlayerInfo.IsSubscriber = false;
+//     }
 
     public void SetButtonView(Image image , string path)
     {
