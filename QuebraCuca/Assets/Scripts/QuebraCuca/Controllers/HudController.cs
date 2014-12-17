@@ -33,6 +33,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _hudFont = Resources.Load<Font>(PathConstants._fontPath + "Ed-Gothic");
             _fontSize = 80;
             Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
+            Color textColor = new Color(24f / 255f, 174f / 255f, 16f / 255f, 255 / 255f);
 
             _pointsController = PointsController.Instance();
             _points = PointsController.GetPoints();
@@ -54,11 +55,29 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _pointsHud.name = "PointsHud";
             _pointsHud.AddComponent<CanvasRenderer>();
             Text textComponent = _pointsHud.AddComponent<Text>();
-            textComponent.text = "PONTOS:";
+            textComponent.text = "PONTOS";
             textComponent.font = _hudFont;
             textComponent.fontSize = _fontSize;
             textComponent.color = hudColor;
-            //_pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, String("PONTOS:").Length);
+            textComponent.rectTransform.anchorMin = new Vector2(0, 1);
+            textComponent.rectTransform.anchorMax = new Vector2(0, 1);
+            _pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, textComponent.preferredWidth);
+            _pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textComponent.preferredHeight);
+            _pointsHud.GetComponent<RectTransform>().anchoredPosition = new Vector2(540f, -60f);
+
+            _pointsObj = new GameObject();
+            _pointsObj.transform.parent = canvas.transform;
+            _pointsObj.AddComponent<CanvasRenderer>();
+            Text pointsText = _pointsObj.AddComponent<Text>();
+            pointsText.text = _points.ToString();
+            pointsText.font = _hudFont;
+            pointsText.fontSize = _fontSize;
+            pointsText.color = textColor;
+            pointsText.rectTransform.anchorMin = new Vector2(0, 1);
+            pointsText.rectTransform.anchorMax = new Vector2(0, 1);
+            _pointsObj.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pointsText.preferredWidth);
+            _pointsObj.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, pointsText.preferredHeight);
+            _pointsObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(_pointsHud.GetComponent<RectTransform>().anchoredPosition.x + pointsText.preferredWidth + _offSetX, _pointsHud.GetComponent<RectTransform>().anchoredPosition.y);
 
             /*Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
             _pointsHud = new GameObject();
