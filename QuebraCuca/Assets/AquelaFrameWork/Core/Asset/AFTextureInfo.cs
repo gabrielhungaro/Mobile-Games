@@ -12,6 +12,7 @@ namespace AquelaFrameWork.Core.Asset
         private Rect m_frame;
         private Vector2 m_pivot;
         private bool m_rotated;
+        private Sprite m_sprite;
 
         public AFTextureInfo()
         {
@@ -24,6 +25,17 @@ namespace AquelaFrameWork.Core.Asset
             m_frame = frame;
             m_rotated = rotated;
             m_pivot = pivot;
+        }
+
+
+        public void SetSprite( Sprite value )
+        {
+            m_sprite = value;
+        }
+
+        public Sprite GetSprite()
+        {
+            return m_sprite;
         }
 
         public void SetPivot(Vector2 value)

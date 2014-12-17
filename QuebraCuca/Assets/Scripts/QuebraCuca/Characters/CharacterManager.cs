@@ -66,21 +66,21 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
 
                 //if (obj.GetComponent<Character>())
                 //{
-                UI2DSprite objSprite = (obj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                //Debug.Log("objToShow: " + obj);
-                    string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
-                    switch (charPosition[0])
-                    {
-                        case "left":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                        case "center":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.transform.localPosition.y + _distToTween, obj.transform.localPosition.z);
-                            break;
-                        case "right":
-                            posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
-                            break;
-                    }
+//                 UI2DSprite objSprite = (obj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+//                 //Debug.Log("objToShow: " + obj);
+//                     string[] charPosition = obj.GetComponent<Character>().name.Split(char.Parse("_"));
+//                     switch (charPosition[0])
+//                     {
+//                         case "left":
+//                             posToTween = new Vector3(obj.gameObject.transform.localPosition.x + _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
+//                             break;
+//                         case "center":
+//                             posToTween = new Vector3(obj.gameObject.transform.localPosition.x, obj.transform.localPosition.y + _distToTween, obj.transform.localPosition.z);
+//                             break;
+//                         case "right":
+//                             posToTween = new Vector3(obj.gameObject.transform.localPosition.x - _distToTween, obj.transform.localPosition.y, obj.transform.localPosition.z);
+//                             break;
+//                     }
                 //}
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 

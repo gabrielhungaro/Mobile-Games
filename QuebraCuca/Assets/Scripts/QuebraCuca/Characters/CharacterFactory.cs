@@ -24,35 +24,21 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         {
             try
             {
-                Character character = AFObject.Create<Character>();
-                //GameObject characterGO = AFObject.Create<Character>().gameObject;
-
-                character.gameObject.AddComponent<TimeController>();
-                //character.gameObject.AddComponent<BoxCollider2D>();
-                //character.gameObject.AddComponent<AFBoxColider2DResizer>();
-                character.gameObject.AddComponent<BoxCollider>();
-                character.gameObject.AddComponent<AnimationController>();
-
-                //character.gameObject.AddComponent<UIWidget>();
-                UIEventListener.Get(character.gameObject).onClick += OnClick;
-                //character.GetCharacterAnimation().GetCurrentState().GetComponent<UI2DSprite>().MakePixelPerfect();
-                //character.gameObject.GetComponent<UIWidget>().MakePixelPerfect();
+                CucaBuilder cuca = new CucaBuilder();
+                CucaBuilderDirector director = new CucaBuilderDirector(cuca);
                 _numberOfCharacters++;
-                //FindObjectOfType<IndexController>().AddObjectToLIstByIndex(characterGO, 1);
-                //character.GetComponent<Character>().SetImagePath(PathConstants.GetGameScenePath() + "cuca");
-                //character.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "cuca");
-                //character.AddComponent<Rigidbody2D>().use = false;
-                // character.GetComponent<Rigidbody2D>().isKinematic = false;
-                //character.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
-                //character.GetComponent<UI2DSprite>().MakePixelPerfect();
-                //adicionar anchor no character
-                //character.GetComponent<SpriteRenderer>().alpha = 0;
-                
-                return character;
+                return director.Build();
+
+                //Character character = AFObject.Create<Character>();
+                //character.gameObject.AddComponent<TimeController>();
+                //character.gameObject.AddComponent<BoxCollider>();
+                //character.gameObject.AddComponent<AnimationController>();
+                //UIEventListener.Get(character.gameObject).onClick += OnClick;
+                //return character;
             }
             catch( Exception ex )
             {
-                //AFDebug.LogError("NÃO Criei o personagem.. Por que não quiz... S");
+                AFDebug.LogError("NÃO Criei o personagem.. Por que não quiz... S");
             }
            
             return null;

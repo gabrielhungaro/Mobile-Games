@@ -1,5 +1,6 @@
 ﻿
 using System;
+
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -79,17 +80,32 @@ namespace AquelaFrameWork.Core.Asset
             {
                 res = GetAsset<T>(name);
 
-                if (res == null)
+                if ( AFObject.IsNull(res) )
                 {
 
-                    if (typeof(T) == typeof(AFTextureAtlas))
+                    if ( typeof(T) == typeof(AFTextureAtlas) )
                     {
                         res = Add(name, new AFTextureAtlas(name, path, AFTextureAtlas.EFileType.kTextTypes_Csv)) as T;
                     }
                     else
                     {
                         res = Resources.Load<T>(path);
-                        Add(name, res);
+
+                        if (typeof(T) == typeof(Texture))
+                            Add(name, res as Texture);
+
+                        else if (typeof(T) == typeof(GameObject))
+                            Add(name, res as GameObject);
+
+                        else if (typeof(T) == typeof(AFSound))
+                            Add(name, res as AFSound);
+
+                        else if (typeof(T) == typeof(Texture))
+                            Add(name, res as Texture);    
+                        else
+                            Add(name, res);
+
+                        Resources.UnloadUnusedAssets();
                     }
 
                     UnityEngine.Debug.Log("I'll store an object of: " + typeof(T).ToString());
@@ -118,7 +134,7 @@ namespace AquelaFrameWork.Core.Asset
 
                 T obj = GetAsset<T>(assetName);
 
-                if ( obj != null )
+                if ( obj )
                 {
 
                     pool = AFObject.Create<AFPool>(name);
@@ -154,21 +170,22 @@ namespace AquelaFrameWork.Core.Asset
 
         public AFTextureAtlas Add(string name, AFTextureAtlas obj)
         {
-            if (obj != null)
-            {
+            if (!AFObject.IsNull(obj))
+             {
                 m_texturesAtlas.Add(name, obj);
-            }
-            else
-            {
-                UnityEngine.Debug.LogWarning("TextureAtlas could not be null");
-            }
+             }
+             else
+             {
+                 UnityEngine.Debug.LogWarning("TextureAtlas could not be null");
+             }
 
             return obj;
         }
 
+
         public object Add(string name, object obj)
         {
-            if( obj != null )
+            if (!AFObject.IsNull(obj))
             {
                 m_custom.Add(name , obj);
             }
@@ -182,7 +199,7 @@ namespace AquelaFrameWork.Core.Asset
 
         public AFSound Add(string name, AFSound sound)
         {
-            if ( sound != null)
+            if (!AFObject.IsNull(sound))
             {
                 m_sounds.Add(name, sound);
             }
@@ -196,7 +213,7 @@ namespace AquelaFrameWork.Core.Asset
 
         public GameObject Add(string name, GameObject gameObject)
         {
-            if ( gameObject != null)
+            if (!AFObject.IsNull(gameObject))
             {
                 m_prefabs.Add(name, gameObject);
             }
@@ -210,7 +227,7 @@ namespace AquelaFrameWork.Core.Asset
 
         public Texture Add(string name, Texture texture)
         {
-            if (texture != null)
+            if (!AFObject.IsNull(texture))
             {
                 m_textures.Add(name, texture);
             }

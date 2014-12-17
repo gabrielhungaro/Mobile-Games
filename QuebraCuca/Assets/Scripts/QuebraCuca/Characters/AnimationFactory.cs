@@ -16,14 +16,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
 {
     public class AnimationFactory : ASingleton<AnimationFactory>
     {
-
-        public AFMovieCLipNGUI BuildAnimation(string spritePath, string animationStateName)
+        public AFMovieClip BuildAnimation(string spritePath, string animationStateName)
         {
-            AFMovieCLipNGUI L_animation;
+            AFMovieClip L_animation;
             AFTextureAtlas L_heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
-            L_animation = AFObject.Create<AFMovieCLipNGUI>(animationStateName);
-            L_animation.Init(L_heroAtlas.GetSprites(animationStateName));
-            return L_animation;
+            L_animation = AFObject.Create<AFMovieClip>(animationStateName);
+            L_animation.Init(L_heroAtlas.GetSprites(animationStateName), 12, animationStateName);
+            return L_animation; 
         }
 
     }

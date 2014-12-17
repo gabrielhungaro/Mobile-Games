@@ -26,22 +26,28 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         private Vector3 _initialPosition;
         private AFStatesController _characterAnimations;
         private bool _isRotated = false;
-        private UI2DSprite _uiSprite;
+        private SpriteRenderer _uiSprite;
         private bool _hitedAnimationIsComplete;
         private float _characterScale;
 
         public void Initialize()
         {
-            _characterAnimations = AFObject.Create<AFStatesController>();
-            _characterAnimations.Add(STATE_HITED , AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_HITED ) ,false);
-            _characterAnimations.Add(STATE_ANGRY, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_ANGRY), false);
-            _characterAnimations.Add(STATE_IDLE, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_IDLE), true);
-            _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
-            _uiSprite = (_characterAnimations.GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-            this.gameObject.AddComponent<BoxColliderResizer>().Initialize();
-            if(this.gameObject.GetComponent<AnimationController>()){
-                this.gameObject.GetComponent<AnimationController>().Initialize();
-            }
+//             _characterAnimations = AFObject.Create<AFStatesController>();
+//             _characterAnimations.Add(STATE_HITED , AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_HITED ) ,false);
+//             _characterAnimations.Add(STATE_ANGRY, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_ANGRY), false);
+//             _characterAnimations.Add(STATE_IDLE, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_IDLE), true);
+//             _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
+//             _uiSprite = (_characterAnimations.GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+//             this.gameObject.AddComponent<BoxColliderResizer>().Initialize();
+//             if(this.gameObject.GetComponent<AnimationController>()){
+//                 this.gameObject.GetComponent<AnimationController>().Initialize();
+//             }
+
+            if (_characterAnimations == null)
+                _characterAnimations = gameObject.GetComponentInChildren<AFStatesController>();
+
+            _uiSprite = (_characterAnimations.GetCurrentState() as AFMovieClip).SpriteRenderer.SpriteRendererHolder;
+
         }
 
         public override void AFUpdate(double time)
@@ -58,6 +64,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         public void SetCharacterAnimation(AFStatesController value)
         {
             _characterAnimations = value;
+            _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
         }
 
         public void SetIsHited(bool value)
@@ -100,7 +107,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             return _isRotated;
         }
 
-        public UI2DSprite GetUi2DSprite()
+        public SpriteRenderer GetUi2DSprite()
         {
             return _uiSprite;
         }
@@ -124,5 +131,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         {
             return _characterScale;
         }
+
+        public void UpdateAllCharacterComponents()
+        {
+            _characterAnimations = this.gameObject.GetComponentInChildren<AFStatesController>();
+            _characterAnimations.TakeContollOfAllAnimationChildren();
+            //TODO: Pegar o sprites
+        }
+
     }
 }

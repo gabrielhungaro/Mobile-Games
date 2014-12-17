@@ -83,22 +83,27 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             _listOfCharacters = new List<Character>();
 
-            Character character;
-
             for (int i = 0; i < _numbersOfCharactersToCreate; i++)
             {
-                m_char = character = CharacterFactory.Instance.CreateCharacter();
-                character.name = "Character_" + i;
-
+                Character character = CharacterFactory.Instance.CreateCharacter();
                 _listOfCharacters.Add(character);
                 Add(character);
-                character.Initialize();
+                SetCharacterSetting("Character_" + i + 1, _listOfCharacters[i]);
             }
 
             SetCenterAnchor();
             SetLeftAnchor();
             SetRightAnchor();
         }
+
+        private void SetCharacterSetting(string name , Character character)
+        {
+            m_char = character;//CharacterFactory.Instance.CreateCharacter();
+            character.name = name;
+            //m_char.UpdateAllCharacterComponents();
+            character.Initialize();
+        }
+
 
         private void CreateCamera()
         {
@@ -355,26 +360,26 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         charObj.name = "center_" + _listOfCharacters[i].name;
                     }
 
-                    UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+//                     SpriteRenderer sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieClip).SpriteRenderer.SpriteContainer;
+// 
+//                     sp.SetAnchor(_camera);
+//                     sp.leftAnchor.absolute = -422 + (col * 350) - offsetX;
+//                     sp.rightAnchor.absolute = -222 + (col * 350) - offsetX;
+//                     sp.bottomAnchor.absolute = -649 - (line * 50);
+//                     sp.topAnchor.absolute = -389 - (line * 45);
+//                     sp.UpdateAnchors();
+//                     sp.MakePixelPerfect();
+//                     GameObject nullGo = null;
+//                     sp.SetAnchor(nullGo);
 
-                    sp.SetAnchor(_camera);
-                    sp.leftAnchor.absolute = -422 + (col * 350) - offsetX;
-                    sp.rightAnchor.absolute = -222 + (col * 350) - offsetX;
-                    sp.bottomAnchor.absolute = -649 - (line * 50);
-                    sp.topAnchor.absolute = -389 - (line * 45);
-                    sp.UpdateAnchors();
-                    sp.MakePixelPerfect();
-                    GameObject nullGo = null;
-                    sp.SetAnchor(nullGo);
+//                     charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
+//                     charObj.SetInitialPosition(_listOfCharacters[i].transform.localPosition);
+//                     charObj.SetScale(characterScale);
 
-                    charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
-                    charObj.SetInitialPosition(_listOfCharacters[i].transform.localPosition);
-                    charObj.SetScale(characterScale);
-
-                    charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
+                    //charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
 
                     col++;
-                    FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, line + 1);
+                   // FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, line + 1);
                     if (col == 3)
                     {
                         col = 0;
@@ -422,34 +427,34 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                             charObj.name = "left_" + _listOfCharacters[i + _numberOfCharactersInCenter].name;
                         }
 
-                        UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-
-                        sp.SetAnchor(_camera);
-                        sp.leftAnchor.absolute = 4400 - (col * 130);
-                        sp.rightAnchor.absolute = -5568 - (col * 130);
-                        sp.bottomAnchor.absolute = 4140 - (line * 350) - offsetY;
-                        sp.topAnchor.absolute = -3156 - (line * 350) - offsetY;
-                        if (!charObj.GetIsRotated())
-                        {
-                            sp.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
-                        }
-                        sp.UpdateAnchors();
-                        sp.MakePixelPerfect();
-
-                        GameObject nullGo = null;
-                        sp.SetAnchor(nullGo);
-
-                        sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
-
-                        charObj.SetIsRotated(true);
-                        charObj.SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter].transform.localPosition);
-                        charObj.SetScale(characterScale);
-
-                        charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
-
-
-                        col++;
-                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
+//                         UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+// 
+//                         sp.SetAnchor(_camera);
+//                         sp.leftAnchor.absolute = 4400 - (col * 130);
+//                         sp.rightAnchor.absolute = -5568 - (col * 130);
+//                         sp.bottomAnchor.absolute = 4140 - (line * 350) - offsetY;
+//                         sp.topAnchor.absolute = -3156 - (line * 350) - offsetY;
+//                         if (!charObj.GetIsRotated())
+//                         {
+//                             sp.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
+//                         }
+//                         sp.UpdateAnchors();
+//                         sp.MakePixelPerfect();
+// 
+//                         GameObject nullGo = null;
+//                         sp.SetAnchor(nullGo);
+// 
+//                         sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
+// 
+//                         charObj.SetIsRotated(true);
+//                         charObj.SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter].transform.localPosition);
+//                         charObj.SetScale(characterScale);
+// 
+//                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
+// 
+// 
+                         col++;
+//                         FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
                         if (col == 3)
                         {
                             col = 0;
@@ -502,31 +507,31 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                             charObj.name = "right_" + _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].name;
                         }
 
-                        UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-
-                        sp.SetAnchor(_camera);
-                        sp.leftAnchor.absolute = 5520 + (col * 130);
-                        sp.rightAnchor.absolute = -4450 + (col * 130);
-                        sp.bottomAnchor.absolute = 4141 - (line * 350) - offsetY;
-                        sp.topAnchor.absolute = -3155 - (line * 350) - offsetY;
-                        if (!charObj.GetIsRotated())
-                        {
-                            sp.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
-                        }
-                        sp.UpdateAnchors();
-                        sp.MakePixelPerfect();
-
-                        GameObject nullGo = null;
-                        sp.SetAnchor(nullGo);
-
-                        sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
-                        charObj.SetScale(characterScale);
-                        charObj.SetIsRotated(true);
-                        charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].transform.localPosition);
-                        charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
-                        
-                        col++;
-                        FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
+//                         UI2DSprite sp = (charObj.GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+// 
+//                         sp.SetAnchor(_camera);
+//                         sp.leftAnchor.absolute = 5520 + (col * 130);
+//                         sp.rightAnchor.absolute = -4450 + (col * 130);
+//                         sp.bottomAnchor.absolute = 4141 - (line * 350) - offsetY;
+//                         sp.topAnchor.absolute = -3155 - (line * 350) - offsetY;
+//                         if (!charObj.GetIsRotated())
+//                         {
+//                             sp.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
+//                         }
+//                         sp.UpdateAnchors();
+//                         sp.MakePixelPerfect();
+// 
+//                         GameObject nullGo = null;
+//                         sp.SetAnchor(nullGo);
+// 
+//                         sp.transform.localScale = new Vector3(characterScale, characterScale, 1);
+//                         charObj.SetScale(characterScale);
+//                         charObj.SetIsRotated(true);
+//                         charObj.GetComponent<Character>().SetInitialPosition(_listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft].transform.localPosition);
+//                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
+//                         
+                           col++;
+//                         FindObjectOfType<IndexController>().AddObjectToLIstByIndex(sp.gameObject, col);
                         if (col == 3)
                         {
                             col = 0;
@@ -543,51 +548,51 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private void UpdateCharacterRotation()
         {
-            for (int i = 0; i < _listOfCharacters.Count; i++)
-            {
-                string[] charPosition = _listOfCharacters[i].name.Split(char.Parse("_"));
-
-                switch (charPosition[0])
-                {
-                    case "left":
-                        _characterRotate = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.eulerAngles;
-                        if (_characterRotate != _leftCharacterRotation)
-                        {
-                            (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
-                            UnityEngine.Debug.Log("right rotate its: " + (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation);
-                        }
-                        break;
-                    case "right":
-                        _characterRotate = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.eulerAngles;
-                        if ( ! _characterRotate.Equals( _rightCharacterRotation ) )
-                        //if ( ! _characterRight.Equals(_rightCharacterRotation))
-                        {
-                            (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
-                            //UnityEngine.Debug.Log("right rotate its: " + (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation);
-                        }
-                    break;
-                }
-            }
+//             for (int i = 0; i < _listOfCharacters.Count; i++)
+//             {
+//                 string[] charPosition = _listOfCharacters[i].name.Split(char.Parse("_"));
+// 
+//                 switch (charPosition[0])
+//                 {
+//                     case "left":
+//                         _characterRotate = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.eulerAngles;
+//                         if (_characterRotate != _leftCharacterRotation)
+//                         {
+//                             (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation = Quaternion.Euler(_leftCharacterRotation);
+//                             UnityEngine.Debug.Log("right rotate its: " + (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation);
+//                         }
+//                         break;
+//                     case "right":
+//                         _characterRotate = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.eulerAngles;
+//                         if ( ! _characterRotate.Equals( _rightCharacterRotation ) )
+//                         //if ( ! _characterRight.Equals(_rightCharacterRotation))
+//                         {
+//                             (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation = Quaternion.Euler(_rightCharacterRotation);
+//                             //UnityEngine.Debug.Log("right rotate its: " + (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer.transform.rotation);
+//                         }
+//                     break;
+//                 }
+//             }
         }
 
         private void UpdateCharacterScale()
         {
-            for (int i = 0; i < _listOfCharacters.Count; i++)
-            {
-                UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                sp.MakePixelPerfect();
-                sp.transform.localScale = new Vector3(_listOfCharacters[i].GetScale(), _listOfCharacters[i].GetScale(), 1);
-            }
+//             for (int i = 0; i < _listOfCharacters.Count; i++)
+//             {
+//                 UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+//                 sp.MakePixelPerfect();
+//                 sp.transform.localScale = new Vector3(_listOfCharacters[i].GetScale(), _listOfCharacters[i].GetScale(), 1);
+//             }
         }
 
         private void UpdateSpritesPosition()
         {
-            for (int i = 0; i < _listOfCharacters.Count; i++)
-            {
-                UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
-                sp.transform.localPosition = _listOfCharacters[i].transform.position;
-                //UnityEngine.Debug.Log("sp.position: " + sp.transform.position + " || go.position: " + _listOfCharacters[i].gameObject.transform.localPosition);
-            }
+//             for (int i = 0; i < _listOfCharacters.Count; i++)
+//             {
+//                 UI2DSprite sp = (_listOfCharacters[i].GetCharacterAnimation().GetCurrentState() as AFMovieCLipNGUI).UI2DSpriteRenderer.SpriteContainer;
+//                 sp.transform.localPosition = _listOfCharacters[i].transform.position;
+//                 //UnityEngine.Debug.Log("sp.position: " + sp.transform.position + " || go.position: " + _listOfCharacters[i].gameObject.transform.localPosition);
+//             }
         }
 
         override public void AFDestroy()

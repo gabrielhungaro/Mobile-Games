@@ -10,15 +10,20 @@ namespace AquelaFrameWork.View
         public AFSpriteRendererNGUI UI2DSpriteRenderer { get; set; }
 
 
-        public override void Init(UnityEngine.Sprite[] sprites, float fps = 12)
+        public override void Init(UnityEngine.Sprite[] sprites, float fps = 12, string name = "")
         {
             AFSpriteRendererNGUI spngui = new AFSpriteRendererNGUI();
-            spngui.SpriteContainer = this.gameObject.AddComponent<UI2DSprite>();
-            SetSpriteCotnainer(spngui);
-
             UI2DSpriteRenderer = spngui;
 
-            base.Init(sprites, fps);
+            UpdateSpriteContainer();
+            base.Init(sprites, fps, name);
         }
+
+        public override void UpdateSpriteContainer()
+        {
+            UI2DSpriteRenderer.SpriteContainer = this.gameObject.AddComponent<UI2DSprite>();
+            SetSpriteCotnainer(UI2DSpriteRenderer);
+        }
+
     }
 }

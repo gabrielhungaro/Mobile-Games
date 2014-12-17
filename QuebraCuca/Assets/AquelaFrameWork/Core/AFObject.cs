@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -28,7 +29,7 @@ namespace AquelaFrameWork.Core
                 return new GameObject(typeof(T).ToString()).AddComponent<T>();
 
 
-            return new GameObject(typeof(T).ToString() + ": " + name).AddComponent<T>();
+            return new GameObject(name).AddComponent<T>();
         }
 
 
@@ -41,6 +42,16 @@ namespace AquelaFrameWork.Core
         {
             if (this.gameObject)
                 Destroy(this.gameObject);
+        }
+
+        public static bool IsNull(object obj)
+        {
+            return (obj == null);
+        }
+
+        public bool IsNull()
+        {
+            return ( (this as object) == null);
         }
     }
 }
