@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1badfd6944994af44b5ddf21766a94bc
+guid: f32e504981c541c439a4c2477688835a
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -60,16 +60,17 @@ ModelImporter:
     400052: Orc
     400054: Orc Biped
     4300000: Orc
-    11100000: //RootNode
+    9500000: //RootNode
     13700000: Orc
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -80,7 +81,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -112,6 +113,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
-  additionalBone: 1
+  animationType: 2
+  additionalBone: 0
   userData: 

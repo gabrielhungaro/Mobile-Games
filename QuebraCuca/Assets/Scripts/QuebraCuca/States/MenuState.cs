@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using UnityEngine;
+
+using com.globo.sitio.mobilegames.QuebraCuca.Controllers;
+using com.globo.sitio.mobilegames.QuebraCuca.Elements;
+using com.globo.sitio.mobilegames.QuebraCuca.Constants;
+
+using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.State;
+using AquelaFrameWork.View;
+using AquelaFrameWork.Core.Asset;
+
+namespace com.globo.sitio.mobilegames.QuebraCuca.States
+{
+    public class MenuState : AState
+    {
+
+        private GameObject _startButton;
+        private GameObject _background;
+        private GameObject _camera;
+
+        protected override void Awake()
+        {
+            m_stateID = AState.EGameState.MENU;
+        }
+
+        public override void BuildState()
+        {
+            //if (FindObjectOfType<MyCamera>() == null)
+            //{
+                _camera = new GameObject();
+                _camera.name = "StateCam";
+                _camera.AddComponent<MyCamera>();
+                /*DontDestroyOnLoad(_camera);
+            }
+            else
+            {
+                _camera = FindObjectOfType<MyCamera>().gameObject;
+            }*/
+
+            _background = new GameObject();
+            _background.name = "background";
+            _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetStartScenePath() + "startScene");
+            _background.GetComponent<UI2DSprite>().MakePixelPerfect();
+            _background.GetComponent<UI2DSprite>().SetAnchor(_camera/*.GetComponent<MyCamera>().GetCamera().gameObject*/);
+            _background.GetComponent<UI2DSprite>().MakePixelPerfect();
+
+            _startButton = new GameObject();
+            _startButton.name = "startButton";
+            _startButton.AddComponent<Button>().SetImagePath(PathConstants.GetStartScenePath() + "startButton");
+            _startButton.GetComponent<Button>().OnClick += OnClick;
+            _startButton.GetComponent<Button>().SetWithAnchor(true);
+            _startButton.GetComponent<Button>().SetAnchor(_camera);
+            _startButton.GetComponent<Button>().SetLeftAnchorPoint(-57);
+            _startButton.GetComponent<Button>().SetRightAnchorPoint(57);
+            _startButton.GetComponent<Button>().SetTopAnchorPoint(-720);
+            _startButton.GetComponent<Button>().SetBottomAnchorPoint(-588);
+
+            base.BuildState();
+        }
+
+        private void OnClick()
+        {
+            m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
+        }
+
+        override public void AFDestroy()
+        {
+            GameObject.Destroy(_startButton);
+            GameObject.Destroy(_camera);
+            base.Destroy();
+        }
+    }
+}
