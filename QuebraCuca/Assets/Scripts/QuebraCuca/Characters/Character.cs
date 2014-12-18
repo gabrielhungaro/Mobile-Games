@@ -67,7 +67,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                 SoundManager.PlaySoundByName(SoundConstants.SFX_CORRECT_HIT);
                 //CharacterManager.Instance.HideCharacter(character);
                 PointsController.AddPoints(PointsController.GetPointsToAdd());
-                FindObjectOfType<IndexController>().AddObjectToLIstByIndex(GetCharacterAnimation().GetCurrentState().gameObject, GetIndex());
+                FindObjectOfType<IndexController>().AddObjectToLIstByIndex(GetCharacterAnimation().GetState(Character.STATE_HITED).gameObject, GetIndex());
             }
         }
 

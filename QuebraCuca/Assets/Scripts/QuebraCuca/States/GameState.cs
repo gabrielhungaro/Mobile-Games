@@ -80,10 +80,12 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 this.gameObject.AddComponent<HudController>();
             this.gameObject.GetComponent<HudController>().SetAnchorTarget(_cameraGameObject);
 
-             AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
+            #if UNITY_EDITOR
+            AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
             AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
+            #endif
 
-            CreateParticles();
+            //CreateParticles();
             base.BuildState();
         }
 
@@ -155,61 +157,61 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             _leftWall3.name = "_leftWall3";
             _leftWall3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall3");
             _leftWall3.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall3.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _leftWall3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall3, 2);
 
             _rightWall3 = new GameObject();
             _rightWall3.name = "_rightWall3";
             _rightWall3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall3");
             _rightWall3.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall3.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall3, 2);
 
             _floor3 = new GameObject();
             _floor3.name = "_floor3";
             _floor3.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor3");
             _floor3.transform.localPosition = new Vector3( 0, ( _backgroundHeight / -2f ) + _floor3.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 1);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor3, 2);
 
             _leftWall2 = new GameObject();
             _leftWall2.name = "_leftWall2";
             _leftWall2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall2");
             _leftWall2.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall2.GetComponent<SpriteRenderer>().bounds.size.x / 2f, (_backgroundHeight / 2f) - _leftWall2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall2, 4);
 
             _rightWall2 = new GameObject();
             _rightWall2.name = "_rightWall2";
             _rightWall2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall2");
             _rightWall2.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall2.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall2, 4);
 
             _floor2 = new GameObject();
             _floor2.name = "_floor2";
             _floor2.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor2");
             _floor2.transform.localPosition = new Vector3(0, (_backgroundHeight / -2f) + _floor2.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 2);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor2, 4);
 
             _leftWall1 = new GameObject();
             _leftWall1.name = "_leftWall1";
             _leftWall1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "leftWall1");
             _leftWall1.transform.localPosition = new Vector3( ( _backgroundWidth / -2f ) + _leftWall1.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _leftWall1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_leftWall1, 6);
 
             _rightWall1 = new GameObject();
             _rightWall1.name = "_rightWall1";
             _rightWall1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "rightWall1");
             _rightWall1.transform.localPosition = new Vector3( ( _backgroundWidth / 2f ) - _rightWall1.GetComponent<SpriteRenderer>().bounds.size.x / 2f, ( _backgroundHeight / 2f ) - _rightWall1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0 );
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_rightWall1, 6);
 
             _floor1 = new GameObject();
             _floor1.name = "_floor1";
             _floor1.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "floor1");
             _floor1.transform.localPosition = new Vector3(0, (_backgroundHeight / -2f) + _floor1.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_floor1, 6);
 
             _roof = new GameObject();
             _roof.name = "_roof";
             _roof.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "roof1");
             _roof.transform.localPosition = new Vector3(0, (_backgroundHeight / 2f) - _roof.GetComponent<SpriteRenderer>().bounds.size.y / 2f, 0);
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 3);
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_roof, 6);
 
             Resources.UnloadUnusedAssets();
 
@@ -243,29 +245,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
             _controller.AFUpdate(deltaTime);
 
-            /*_ticks++;
-            if (_ticks >= 10 && _ticks <= 11)
-            {
-                _leftWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _rightWall3.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _floor3.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _floor2.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _floor1.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _leftWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _rightWall2.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _leftWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _rightWall1.GetComponent<UI2DSprite>().MakePixelPerfect();
-                _roof.GetComponent<UI2DSprite>().MakePixelPerfect();
-
-                SetCenterAnchor();
-                SetLeftAnchor();
-                SetRightAnchor();
-            }
-
-            UpdateCharacterRotation();
-            UpdateCharacterScale();
-            UpdateSpritesPosition();*/
-
             if (_controller != null)
             {
                 if (_controller.GetIsEndGame())
@@ -286,7 +265,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 
                 screenPoint = Input.mousePosition;
                 screenPoint.z = 0;
-                CreateTapParticle(m_camera.ScreenToWorldPoint(screenPoint));
+                //CreateTapParticle(m_camera.ScreenToWorldPoint(screenPoint));
             }
 
             foreach (Touch t in Input.touches)
@@ -302,7 +281,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         hit.collider.SendMessage("OnMouseDown", null, SendMessageOptions.DontRequireReceiver);
                     }
 
-                    CreateTapParticle(m_camera.ScreenToWorldPoint(point));
+                    //CreateTapParticle(m_camera.ScreenToWorldPoint(point));
                 }
             }
         }
@@ -365,7 +344,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                     //charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(sp.transform.position.x, sp.transform.position.y);
 
                     col++;
-                    charObj.SetIndex(line + 2);
+                    charObj.SetIndex((line * 2) + 1);
                     FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                     if (col == 3)
                     {
@@ -432,9 +411,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         charObj.SetScale(characterScale);
 
                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(charObj.transform.position.x, charObj.transform.position.y);
-
+                        
+                        charObj.SetIndex((col * 2) + 1);
                         col++;
-                        charObj.SetIndex(col + 1);
                         FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                         if (col == 3)
                         {
@@ -504,9 +483,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         charObj.SetIsRotated(true);
                         charObj.GetComponent<Character>().SetInitialPosition(charObj.transform.localPosition);
                         charObj.gameObject.GetComponent<BoxCollider>().transform.position = new Vector2(charObj.transform.position.x, charObj.transform.position.y);
-                        
+
+                        charObj.SetIndex((col * 2) + 1);
                         col++;
-                        charObj.SetIndex(col + 1);
                         FindObjectOfType<IndexController>().AddObjectToLIstByIndex(charObj.GetCharacterAnimation().GetCurrentState().gameObject, charObj.GetIndex());
                         if (col == 3)
                         {
