@@ -45,12 +45,12 @@ namespace AquelaFrameWork.Core.Asset
         public static string package = "com.globo.sitio.games";
 
         public static readonly string DIRECTORY_NAME_ASSETS = "Assets";
-        public static readonly string DIRECTORY_NAME_HIGH = "High";
-        public static readonly string DIRECTORY_NAME_XHIGH = "ExtraHigh";
-        public static readonly string DIRECTORY_NAME_LOW = "Low";
-        public static readonly string DIRECTORY_NAME_MEDIUM = "Medium";
-        public static readonly string DIRECTORY_NAME_SOUND = "Sounds";
-        public static readonly string DIRECTORY_NAME_DATA = "Data";
+        public static readonly string DIRECTORY_NAME_HIGH = "High/";
+        public static readonly string DIRECTORY_NAME_XHIGH = "ExtraHigh/";
+        public static readonly string DIRECTORY_NAME_LOW = "Low/";
+        public static readonly string DIRECTORY_NAME_MEDIUM = "Medium/";
+        public static readonly string DIRECTORY_NAME_SOUND = "Sounds/";
+        public static readonly string DIRECTORY_NAME_DATA = "Data/";
         public static readonly string DIRECTORY_NAME_SCRIPTS = "Scripts";
         public static readonly string DIRECTORY_NAME_RESOURCES= "Resources";
 
@@ -406,9 +406,9 @@ namespace AquelaFrameWork.Core.Asset
         }
 
 #endif
-        public static string GetPathTargetPlatformWithResolution()
+        public static string GetPathTargetPlatformWithResolution(string file = "")
         {
-            return ( GetPathTargetPlatform() + GetResolutionFolder() );
+            return (GetPathTargetPlatform() + GetResolutionFolder() + file);
         }
 
 
@@ -425,7 +425,7 @@ namespace AquelaFrameWork.Core.Asset
 
             if (DPI > 290)
             {
-                return DIRECTORY_NAME_XHIGH;
+                return DIRECTORY_NAME_HIGH;
             }
             else if (DPI > 200 && Screen.dpi <= 290)
             {

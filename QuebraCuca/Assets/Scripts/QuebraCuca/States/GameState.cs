@@ -47,12 +47,16 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         //private int _ticks;
         
-        private GameObject _camera;
+        private GameObject _cameraGameObject;
+        private Camera m_camera;
 
         private List<Character> _listOfCharacters;
 
         private GameController _controller;
         private Character m_char;
+
+        private GameObject m_particleEmiter;
+
         protected override void Awake()
         {
             m_stateID = AState.EGameState.GAME;
@@ -70,13 +74,27 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             _controller = AFObject.Create<GameController>();
             _controller.gameObject.transform.parent = this.gameObject.transform;
             _controller.Initialize();
-            _controller.SetAnchorTarget(_camera);
+            _controller.SetAnchorTarget(_cameraGameObject);
 
             if (this.gameObject.GetComponent<HudController>() == false)
                 this.gameObject.AddComponent<HudController>();
-            this.gameObject.GetComponent<HudController>().SetAnchorTarget(_camera);
+            this.gameObject.GetComponent<HudController>().SetAnchorTarget(_cameraGameObject);
 
+             AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
+            AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
+
+            CreateParticles();
             base.BuildState();
+        }
+
+        private void CreateParticles()
+        {
+            string path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM_GroundHit");
+            m_particleEmiter = Resources.Load<GameObject>(path);
+
+            path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM3_Flying_EmberCFXM_Hit_B");
+            GameObject goEmiter = Instantiate(Resources.Load<GameObject>(path)) as GameObject;
+            goEmiter.transform.position = new Vector3(0, 1.8f, 0);
         }
 
         private void CreatePullOfCharacters()
@@ -91,8 +109,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 character.name = "Character_" + i;
 
                 _listOfCharacters.Add(character);
-                Add(character);
                 character.Initialize();
+
+                Add(character);
             }
 
             SetCenterAnchor();
@@ -104,9 +123,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             //if (FindObjectOfType<MyCamera>() == null)
             //{
-                _camera = new GameObject();
-                _camera.name = "StateCam";
-                _camera.AddComponent<MyCamera>();
+                _cameraGameObject = new GameObject();
+                _cameraGameObject.name = "StateCam";
+                _cameraGameObject.tag = "MainCamera";
+                m_camera = _cameraGameObject.AddComponent<MyCamera>().GetCamera();
             /*}
             else
             {
@@ -219,6 +239,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         public override void AFUpdate(double deltaTime)
         {
+            InputUpdate();
+
             _controller.AFUpdate(deltaTime);
 
             /*_ticks++;
@@ -253,6 +275,44 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             }
 
             base.AFUpdate(deltaTime);
+        }
+
+        private void InputUpdate()
+        {
+            Vector3 screenPoint;
+
+            if (Input.GetMouseButtonDown( 0 ))
+            {
+                
+                screenPoint = Input.mousePosition;
+                screenPoint.z = 0;
+                CreateTapParticle(m_camera.ScreenToWorldPoint(screenPoint));
+            }
+
+            foreach (Touch t in Input.touches)
+            {
+                if (t.phase == TouchPhase.Began)
+                {
+                    Vector3 point = new Vector3(t.position.x, t.position.y, 0);
+                    Ray ray = m_camera.ViewportPointToRay(point);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        hit.collider.SendMessage("OnMouseDown", null, SendMessageOptions.DontRequireReceiver);
+                    }
+
+                    CreateTapParticle(m_camera.ScreenToWorldPoint(point));
+                }
+            }
+        }
+
+
+        private void CreateTapParticle(Vector3 screenPoint)
+        {
+            GameObject go = Instantiate(m_particleEmiter) as GameObject;
+            go.layer = LayerMask.NameToLayer("UI");
+            go.transform.position = screenPoint;
         }
 
         private void SetCenterAnchor()
@@ -527,7 +587,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             GameObject.Destroy(_rightWall1);
 
             GameObject.Destroy(_roof);
-            GameObject.Destroy(_camera);
+            GameObject.Destroy(_cameraGameObject);
 
             this.gameObject.GetComponent<HudController>().Destroy();
 

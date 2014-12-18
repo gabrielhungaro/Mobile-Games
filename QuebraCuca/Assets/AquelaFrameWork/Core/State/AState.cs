@@ -210,11 +210,13 @@ namespace AquelaFrameWork.Core.State
         {
             AFObject L_object = GetObjectByName( obj.name );
 
-            if( L_object == null)
+            if(AFObject.IsNull( L_object ))
             {
                 L_object = obj;
                 m_objects.Add(L_object);
                 L_object.gameObject.transform.parent = this.gameObject.transform;
+
+                //Add(L_object.gameObject);
             }
             else
             {

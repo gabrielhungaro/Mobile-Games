@@ -57,7 +57,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         public static void RemoveLife()
         {
             if(_lifes > 0){
-                _lifes--;
+                //_lifes--;
             }
         }
 

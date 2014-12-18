@@ -26,6 +26,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         private bool _isShowing = false;
         private Vector3 _initialPosition;
         private AFStatesController _characterAnimations;
+
         private bool _isRotated = false;
         private Sprite _sprite;
         private bool _hitedAnimationIsComplete;
@@ -35,13 +36,24 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
         public void Initialize()
         {
             _characterAnimations = AFObject.Create<AFStatesController>();
-            _characterAnimations.Add(STATE_HITED , AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_HITED ) ,false);
-            _characterAnimations.Add(STATE_ANGRY, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_ANGRY), false);
-            _characterAnimations.Add(STATE_IDLE, AnimationFactory.Instance.BuildAnimation(PathConstants.GetGameScenePath() + "cucaSprites", STATE_IDLE), true);
+
+            string path = PathConstants.GetGameScenePath() + "cucaSprites";
+            AMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, STATE_HITED );
+            _characterAnimations.Add(STATE_HITED, animation, false);
+
+            animation = AnimationFactory.Instance.BuildAnimation(path, STATE_ANGRY);
+            _characterAnimations.Add(STATE_ANGRY, animation, false);
+
+            animation = AnimationFactory.Instance.BuildAnimation(path, STATE_IDLE);
+            _characterAnimations.Add(STATE_IDLE, animation , true);
+            
+            
             _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
             _sprite = _characterAnimations.GetCurrentState().GetSprite();
             this.gameObject.AddComponent<BoxColliderResizer>().Initialize();
-            if(this.gameObject.GetComponent<AnimationController>()){
+
+            if(this.gameObject.GetComponent<AnimationController>())
+            {
                 this.gameObject.GetComponent<AnimationController>().Initialize();
             }
         }
