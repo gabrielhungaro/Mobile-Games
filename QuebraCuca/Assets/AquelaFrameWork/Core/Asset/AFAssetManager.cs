@@ -44,6 +44,8 @@ namespace AquelaFrameWork.Core.Asset
         public static string commumPath = "Common/";
         public static string package = "com.globo.sitio.games";
 
+        public static string DIRECTORY_OWNER = "QuebraCuca";
+
         public static readonly string DIRECTORY_NAME_ASSETS = "Assets";
         public static readonly string DIRECTORY_NAME_HIGH = "High/";
         public static readonly string DIRECTORY_NAME_XHIGH = "ExtraHigh/";
@@ -408,7 +410,10 @@ namespace AquelaFrameWork.Core.Asset
 #endif
         public static string GetPathTargetPlatformWithResolution(string file = "")
         {
-            return (GetPathTargetPlatform() + GetResolutionFolder() + file);
+            if (DIRECTORY_OWNER.Equals(""))
+                return (GetPathTargetPlatform() + GetResolutionFolder() + file);
+                
+            return (DIRECTORY_OWNER + "/" + GetPathTargetPlatform() + GetResolutionFolder() + file);
         }
 
 
@@ -446,6 +451,28 @@ namespace AquelaFrameWork.Core.Asset
         public static string GetCommumPath()
         {
             return commumPath;
+        }
+
+
+        public T Instantiate<T>( string nameOrPath ) where T : UnityEngine.Object
+        {
+            T L_object = Load<T>(nameOrPath);
+
+            if(AFObject.IsNull(L_object) )
+            {
+                AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name );
+            }
+            else
+            {
+                T L_objectInstantiated = Instantiate(L_object) as T;
+                
+                if (AFObject.IsNull(L_object))
+                    AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name);
+
+                return L_objectInstantiated;
+            }
+
+            return null;
         }
 
     }

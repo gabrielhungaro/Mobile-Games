@@ -23,7 +23,8 @@ namespace AquelaFrameWork.Core.State
         [SerializeField]
         protected IState m_currentState;
         [SerializeField]
-        protected IState m_nextState;
+        protected AState.EGameState m_nextStateID;
+
 
         protected IStateFactory m_factory;
 
@@ -49,7 +50,7 @@ namespace AquelaFrameWork.Core.State
 
         virtual public void AFUpdate(double deltaTime)
         {
-            if( m_nextState != null )
+            if( m_nextStateID != null && !m_nextStateID.Equals(AState.EGameState.NULL) )
                 ChangeState();
             //UnityEngine.Debug.Log(m_currentState);
             if (m_currentState != null && !currentStateID.Equals(AState.EGameState.NULL) )
@@ -73,10 +74,9 @@ namespace AquelaFrameWork.Core.State
                 }
             }
 
-            currentStateID = m_nextState.GetStateID();
-            m_currentState = m_nextState;
-            
-            m_nextState = null;
+            currentStateID = m_nextStateID;
+            m_currentState = GetState(m_nextStateID);
+            m_nextStateID = AState.EGameState.NULL;
 
             if (m_currentState is AState)
                 (m_currentState as AState).transform.parent = gameObject.transform;
@@ -89,15 +89,16 @@ namespace AquelaFrameWork.Core.State
         virtual public void GotoState( AState.EGameState newStateID )
         {
             m_transition.Begin();
-            GotoState( m_factory.CreateStateByID(newStateID) );
-        }
 
-        virtual public void GotoState( IState newState )
-        {
-            if (newState == null || newState.GetStateID() == currentStateID)
+            if ( newStateID == currentStateID )
                 return;
 
-            m_nextState = newState;
+            m_nextStateID = newStateID;
+        }
+
+        virtual public IState GetState(AState.EGameState newStateID)
+        {
+            return m_factory.CreateStateByID(newStateID);
         }
 
         virtual public void Pause() { m_currentState.Pause(); }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 using com.globo.sitio.mobilegames.QuebraCuca.Controllers;
 using com.globo.sitio.mobilegames.QuebraCuca.Elements;
@@ -17,10 +18,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 {
     public class MenuState : AState
     {
-
         private GameObject _startButton;
         private GameObject _background;
-        private GameObject _camera;
+
+        private GameObject _cameraGameObject;
+
+        private GameObject m_interface;
+
+        private Camera m_camera;
 
         protected override void Awake()
         {
@@ -29,35 +34,66 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         public override void BuildState()
         {
-            //if (FindObjectOfType<MyCamera>() == null)
-            //{
-                _camera = new GameObject();
-                _camera.name = "StateCam";
-                _camera.AddComponent<MyCamera>();
-                /*DontDestroyOnLoad(_camera);
+#if UNITY_EDITOR
+            AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
+            AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
+#endif
+            _cameraGameObject = new GameObject();
+            _cameraGameObject.name = "StateCam";
+            m_camera = _cameraGameObject.AddComponent<MyCamera>().GetCamera();
+
+            string path = AFAssetManager.GetPathTargetPlatform() + "Prefabs/StartSceneCanvas";
+
+            AFDebug.Log(AFAssetManager.GetPathTargetPlatform() + "Prefabs/StartScene" );
+
+            GameObject startSceneToIntantiate = AFAssetManager.Instance.Load<GameObject>(path);
+
+            if (!AFObject.IsNull(startSceneToIntantiate))
+            {
+                m_interface = AFAssetManager.Instance.Instantiate<GameObject>(path);
+
+                if (!AFObject.IsNull(m_interface))
+                {
+                    Canvas L_canvas = m_interface.GetComponent<Canvas>();
+
+                    if ( !AFObject.IsNull(L_canvas) )
+                    {
+                        L_canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                        L_canvas.worldCamera = m_camera;
+                    }
+                    else
+                    {
+                        AFDebug.LogError("Canvas not found!");
+                    }
+                   
+                    _background = GameObject.Find("Background");
+                    _startButton = GameObject.Find("StartButton");
+
+                    path = AFAssetManager.GetPathTargetPlatformWithResolution("Scenes/StartScene/Background");
+                    AFDebug.Log(path);
+                    Sprite L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
+                    _background.GetComponent<Image>().sprite = L_sprite;
+
+
+                    path = AFAssetManager.GetPathTargetPlatformWithResolution("Scenes/StartScene/StartButton");
+                    L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
+                    AFDebug.Log(path);
+                    _startButton.GetComponent<Image>().sprite = L_sprite;
+
+                    _startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClick();});
+                }
+                else
+                {
+                    AFDebug.LogError("Nao foi possivel encontrar a interface do login");
+                }
             }
             else
             {
-                _camera = FindObjectOfType<MyCamera>().gameObject;
-            }*/
+                AFDebug.LogError("Nao foi possivel encontrar a interface do login para clonar");
+            }
 
-            _background = new GameObject();
-            _background.name = "background";
-            _background.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetStartScenePath() + "startScene");
-            _background.GetComponent<UI2DSprite>().MakePixelPerfect();
-            _background.GetComponent<UI2DSprite>().SetAnchor(_camera/*.GetComponent<MyCamera>().GetCamera().gameObject*/);
-            _background.GetComponent<UI2DSprite>().MakePixelPerfect();
 
-            _startButton = new GameObject();
-            _startButton.name = "startButton";
-            _startButton.AddComponent<Button>().SetImagePath(PathConstants.GetStartScenePath() + "startButton");
-            _startButton.GetComponent<Button>().OnClick += OnClick;
-            _startButton.GetComponent<Button>().SetWithAnchor(true);
-            _startButton.GetComponent<Button>().SetAnchor(_camera);
-            _startButton.GetComponent<Button>().SetLeftAnchorPoint(-57);
-            _startButton.GetComponent<Button>().SetRightAnchorPoint(57);
-            _startButton.GetComponent<Button>().SetTopAnchorPoint(-720);
-            _startButton.GetComponent<Button>().SetBottomAnchorPoint(-588);
+            Add(m_interface);
 
             base.BuildState();
         }
@@ -70,7 +106,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         override public void AFDestroy()
         {
             GameObject.Destroy(_startButton);
-            GameObject.Destroy(_camera);
+            GameObject.Destroy(_cameraGameObject);
             base.Destroy();
         }
     }
