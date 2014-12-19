@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace com.globo.sitio.mobilegames.Commom
+namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 {
     public class CameraSizeHandler : MonoBehaviour
     {
