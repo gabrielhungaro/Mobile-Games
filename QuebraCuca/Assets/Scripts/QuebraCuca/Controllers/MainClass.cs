@@ -21,6 +21,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 
         public override void Initialize()
         {
+            AFAssetManager.SetDirectoryOwner("QuebraCuca");
+
             m_stateManager = AFObject.Create<AFStateManager>();
 
             m_stateManager.Initialize(new GameStateFactory());

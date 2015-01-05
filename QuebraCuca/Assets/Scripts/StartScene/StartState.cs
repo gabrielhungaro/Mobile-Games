@@ -65,6 +65,7 @@ public class StartState : AquelaFrameWork.Core.State.AState
         m_bateRebateButton.onClick.AddListener(() => { OnBaterebateButtonCLickHandler(); });
         m_quebraCucaButton.onClick.AddListener(() => { OnQuebraCucaButtonCLickHandler(); });
         m_cataBalaoButton.onClick.AddListener(() => { OnCataBalaoButtonCLickHandler(); });
+
     }
 
     private void OnBaterebateButtonCLickHandler()
@@ -106,9 +107,9 @@ public class StartState : AquelaFrameWork.Core.State.AState
 
     public void SetButtonView(Image image , string path)
     {
-        AFDebug.Log(AFAssetManager.GetPathTargetPlatformWithResolution() + "/" + path);
+        AFDebug.Log(AFAssetManager.GetPathTargetPlatformWithResolution() + path);
 
-        Sprite sp = AFAssetManager.Instance.Load<Sprite>(AFAssetManager.GetPathTargetPlatformWithResolution() + "/" + path);
+        Sprite sp = AFAssetManager.Instance.Load<Sprite>(AFAssetManager.GetPathTargetPlatformWithResolution() + path);
 
         if (sp != null)
             image.sprite = sp;

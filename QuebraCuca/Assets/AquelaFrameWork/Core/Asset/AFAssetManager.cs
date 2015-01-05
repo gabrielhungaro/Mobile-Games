@@ -44,7 +44,7 @@ namespace AquelaFrameWork.Core.Asset
         public static string commumPath = "Common/";
         public static string package = "com.globo.sitio.games";
 
-        public static string DIRECTORY_OWNER = "QuebraCuca";
+        private static string DIRECTORY_OWNER = "QuebraCuca";
 
         public static readonly string DIRECTORY_NAME_ASSETS = "Assets";
         public static readonly string DIRECTORY_NAME_HIGH = "High/";
@@ -473,6 +473,15 @@ namespace AquelaFrameWork.Core.Asset
             }
 
             return null;
+        }
+
+        public static string SetDirectoryOwner(string newOwner)
+        {
+            return (DIRECTORY_OWNER = newOwner);
+        }
+        public static string GetDirectoryOwner(string newOwner)
+        {
+            return (DIRECTORY_OWNER = newOwner);
         }
 
     }
