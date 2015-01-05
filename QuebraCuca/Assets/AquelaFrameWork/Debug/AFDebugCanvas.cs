@@ -51,6 +51,8 @@ public class AFDebugCanvas : AFObject
          rectTrans.anchorMin = new Vector2(0, 1);
          rectTrans.sizeDelta = new Vector2(800, 300);
          rectTrans.position = new Vector3(408, (Screen.height - (rectTrans.rect.size.y / 2) ), -10);
+
+         GameObject.DontDestroyOnLoad(this.gameObject);
     }
 
     public Text GettextFild()

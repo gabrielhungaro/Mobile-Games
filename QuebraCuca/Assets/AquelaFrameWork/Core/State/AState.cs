@@ -26,10 +26,15 @@ namespace AquelaFrameWork.Core.State
         {
             NULL = 0,
             MENU,
+            MENU_1,
+            MENU_2,
+            MENU_3,
+            MENU_4,
             INTRO,
             TUTORIAL,
             RANKING,
             GAME,
+            SELECTION,
             STATE_COUNT
         }
 
@@ -44,6 +49,8 @@ namespace AquelaFrameWork.Core.State
 
         [SerializeField]
         protected List<AFObject> m_objects;
+        [SerializeField]
+        protected List<GameObject> m_gameObjects;
 
         public Signal<empty> OnStart = new Signal<empty>();
         public Signal<empty> OnDestroy = new Signal<empty>();
@@ -110,6 +117,7 @@ namespace AquelaFrameWork.Core.State
                 m_assetManager = AFAssetManager.Instance;
                 m_input = AFInput.Instance;
                 m_objects = new List<AFObject>();
+                m_gameObjects = new List<GameObject>();
 
                 if (m_hasEvents)
                     OnInitialized.Dispatch();
@@ -210,11 +218,13 @@ namespace AquelaFrameWork.Core.State
         {
             AFObject L_object = GetObjectByName( obj.name );
 
-            if( L_object == null)
+            if(AFObject.IsNull( L_object ))
             {
                 L_object = obj;
                 m_objects.Add(L_object);
                 L_object.gameObject.transform.parent = this.gameObject.transform;
+
+                //Add(L_object.gameObject);
             }
             else
             {
@@ -238,6 +248,9 @@ namespace AquelaFrameWork.Core.State
                     Add(L_objList[i]);
                 }
             }
+
+            go.transform.SetParent(this.gameObject.transform);
+            m_gameObjects.Add(go);
         }
 
         virtual public Entity AddEntity(Entity entity, object view = null)
@@ -305,6 +318,10 @@ namespace AquelaFrameWork.Core.State
 
             for (int i = 0; i < m_objects.Count; ++i)
                 m_objects[i].AFDestroy();
+
+            for (int i = 0; i < m_gameObjects.Count; ++i)
+                if (AFObject.IsNull(m_gameObjects[i]))
+                    Destroy(m_gameObjects[i]);
 
             m_objects.Clear();
             m_objects = null;

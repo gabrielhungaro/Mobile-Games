@@ -15,7 +15,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Constants
 
         public static string _remotePath = "QuebraCuca/";
         private static string _choosedDevice;
-        private static string IOs = "IOs";
+        private static string IOs = "IOS";
         private static string ANDROID = "Android";
         private static string _deviceResolution;
         private static string _scenesPath = "Scenes/";
