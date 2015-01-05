@@ -44,13 +44,15 @@ namespace AquelaFrameWork.Core.Asset
         public static string commumPath = "Common/";
         public static string package = "com.globo.sitio.games";
 
+        private static string DIRECTORY_OWNER = "QuebraCuca";
+
         public static readonly string DIRECTORY_NAME_ASSETS = "Assets";
-        public static readonly string DIRECTORY_NAME_HIGH = "High";
-        public static readonly string DIRECTORY_NAME_XHIGH = "ExtraHigh";
-        public static readonly string DIRECTORY_NAME_LOW = "Low";
-        public static readonly string DIRECTORY_NAME_MEDIUM = "Medium";
-        public static readonly string DIRECTORY_NAME_SOUND = "Sounds";
-        public static readonly string DIRECTORY_NAME_DATA = "Data";
+        public static readonly string DIRECTORY_NAME_HIGH = "High/";
+        public static readonly string DIRECTORY_NAME_XHIGH = "ExtraHigh/";
+        public static readonly string DIRECTORY_NAME_LOW = "Low/";
+        public static readonly string DIRECTORY_NAME_MEDIUM = "Medium/";
+        public static readonly string DIRECTORY_NAME_SOUND = "Sounds/";
+        public static readonly string DIRECTORY_NAME_DATA = "Data/";
         public static readonly string DIRECTORY_NAME_SCRIPTS = "Scripts";
         public static readonly string DIRECTORY_NAME_RESOURCES= "Resources";
 
@@ -406,9 +408,12 @@ namespace AquelaFrameWork.Core.Asset
         }
 
 #endif
-        public static string GetPathTargetPlatformWithResolution()
+        public static string GetPathTargetPlatformWithResolution(string file = "")
         {
-            return ( GetPathTargetPlatform() + GetResolutionFolder() );
+            if (DIRECTORY_OWNER.Equals(""))
+                return (GetPathTargetPlatform() + GetResolutionFolder() + file);
+                
+            return (DIRECTORY_OWNER + "/" + GetPathTargetPlatform() + GetResolutionFolder() + file);
         }
 
 
@@ -425,7 +430,7 @@ namespace AquelaFrameWork.Core.Asset
 
             if (DPI > 290)
             {
-                return DIRECTORY_NAME_XHIGH;
+                return DIRECTORY_NAME_HIGH;
             }
             else if (DPI > 200 && Screen.dpi <= 290)
             {
@@ -446,6 +451,37 @@ namespace AquelaFrameWork.Core.Asset
         public static string GetCommumPath()
         {
             return commumPath;
+        }
+
+
+        public T Instantiate<T>( string nameOrPath ) where T : UnityEngine.Object
+        {
+            T L_object = Load<T>(nameOrPath);
+
+            if(AFObject.IsNull(L_object) )
+            {
+                AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name );
+            }
+            else
+            {
+                T L_objectInstantiated = Instantiate(L_object) as T;
+                
+                if (AFObject.IsNull(L_object))
+                    AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name);
+
+                return L_objectInstantiated;
+            }
+
+            return null;
+        }
+
+        public static string SetDirectoryOwner(string newOwner)
+        {
+            return (DIRECTORY_OWNER = newOwner);
+        }
+        public static string GetDirectoryOwner(string newOwner)
+        {
+            return (DIRECTORY_OWNER = newOwner);
         }
 
     }

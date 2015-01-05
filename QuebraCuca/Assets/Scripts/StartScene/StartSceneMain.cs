@@ -13,12 +13,13 @@ public class StartSceneMain : AFEngine
     {
         //AFDebug.SetConfigs( AFDebugSettings.OUTPUT_SCREEN | AFDebugSettings.OUTPUT_UNITY );
 
+        AFAssetManager.SetDirectoryOwner("");
+
         m_stateManager = AFObject.Create<AFStateManager>();
         m_stateManager.Initialize(new StartStateFactory());
         m_stateManager.GotoState(AState.EGameState.MENU);
 
         base.Initialize();
-
 
         AFSingleTransition tras = AFObject.Create<AFSingleTransition>();
         SpriteRenderer sr = tras.gameObject.AddComponent<SpriteRenderer>();

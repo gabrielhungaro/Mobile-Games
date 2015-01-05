@@ -19,6 +19,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         private List<GameObject> _listOfSecondLayerObjects;
         private List<GameObject> _listOfThirdLayerObjects;
         private List<GameObject> _listOfFouthLayerObjects;
+        private List<GameObject> _listOfFifthLayerObjects;
+        private List<GameObject> _listOfSixthLayerObjects;
 
         public void Start()
         {
@@ -28,6 +30,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _listOfLayers.Add(2, _listOfSecondLayerObjects = new List<GameObject>());
             _listOfLayers.Add(3, _listOfThirdLayerObjects = new List<GameObject>());
             _listOfLayers.Add(4, _listOfFouthLayerObjects = new List<GameObject>());
+            _listOfLayers.Add(5, _listOfFifthLayerObjects = new List<GameObject>());
+            _listOfLayers.Add(6, _listOfSixthLayerObjects = new List<GameObject>());
+
         }
 
         public void AddObjectToList(GameObject obj)
@@ -47,14 +52,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             {
                 foreach (GameObject obj in _listOfLayers[i])
                 {
-                    if (obj.GetComponent<AFMovieClip>())
-                    {
+                    //if (obj.GetComponent<AFMovieClip>())
+                    //{
                         obj.GetComponent<SpriteRenderer>().sortingOrder = i;
-                    }
+                    /*}
                     else
                     {
                         obj.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-                    }
+                    }*/
                 }
             }
         }

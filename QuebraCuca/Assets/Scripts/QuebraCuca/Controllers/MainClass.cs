@@ -21,11 +21,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
 
         public override void Initialize()
         {
+            AFAssetManager.SetDirectoryOwner("QuebraCuca");
+
             m_stateManager = AFObject.Create<AFStateManager>();
 
-            m_stateManager.Initialize( new GameStateFactory() );
-
-            m_stateManager.GotoState( AState.EGameState.GAME );
+            m_stateManager.Initialize(new GameStateFactory());
 
             _resolutionController = ResolutionController.Instance();
             _paths = PathConstants.Instance();
@@ -36,13 +36,18 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _soundManager.AddComponent<SoundManager>().Init();
             //SoundManager.PlaySoundByName(SoundConstants.BG_SOUND);
 
-            base.Initialize();
-
             AFSingleTransition tras = AFObject.Create<AFSingleTransition>();
             SpriteRenderer sr = tras.gameObject.AddComponent<SpriteRenderer>();
+
+            sr.transform.position = new Vector3(0, 0, 6);
             sr.sprite = AFAssetManager.Instance.CreateSpriteFromTexture("Common/High/loadingscreen");
             sr.transform.localScale = new Vector3(1, 1, 1);
             m_stateManager.AddTransition(tras);
+
+            m_stateManager.GotoState(AState.EGameState.MENU);
+
+            base.Initialize();
+
         }
     }
 }

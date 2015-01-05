@@ -26,7 +26,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
         private GameObject _anchorTarget;
         private List<GameObject> _listOfLifes;
         
-        private int _offSetX = 20;
+        private float _offSetX = 20f;
+        private GameObject _canvas;
+        private Vector2 _anchorMin = new Vector2(0, 1);
+        private Vector2 _anchorMax = new Vector2(0, 1);
 
         void Start()
         {
@@ -39,11 +42,11 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _points = PointsController.GetPoints();
             _lifes = LifesController.GetLifes();
 
-            GameObject canvas = new GameObject();
-            canvas.name = "Canvas";
-            Canvas canvasComponent = canvas.AddComponent<Canvas>();
-            CanvasScaler scalerComponent = canvas.AddComponent<CanvasScaler>();
-            GraphicRaycaster raycasterComponent = canvas.AddComponent<GraphicRaycaster>();
+            _canvas = new GameObject();
+            _canvas.name = "Canvas";
+            Canvas canvasComponent = _canvas.AddComponent<Canvas>();
+            CanvasScaler scalerComponent = _canvas.AddComponent<CanvasScaler>();
+            GraphicRaycaster raycasterComponent = _canvas.AddComponent<GraphicRaycaster>();
 
             canvasComponent.renderMode = RenderMode.ScreenSpaceOverlay;
             scalerComponent.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -51,7 +54,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             scalerComponent.matchWidthOrHeight = .5f;
 
             _pointsHud = new GameObject();
-            _pointsHud.transform.parent = canvas.transform;
+            _pointsHud.transform.parent = _canvas.transform;
             _pointsHud.name = "PointsHud";
             _pointsHud.AddComponent<CanvasRenderer>();
             Text textComponent = _pointsHud.AddComponent<Text>();
@@ -59,150 +62,106 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             textComponent.font = _hudFont;
             textComponent.fontSize = _fontSize;
             textComponent.color = hudColor;
-            textComponent.rectTransform.anchorMin = new Vector2(0, 1);
-            textComponent.rectTransform.anchorMax = new Vector2(0, 1);
+            textComponent.rectTransform.anchorMin = _anchorMin;
+            textComponent.rectTransform.anchorMax = _anchorMax;
             _pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, textComponent.preferredWidth);
             _pointsHud.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textComponent.preferredHeight);
             _pointsHud.GetComponent<RectTransform>().anchoredPosition = new Vector2(540f, -60f);
 
             _pointsObj = new GameObject();
-            _pointsObj.transform.parent = canvas.transform;
+            _pointsObj.transform.parent = _canvas.transform;
             _pointsObj.AddComponent<CanvasRenderer>();
             Text pointsText = _pointsObj.AddComponent<Text>();
             pointsText.text = _points.ToString();
             pointsText.font = _hudFont;
             pointsText.fontSize = _fontSize;
             pointsText.color = textColor;
-            pointsText.rectTransform.anchorMin = new Vector2(0, 1);
-            pointsText.rectTransform.anchorMax = new Vector2(0, 1);
+            pointsText.rectTransform.anchorMin = _anchorMin;
+            pointsText.rectTransform.anchorMax = _anchorMax;
             _pointsObj.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pointsText.preferredWidth);
             _pointsObj.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, pointsText.preferredHeight);
-            _pointsObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(_pointsHud.GetComponent<RectTransform>().anchoredPosition.x + pointsText.preferredWidth + _offSetX, _pointsHud.GetComponent<RectTransform>().anchoredPosition.y);
+            _pointsObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(_pointsHud.GetComponent<RectTransform>().anchoredPosition.x + textComponent.preferredWidth, _pointsHud.GetComponent<RectTransform>().anchoredPosition.y);
 
-            /*Color hudColor = new Color(13f / 255f, 140f / 255f, 7f / 255f, 255 / 255f);
-            _pointsHud = new GameObject();
-            _pointsHud.name = "_pointsHud";
-            _pointsHud.AddComponent<UILabel>().text = "PONTOS";
-            _pointsHud.GetComponent<UILabel>().trueTypeFont = _hudFont;
-            _pointsHud.GetComponent<UILabel>().fontSize = _fontSize;
-            _pointsHud.GetComponent<UILabel>().color = hudColor;
-            _pointsHud.GetComponent<UILabel>().MakePixelPerfect();
-            _pointsHud.GetComponent<UILabel>().SetAnchor(_anchorTarget);
-            _pointsHud.GetComponent<UILabel>().leftAnchor.absolute = -595;
-            _pointsHud.GetComponent<UILabel>().rightAnchor.absolute = -337;
-            _pointsHud.GetComponent<UILabel>().bottomAnchor.absolute = 666;
-            _pointsHud.GetComponent<UILabel>().topAnchor.absolute = 766;
-            _pointsHud.GetComponent<UILabel>().UpdateAnchors();
-            _pointsHud.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsHud, 4);*/
+            _lifeHUD = new GameObject();
+            _lifeHUD.transform.parent = _canvas.transform;
+            _lifeHUD.AddComponent<CanvasRenderer>();
+            Text lifeTextHUD = _lifeHUD.AddComponent<Text>();
+            lifeTextHUD.text = "VIDAS";
+            lifeTextHUD.font = _hudFont;
+            lifeTextHUD.fontSize = _fontSize;
+            lifeTextHUD.color = hudColor;
+            lifeTextHUD.rectTransform.anchorMin = _anchorMin;
+            lifeTextHUD.rectTransform.anchorMax = _anchorMax;
+            _lifeHUD.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, lifeTextHUD.preferredWidth);
+            _lifeHUD.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, lifeTextHUD.preferredHeight);
+            _lifeHUD.GetComponent<RectTransform>().anchoredPosition = new Vector2(1300f, _pointsHud.GetComponent<RectTransform>().anchoredPosition.y);
+            //_lifeHUD.GetComponent<RectTransform>().anchoredPosition = new Vector2(_lifeHUD.GetComponent<RectTransform>().anchoredPosition.x + lifeTextHUD.preferredWidth, _lifeHUD.GetComponent<RectTransform>().anchoredPosition.y
 
-            /*_lifeHud = new GameObject();
-            _lifeHud.name = "_lifeHud";
-            _lifeHud.AddComponent<UILabel>().text = "VIDAS";
-            _lifeHud.GetComponent<UILabel>().trueTypeFont = _hudFont;
-            _lifeHud.GetComponent<UILabel>().fontSize = _fontSize;
-            _lifeHud.GetComponent<UILabel>().color = hudColor;
-            _lifeHud.GetComponent<UILabel>().MakePixelPerfect();
-            _lifeHud.GetComponent<UILabel>().SetAnchor(_anchorTarget);
-            _lifeHud.GetComponent<UILabel>().leftAnchor.absolute = 158;
-            _lifeHud.GetComponent<UILabel>().rightAnchor.absolute = 384;
-            _lifeHud.GetComponent<UILabel>().bottomAnchor.absolute = 666;
-            _lifeHud.GetComponent<UILabel>().topAnchor.absolute = 766;
-            _lifeHud.GetComponent<UILabel>().UpdateAnchors();
-            _lifeHud.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_lifeHud, 4);*/
-
-            /*Color textColor = new Color(24f / 255f, 174f / 255f, 16f / 255f, 255 / 255f);
-            _pointsObj = new GameObject();
-            _pointsObj.name = "_points";
-            _pointsObj.AddComponent<UILabel>().text = _points.ToString();
-            _pointsObj.GetComponent<UILabel>().trueTypeFont = _hudFont;
-            _pointsObj.GetComponent<UILabel>().fontSize = _fontSize;
-            _pointsObj.GetComponent<UILabel>().color = textColor;
-            _pointsObj.GetComponent<UILabel>().MakePixelPerfect();
-            _pointsObj.GetComponent<UILabel>().SetAnchor(_anchorTarget);
-            _pointsObj.GetComponent<UILabel>().leftAnchor.absolute = -299;
-            _pointsObj.GetComponent<UILabel>().rightAnchor.absolute = -219;
-            _pointsObj.GetComponent<UILabel>().bottomAnchor.absolute = 666;
-            _pointsObj.GetComponent<UILabel>().topAnchor.absolute = 766;
-            _pointsObj.GetComponent<UILabel>().UpdateAnchors();
-            _pointsObj.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsObj, 4);*/
-
-            /*_lifesObj = new GameObject();
-            _lifesObj.name = "_lifes";
-            _lifesObj.AddComponent<UILabel>().text = _lifes.ToString();
-            _lifesObj.GetComponent<UILabel>().trueTypeFont = _hudFont;
-            _lifesObj.GetComponent<UILabel>().fontSize = _fontSize;
-            _lifesObj.GetComponent<UILabel>().color = textColor;
-            _lifesObj.GetComponent<UILabel>().MakePixelPerfect();
-            _lifesObj.GetComponent<UILabel>().SetAnchor(_anchorTarget);
-            _lifesObj.GetComponent<UILabel>().leftAnchor.absolute = 345;
-            _lifesObj.GetComponent<UILabel>().rightAnchor.absolute = 445;
-            _lifesObj.GetComponent<UILabel>().bottomAnchor.absolute = 666;
-            _lifesObj.GetComponent<UILabel>().topAnchor.absolute = 766;
-            _lifesObj.GetComponent<UILabel>().UpdateAnchors();
-            _lifesObj.GetComponent<UILabel>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_lifesObj, 4);*/
-
-            //CreateLifeHud();
+            CreateLifeHud();
         }
 
         public void CreateLifeHud()
         {
             _listOfLifes = new List<GameObject>();
-            _lifeHUD = new GameObject();
+            /*_lifeHUD = new GameObject();
             _lifeHUD.name = "lifeHud";
-            _lifeHUD.transform.parent = this.gameObject.transform;
+            _lifeHUD.transform.parent = this.gameObject.transform;*/
 
             for (int i = 0; i < LifesController.GetInitialLifes(); i++)
             {
                 GameObject _life = new GameObject();
-                //_life.transform.parent = _lifeHUD.transform;
+                _life.transform.parent = _canvas.transform;
                 _life.name = "life" + i;
-                _life.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "lifeIcon_full");
-                _life.GetComponent<UI2DSprite>().MakePixelPerfect();
+                _life.AddComponent<CanvasRenderer>();
+                _life.AddComponent<Image>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "lifeIcon_full");
+                _life.GetComponent<Image>().preserveAspect = true;
                 _listOfLifes.Add(_life);
 
-                int lifeWidth = _life.GetComponent<UI2DSprite>().width;
+                float lifeWidth = _life.GetComponent<Image>().sprite.bounds.size.x * 100f;
 
-                _life.GetComponent<UI2DSprite>().SetAnchor(this.gameObject);
+                Debug.Log("lifeWidth: " + lifeWidth);
+
+                _life.GetComponent<RectTransform>().anchorMin = _anchorMin;
+                _life.GetComponent<RectTransform>().anchorMax = _anchorMax;
+                _life.GetComponent<RectTransform>().anchoredPosition = new Vector2(_lifeHUD.GetComponent<RectTransform>().anchoredPosition.x + _lifeHUD.GetComponent<Text>().preferredWidth + lifeWidth * i + (_offSetX * i), _lifeHUD.GetComponent<RectTransform>().anchoredPosition.y);
+
+                /*_life.GetComponent<UI2DSprite>().SetAnchor(this.gameObject);
                 _life.GetComponent<UI2DSprite>().topAnchor.absolute = 817;
                 _life.GetComponent<UI2DSprite>().bottomAnchor.absolute = 528;
                 _life.GetComponent<UI2DSprite>().leftAnchor.absolute = 622 - lifeWidth * i - (_offSetX * i);
                 _life.GetComponent<UI2DSprite>().rightAnchor.absolute = 1320 - lifeWidth * i - (_offSetX * i);
                 _life.GetComponent<UI2DSprite>().UpdateAnchors();
                 _life.GetComponent<UI2DSprite>().MakePixelPerfect();
-                FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_life, 4);
+                FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_life, 4);*/
             }
         }
 
-        /*void Update()
+        void Update()
         {
             _points = PointsController.GetPoints();
             if (_pointsObj != null)
             {
-                _pointsObj.GetComponent<UILabel>().text = _points.ToString();
+                _pointsObj.GetComponent<Text>().text = _points.ToString();
             }
 
             _lifes = LifesController.GetLifes();
-            if (_lifesObj != null)
+            /*if (_lifesObj != null)
             {
                 _lifesObj.GetComponent<UILabel>().text = _lifes.ToString();
-            }
+            }*/
 
             for (int i = 0; i < _listOfLifes.Count(); i++)
             {
-                _listOfLifes[i].transform.localPosition = new Vector3(Screen.width * 2 - (_listOfLifes[i].GetComponent<UI2DSprite>().width * i) - _offSetX * i, (Screen.height * 2 - _listOfLifes[i].GetComponent<UI2DSprite>().height / 2f));
+                //_listOfLifes[i].transform.localPosition = new Vector3(Screen.width * 2 - (_listOfLifes[i].GetComponent<UI2DSprite>().width * i) - _offSetX * i, (Screen.height * 2 - _listOfLifes[i].GetComponent<UI2DSprite>().height / 2f));
                 if (LifesController.GetLifes() > 0)
                 {
                     for (int k = LifesController.GetLifes(); k < LifesController.GetInitialLifes(); k++)
                     {
-                        _listOfLifes[k].GetComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "lifeIcon_empty");
+                        _listOfLifes[k].GetComponent<Image>().sprite = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "lifeIcon_empty");
                     }
                 }
             }
-        }*/
+        }
 
         public void Destroy()
         {
