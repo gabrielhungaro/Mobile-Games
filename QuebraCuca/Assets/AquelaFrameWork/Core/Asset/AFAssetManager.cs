@@ -58,7 +58,7 @@ namespace AquelaFrameWork.Core.Asset
 
         protected Dictionary<string, Texture> m_textures = new Dictionary<string,Texture>();
         protected Dictionary<string, AFTextureAtlas> m_texturesAtlas = new Dictionary<string, AFTextureAtlas>();
-        protected Dictionary<string , AFSound> m_sounds = new Dictionary<string,AFSound>();
+        protected Dictionary<string, AudioClip> m_sounds = new Dictionary<string, AudioClip>();
         protected Dictionary<string , GameObject> m_prefabs = new Dictionary<string,GameObject>();
         protected Dictionary<string , object> m_custom = new Dictionary<string,object>();
 
@@ -95,15 +95,12 @@ namespace AquelaFrameWork.Core.Asset
 
                         if (typeof(T) == typeof(Texture))
                             Add(name, res as Texture);
-
                         else if (typeof(T) == typeof(GameObject))
                             Add(name, res as GameObject);
-
-                        else if (typeof(T) == typeof(AFSound))
-                            Add(name, res as AFSound);
-
                         else if (typeof(T) == typeof(Texture))
-                            Add(name, res as Texture);    
+                            Add(name, res as Texture);
+                        else if (typeof(T) == typeof(AudioClip))
+                            Add(name, res as AudioClip);
                         else
                             Add(name, res);
 
@@ -199,7 +196,7 @@ namespace AquelaFrameWork.Core.Asset
             return obj;
         }
 
-        public AFSound Add(string name, AFSound sound)
+        public AudioClip Add(string name, AudioClip sound)
         {
             if (!AFObject.IsNull(sound))
             {
@@ -265,7 +262,7 @@ namespace AquelaFrameWork.Core.Asset
             return null;
         }
 
-        public AFSound GetAFSound( string name )
+        public AudioClip GetAudioClip(string name)
         {
             if( m_sounds.ContainsKey( name ) )
             {
@@ -285,7 +282,7 @@ namespace AquelaFrameWork.Core.Asset
             }
             else if ( m_sounds.ContainsKey(name))
             {
-                m_sounds[name].Destroy();
+                //m_sounds[name].Destroy();
                 m_sounds.Remove(name);
             }
             else if( m_prefabs.ContainsKey(name ) )
@@ -367,7 +364,7 @@ namespace AquelaFrameWork.Core.Asset
         public void DisposeAll()
         {
             m_textures = new Dictionary<string,Texture>();
-            m_sounds = new Dictionary<string,AFSound>();
+            m_sounds = new Dictionary<string, AudioClip>();
             m_prefabs = new Dictionary<string,GameObject>();
             m_custom = new Dictionary<string,object>();
         }
@@ -479,9 +476,12 @@ namespace AquelaFrameWork.Core.Asset
         {
             return (DIRECTORY_OWNER = newOwner);
         }
-        public static string GetDirectoryOwner(string newOwner)
+        public static string GetDirectoryOwner( string path )
         {
-            return (DIRECTORY_OWNER = newOwner);
+            if (DIRECTORY_OWNER.Equals(""))
+                return path;
+
+            return (DIRECTORY_OWNER + "/" + path);
         }
 
     }
