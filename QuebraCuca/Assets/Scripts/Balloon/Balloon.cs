@@ -30,7 +30,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         public void LoadSprite()
         {
             _spritePath = _spritePath + _spriteName + "/";
-            //Debug.Log("LOAD SPRITE " + _spritePath + _spriteName + "0001");
 
             _sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "0001");//_spriteName);
             //_sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "/" + _spriteName + "0001");//_spriteName);

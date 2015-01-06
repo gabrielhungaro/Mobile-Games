@@ -16,7 +16,7 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private static string _folderPath = "Balloon/";
         private static string _balloonAnimPath = "Animations/";
-        private static string _balloonPath = "Balloons/Padrao/";
+        private static string _balloonPath = "Balloons/";
         private static string _inGamePath = "Scenes/InGame/";
         private static string _resultPath = "Scenes/ResultScreen/";
         private static string _startPath = "Scenes/StartScreen/";
@@ -75,7 +75,7 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         public static string GetBalloonAnimationsFolder()
         {
-            return _folderPath + _choosedDevice + _balloonAnimPath;
+            return _folderPath + _choosedDevice + _inGamePath + _balloonPath;
         }
 
     }
