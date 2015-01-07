@@ -85,7 +85,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
             #endif
 
-            //CreateParticles();
+            CreateParticles();
             base.BuildState();
         }
 
@@ -97,6 +97,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM3_Flying_EmberCFXM_Hit_B");
             GameObject goEmiter = Instantiate(Resources.Load<GameObject>(path)) as GameObject;
             goEmiter.transform.position = new Vector3(0, 1.8f, 0);
+            goEmiter.GetComponent<ParticleSystem>().renderer.sortingLayerName = "Foreground";
+            goEmiter.GetComponent<ParticleSystem>().renderer.sortingOrder = 999;
         }
 
         private void CreatePullOfCharacters()
@@ -265,7 +267,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 
                 screenPoint = Input.mousePosition;
                 screenPoint.z = 0;
-                //CreateTapParticle(m_camera.ScreenToWorldPoint(screenPoint));
+                CreateTapParticle(m_camera.ScreenToWorldPoint(screenPoint));
             }
 
             foreach (Touch t in Input.touches)
@@ -292,6 +294,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             GameObject go = Instantiate(m_particleEmiter) as GameObject;
             go.layer = LayerMask.NameToLayer("UI");
             go.transform.position = screenPoint;
+            go.transform.localScale = new Vector3(3, 3, 3);
+
+            ParticleSystem ps = go.GetComponent<ParticleSystem>();
+            ps.renderer.sortingOrder = 999;
         }
 
         private void SetCenterAnchor()

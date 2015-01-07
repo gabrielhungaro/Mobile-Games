@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using AquelaFrameWork.Core.Asset;
+using AquelaFrameWork.Sound;
+
 //using AquelaFrameWork.Server;
 
 public class StartState : AquelaFrameWork.Core.State.AState
@@ -66,12 +68,15 @@ public class StartState : AquelaFrameWork.Core.State.AState
         m_quebraCucaButton.onClick.AddListener(() => { OnQuebraCucaButtonCLickHandler(); });
         m_cataBalaoButton.onClick.AddListener(() => { OnCataBalaoButtonCLickHandler(); });
 
+        AFDebug.Log(AFAssetManager.GetDirectoryOwner("Sound/sfxWrongHit"));
+        AFSoundManager.Instance.Add(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"),null,1.0f,1.0f,false,false);
     }
 
     private void OnBaterebateButtonCLickHandler()
     {
-        m_bateRebateButton.onClick.RemoveAllListeners();
-        Application.LoadLevel(GAME_BATE_RETATE);
+        AFSoundManager.Instance.Play(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"));
+        //m_bateRebateButton.onClick.RemoveAllListeners();
+        //Application.LoadLevel(GAME_BATE_RETATE);
     }
 
     private void OnQuebraCucaButtonCLickHandler()

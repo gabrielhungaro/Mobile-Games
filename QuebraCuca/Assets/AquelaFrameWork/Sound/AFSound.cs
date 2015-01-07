@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.Asset;
 
 namespace AquelaFrameWork.Sound
 {
@@ -12,6 +13,7 @@ namespace AquelaFrameWork.Sound
         protected float m_volume;
         protected float m_pitch;
         protected string m_name;
+        protected string m_path;
         
         protected AFSoundGroup m_group;
         protected AudioClip m_audioClip;
@@ -20,16 +22,52 @@ namespace AquelaFrameWork.Sound
         protected Vector3 m_point;
         protected bool m_isPlaying;
         protected bool m_loop;
+        protected bool m_oncePertime;
 
         protected AFSoundManager m_manager;
 
-        public AFSound( 
+
+        public static AFSound Create( 
             string name, 
             AudioClip audio,
             Transform emitter = null,
             float volume = 1.0f,
             float pitch = 1.0f,
-            bool loop = false)
+            bool loop = false,
+            bool playOncePertime = true)
+        {
+            AFSound L_sound = AFObject.Create<AFSound>(name);
+            L_sound.Initialize(name, audio, emitter, volume, pitch, loop, playOncePertime);
+            return L_sound;
+        }
+
+        public static AFSound Create( 
+           string path,
+           string name = "",
+           Transform emitter = null,
+           float volume = 1.0f,
+           float pitch = 1.0f,
+           bool loop = false,
+            bool playOncePertime = true)
+        {
+            if (name.Equals(""))
+                name = path;
+
+            AFSound L_sound = AFObject.Create<AFSound>(name);
+            AudioClip L_audioClip = AFAssetManager.Instance.Load<AudioClip>(path);
+            L_sound.Initialize(name, L_audioClip ,emitter, volume, pitch, loop, playOncePertime);
+            return L_sound;
+        }
+
+
+        public AFSound Initialize( 
+            string name, 
+            AudioClip audio,
+            Transform emitter = null,
+            float volume = 1.0f,
+            float pitch = 1.0f,
+            bool loop = false,
+            bool playOncePertime = true)
         {
             m_name = name;
             m_volume = volume;
@@ -39,9 +77,10 @@ namespace AquelaFrameWork.Sound
             m_audioClip = audio;
             m_isPlaying = false;
             m_loop = loop;
-
+            m_oncePertime = playOncePertime;
             m_manager = AFSoundManager.Instance;
 
+            return this;
             //Abandon all hope ye who enter beyond this point
             //I'm sorry, but our princess is in another castle.
         }
@@ -69,7 +108,7 @@ namespace AquelaFrameWork.Sound
 
         public AudioSource Play()
         {
-            if (!GetIsPlaying() )
+            if (!GetIsPlaying() || !isOncePerTime() )
             {
                 m_audioSource = m_manager.Play(m_audioClip, m_volume, m_pitch, m_emitter, m_loop, m_point);
             }
@@ -79,6 +118,11 @@ namespace AquelaFrameWork.Sound
             }
 
             return m_audioSource;
+        }
+
+        public bool isOncePerTime()
+        {
+            return m_oncePertime;
         }
 
         public AudioSource GetAudioSource()
