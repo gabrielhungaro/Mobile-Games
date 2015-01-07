@@ -11,9 +11,10 @@ namespace AquelaFrameWork.Core.State
 {
     public class AFSingleTransition : AFObject , IStateTransition
     {
+        private static readonly int SPRITE_SORT_LAYER = 1100;
+
         //private System.Threading.Thread m_thread;
         private GameObject m_trasition;
-
         private AFObject[] m_updatableComponents;
         private AStateManager m_stateManager;
 
@@ -24,6 +25,12 @@ namespace AquelaFrameWork.Core.State
             m_trasition = transitionGO;
             m_updatableComponents = m_trasition.GetComponents<AFObject>();
             //Todo: IMPLEMENT MULTHREAD
+
+            SpriteRenderer[] spRenderer = m_trasition.GetComponents<SpriteRenderer>();
+
+            for (int i = 0; i < spRenderer.Length; ++i )
+                if (!AFObject.IsNull(spRenderer[i]))
+                    spRenderer[i].sortingOrder = SPRITE_SORT_LAYER;
 
             if (m_updatableComponents.Length > 0)
                 CreateThread();
@@ -57,8 +64,7 @@ namespace AquelaFrameWork.Core.State
         {
             //if (m_thread != null)
                // m_thread.Start();
-
-            m_trasition.active = true;
+            m_trasition.SetActive(true);
             return this;
         }
 
@@ -66,9 +72,7 @@ namespace AquelaFrameWork.Core.State
         {
             //if (m_thread != null)
                // m_thread.Abort();
-
-
-            m_trasition.active = false;
+            m_trasition.SetActive(false);
 
             return this;
         }
