@@ -44,7 +44,7 @@ namespace BateRebate
         }
         public void QuitGame()
         {
-            //TODO
+            Application.LoadLevel(ScenesNames.MENU_START_SCENE);
         }
         public string AddPlatformAndQualityToUrl(string url, string platform = "IOS", string quality = "High")
         {
