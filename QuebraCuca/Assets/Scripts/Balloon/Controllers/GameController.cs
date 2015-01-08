@@ -268,14 +268,12 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
             RemoveEndGameScreen();
             //InitGame();
-            Application.LoadLevel(SceneManager.GAME_SCENE);
         }
 
         private void OnClickExit(GameObject g)
         {
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
             RemoveEndGameScreen();
-            Application.LoadLevel(SceneManager.START_SCENE);
         }
 
         private void RemoveEndGameScreen()

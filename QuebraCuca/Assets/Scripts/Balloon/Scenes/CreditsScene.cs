@@ -14,11 +14,9 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         private GameObject _camera;
         private GameObject _background;
         private GameObject _returnButton;
-        private SceneManager _sceneManager;
 
         void Start()
         {
-            _sceneManager = this.gameObject.GetComponent<SceneManager>();
             LayerController.Instance().Start();
             _uiRoot = new GameObject();
             _uiRoot.name = "_uiRoot";
@@ -74,7 +72,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         private void OnClickReturnButton(GameObject go)
         {
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
-            _sceneManager.GotoStartScene();
         }
 
         void Update()

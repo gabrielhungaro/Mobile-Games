@@ -12,14 +12,12 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         private GameObject _camera;
         private GameObject _background;
         private GameObject _retryButton;
-        private SceneManager _sceneManager;
         private GameObject _exitButton;
         private GameObject _actualPoints;
         private GameObject _maxPoints;
 
         void Start()
         {
-            _sceneManager = this.gameObject.GetComponent<SceneManager>();
             LayerController.Instance().Start();
             _uiRoot = new GameObject();
             _uiRoot.name = "_uiRoot";
@@ -77,7 +75,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private void OnClickRetryButton(GameObject go)
         {
-            _sceneManager.GotoGameScene();
         }
 
         private void CreateExitButton()
@@ -94,7 +91,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private void OnClickExitButton(GameObject go)
         {
-            _sceneManager.GotoStartScene();
         }
 
         private void CreatePoints()

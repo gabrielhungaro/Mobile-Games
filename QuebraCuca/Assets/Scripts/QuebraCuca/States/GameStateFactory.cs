@@ -20,10 +20,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         public static string START_SCENE = "StartScene";
         public static string GAME_SCENE = "GameScene";
 
-        private static string _currentSceneName;
-        private static Scene _currentScene;
-        private static List<Scene> _listOfScenes;
-        private static bool _sceneIsActive;
         private static GameObject _uiRoot;
         private static GameObject _camera;
 

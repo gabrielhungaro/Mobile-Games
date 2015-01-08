@@ -4,17 +4,21 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.State;
+using AquelaFrameWork.Core.Asset;
+using AquelaFrameWork.View;
+
 namespace Com.Globo.Sitio.MobileGames.Balloon
 {
 
-    public class ChooseModeScene : MonoBehaviour
+    public class ChooseModeScene : AState
     {
 
         private GameObject _uiRoot;
         private GameObject _camera;
         private GameObject _background;
         private GameObject _returnButton;
-        private SceneManager _sceneManager;
         private GameObject _timeTrialButton;
         private GameObject _surviveButton;
         public int _offSetX = 1;
@@ -37,7 +41,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
                 }
             }
 
-            _sceneManager = this.gameObject.GetComponent<SceneManager>();
             LayerController.Instance().Start();
             _uiRoot = new GameObject();
             _uiRoot.name = "_uiRoot";
@@ -98,7 +101,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         {
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
             GameController.SetGameMode(GameController.TIME_TRIAL);
-            _sceneManager.GotoGameScene();
         }
 
         private void CreateSurviveButton()
@@ -118,7 +120,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         {
             GameController.SetGameMode(GameController.SURVIVAL);
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
-            _sceneManager.GotoGameScene();
         }
 
         private void CreateReturnButton()
@@ -136,7 +137,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private void OnClickReturnButton(GameObject go)
         {
-            _sceneManager.GotoStartScene();
         }
 
         void Update()

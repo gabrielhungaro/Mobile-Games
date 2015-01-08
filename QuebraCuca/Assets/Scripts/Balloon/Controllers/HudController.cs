@@ -347,7 +347,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private void OnClickExit(GameObject go)
         {
-            Application.LoadLevel(SceneManager.START_SCENE);
         }
 
         private void RemovePauseScreen()

@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+
+
 namespace Com.Globo.Sitio.MobileGames.Balloon
 {
     public class ConstantsSounds
     {
+        private static volatile ConstantsSounds _instance;
+        private static object _lock = new object();
+
         private static string _folderPath = "Audios/";
         private static string _musicFolder = "Musics/";
         private static string _sfxsFolder = "Sfxs/";
@@ -22,7 +27,21 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         public static string SFX_FAST_FOWARD = "FastFoward";
         public static string SFX_EXPLOSIVE = "Explosive";
 
-        public void Start()
+        static ConstantsSounds() { }
+
+        public static ConstantsSounds Instance()
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    if (_instance == null) _instance = new ConstantsSounds();
+                }
+            }
+            return _instance;
+        }
+
+        private ConstantsSounds()
         {
             //_choosedDevice = IOS_PATH;
         }
