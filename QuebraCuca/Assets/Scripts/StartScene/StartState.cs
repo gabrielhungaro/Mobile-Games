@@ -13,11 +13,6 @@ using AquelaFrameWork.Sound;
 
 public class StartState : AquelaFrameWork.Core.State.AState
 {
-
-    public static readonly string GAME_QUEBRA_CUCA = "QuebraCuca";
-    public static readonly string GAME_CATA_BALOES = "CataBaloes";
-    public static readonly string GAME_BATE_RETATE = "BateRebate";
-
     [SerializeField]
     private GameObject m_btBateRebate;
     [SerializeField]
@@ -49,6 +44,11 @@ public class StartState : AquelaFrameWork.Core.State.AState
         AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
 #endif
 
+//         TextAsset ass = Resources.Load<TextAsset>("cucaSprites");
+//         TextAsset mytxtData = (TextAsset)Resources.Load("cucaSprites");
+//         string str = mytxtData.text;
+
+
         m_interface = GameObject.Find("ButtonsCanvas");
         m_btBateRebate = GameObject.Find("BateRebateButton");
         m_btCataBalao = GameObject.Find("CataBalaoButton");
@@ -75,26 +75,29 @@ public class StartState : AquelaFrameWork.Core.State.AState
     private void OnBaterebateButtonCLickHandler()
     {
         AFSoundManager.Instance.Play(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"));
-        //m_bateRebateButton.onClick.RemoveAllListeners();
-        //Application.LoadLevel(GAME_BATE_RETATE);
+        m_bateRebateButton.onClick.RemoveAllListeners();
+        Application.LoadLevel(ScenesNames.GAME_BATE_RETATE);
     }
 
     private void OnQuebraCucaButtonCLickHandler()
     {
+        AFSoundManager.Instance.Play(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"));
         m_quebraCucaButton.onClick.RemoveAllListeners();
-        Application.LoadLevel(GAME_QUEBRA_CUCA);
+        Application.LoadLevel(ScenesNames.GAME_QUEBRA_CUCA);
 
     }
 
     private void OnCataBalaoButtonCLickHandler()
     {
+        AFSoundManager.Instance.Play(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"));
         m_cataBalaoButton.onClick.RemoveAllListeners();
-        Application.LoadLevel(GAME_CATA_BALOES);
+        Application.LoadLevel(ScenesNames.GAME_CATA_BALOES);
     }
 
 
     public void OnLoginButtonClickHandler()
     {
+        AFSoundManager.Instance.Play(AFAssetManager.GetDirectoryOwner("Sounds/sfxWrongHit"));
         //AFServer.Instance.Login(m_btBateRebate.text, m_btCataBalao.text);
     }
 

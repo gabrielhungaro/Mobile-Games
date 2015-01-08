@@ -147,16 +147,26 @@ namespace AquelaFrameWork.Core.Asset
 
         private void ParseCVSFile(String path)
         {
-            UnityEngine.Debug.Log("PATH: " + Application.dataPath + "/Resources/" + path);
 
-            if ( (Path.GetExtension(Path.GetExtension(path)) == "") )
-            {
-                path += ".aff";
-            }
+// #if UNITY_EDITOR
+//             
+//             UnityEngine.Debug.Log("PATH: " + Application.dataPath + "/Resources/" + path);
+//             if ( (Path.GetExtension(Path.GetExtension(path)) == "") )
+//             {
+//                 path += ".aff";
+//             }
+// 
+//             AFCsvFileReader reader = new AFCsvFileReader(Application.dataPath + "/Resources/" + path);
+// 
+// #else
+//             AFCsvFileReader reader = new AFCsvFileReader( StreamConverter.OpenStream( path ) );
+// #endif // UNITY_EDITOR
 
-            AFCsvFileReader reader = new AFCsvFileReader(Application.dataPath + "/Resources/" + path);
+            AFCsvFileReader reader = new AFCsvFileReader(StreamConverter.OpenStream(path));
             AFCsvRow row = new AFCsvRow();
             AFTextureInfo info = null;
+            
+            
 
             UnityEngine.Rect rect;
             UnityEngine.Vector2 pivot = UnityEngine.Vector2.zero;

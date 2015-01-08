@@ -91,10 +91,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private void CreateParticles()
         {
-            string path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM_GroundHit");
+            string path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM_GroundHit_TAP");
             m_particleEmiter = Resources.Load<GameObject>(path);
 
-            path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM3_Flying_EmberCFXM_Hit_B");
+            path = AFAssetManager.GetPathTargetPlatformWithResolution("CFXM3_Flying_EmberCFXM_Hit");
             GameObject goEmiter = Instantiate(Resources.Load<GameObject>(path)) as GameObject;
             goEmiter.transform.position = new Vector3(0, 1.8f, 0);
             goEmiter.GetComponent<ParticleSystem>().renderer.sortingLayerName = "Foreground";

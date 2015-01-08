@@ -93,31 +93,38 @@ namespace AquelaFrameWork.Core.Asset
                     {
                         res = Resources.Load<T>(path);
 
-                        if (typeof(T) == typeof(Texture))
-                            Add(name, res as Texture);
-                        else if (typeof(T) == typeof(GameObject))
-                            Add(name, res as GameObject);
-                        else if (typeof(T) == typeof(Texture))
-                            Add(name, res as Texture);
-                        else if (typeof(T) == typeof(AudioClip))
-                            Add(name, res as AudioClip);
-                        else
-                            Add(name, res);
+                        if ( !AFObject.IsNull(res) )
+                        { 
+                            if (typeof(T) == typeof(Texture))
+                                Add(name, res as Texture);
+                            else if (typeof(T) == typeof(GameObject))
+                                Add(name, res as GameObject);
+                            else if (typeof(T) == typeof(Texture))
+                                Add(name, res as Texture);
+                            else if (typeof(T) == typeof(AudioClip))
+                                Add(name, res as AudioClip);
+                            else
+                                Add(name, res);
 
-                        Resources.UnloadUnusedAssets();
+                            Resources.UnloadUnusedAssets();
+                        }
+                        else
+                        {
+                            AFDebug.LogError("Asset not found: " + name);
+                        }
                     }
 
-                    UnityEngine.Debug.Log("I'll store an object of: " + typeof(T).ToString());
+                    AFDebug.Log("I'll store an object of: " + typeof(T).ToString());
                 }
             }
             catch( NullReferenceException nullEx )
             {
-                UnityEngine.Debug.LogError("The asset was not found: " + nullEx.Message);
+                AFDebug.LogError("The asset was not found: " + nullEx.Message);
             }
             catch( Exception ex )
             {
                 //TODO: Discover what happens when unity throw this error
-                UnityEngine.Debug.LogError("The asset was not found: " + ex.Message);
+                AFDebug.LogError("The asset was not found: " + ex.Message);
             }
 
             return res;
@@ -457,14 +464,14 @@ namespace AquelaFrameWork.Core.Asset
 
             if(AFObject.IsNull(L_object) )
             {
-                AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name );
+                AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + nameOrPath);
             }
             else
             {
                 T L_objectInstantiated = Instantiate(L_object) as T;
                 
                 if (AFObject.IsNull(L_object))
-                    AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + name);
+                    AFDebug.LogError("Was not Possible to load or instantiate follow gameObject: " + nameOrPath);
 
                 return L_objectInstantiated;
             }

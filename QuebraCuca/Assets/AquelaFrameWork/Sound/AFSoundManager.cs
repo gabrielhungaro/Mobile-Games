@@ -41,12 +41,7 @@ namespace AquelaFrameWork.Sound
 
         internal AFSound Put( AFSound sound )
         {
-            if (Exists(sound.GetName()))
-            {
-                AFDebug.LogWarning("Audio already registered: " + sound.GetName() );
-                return m_audios[sound.GetName()];
-            }
-
+           
             m_audios[sound.GetName()] = sound;
             OnAudioAdd.Dispatch(sound);
             audiosInList++;
@@ -58,16 +53,34 @@ namespace AquelaFrameWork.Sound
 
         public AFSound Add(AFSound sound)
         {
+            if (Exists(sound.GetName()))
+            {
+                AFDebug.LogWarning("Audio already registered: " + name);
+                return m_audios[sound.GetName()];
+            }
+
             return Put(sound);
         }
 
         public AFSound Add(string name, AudioClip audioClip, Transform emitter = null, float volume = 1.0f, float pitch = 1.0f, bool loop = false, bool playOncePertime = true)
         {
+            if (Exists(name))
+            {
+                AFDebug.LogWarning("Audio already registered: " + name);
+                return m_audios[name];
+            }
+
             return Put(AFSound.Create(name, audioClip, emitter, volume, pitch, loop, playOncePertime));
         }
 
         public AFSound Add(string name, string path, Transform emitter = null, float volume = 1.0f, float pitch = 1.0f, bool loop = false, bool playOncePertime = true)
         {
+            if (Exists(name))
+            {
+                AFDebug.LogWarning("Audio already registered: " + name);
+                return m_audios[name];
+            }
+
             return Put(AFSound.Create(path, name, emitter, volume, pitch, loop, playOncePertime));
         }
 
