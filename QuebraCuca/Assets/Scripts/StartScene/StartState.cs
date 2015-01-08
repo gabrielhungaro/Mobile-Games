@@ -44,6 +44,11 @@ public class StartState : AquelaFrameWork.Core.State.AState
         AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
 #endif
 
+//         TextAsset ass = Resources.Load<TextAsset>("cucaSprites");
+//         TextAsset mytxtData = (TextAsset)Resources.Load("cucaSprites");
+//         string str = mytxtData.text;
+
+
         m_interface = GameObject.Find("ButtonsCanvas");
         m_btBateRebate = GameObject.Find("BateRebateButton");
         m_btCataBalao = GameObject.Find("CataBalaoButton");

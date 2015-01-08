@@ -7,6 +7,22 @@ using UnityEngine;
 
 namespace AquelaFrameWork.Utils
 {
+
+    public class StreamConverter
+    {
+        public static Stream OpenStream(string path)
+        {
+            path = path.Split('.')[0];
+
+            TextAsset ta = Resources.Load(path, typeof(TextAsset)) as TextAsset;
+
+            if (ta != null)
+                return new MemoryStream(ta.bytes);
+
+            throw new Exception("resource not found : " + path);
+        }	
+    }
+
     public class AFCsvRow : List<string>
     {
         public string LineText { get; set; }
