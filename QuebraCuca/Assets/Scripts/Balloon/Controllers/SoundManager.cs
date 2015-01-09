@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-namespace Com.Globo.Sitio.MobileGames.Balloon
+
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class SoundManager : MonoBehaviour
     {
@@ -62,6 +63,7 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         {
             //create GameObject to associate a audio
             GameObject gameObj = new GameObject();
+            gameObj.transform.parent = this.transform;
             gameObj.name = name + "_Sound";
             gameObj.AddComponent<AudioSource>().audio.clip = clip;
             gameObj.audio.volume = volume;

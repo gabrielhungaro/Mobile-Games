@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+namespace com.globo.sitio.mobilegames.Balloon
 {
 
     [System.Serializable]

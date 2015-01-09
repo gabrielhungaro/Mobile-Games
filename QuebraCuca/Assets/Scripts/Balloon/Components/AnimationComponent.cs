@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using AnimatorAccess;
 //using UnityEditorInternal;
-namespace Com.Globo.Sitio.MobileGames.Balloon
+
+namespace com.globo.sitio.mobilegames.Balloon
 {
 
     public class AnimationComponent : BaseAnimatorAccess

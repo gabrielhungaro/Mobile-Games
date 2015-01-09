@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-namespace Com.Globo.Sitio.MobileGames.Balloon
+
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class HudController : MonoBehaviour
     {
@@ -45,32 +46,10 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
             LayerController.Instance().Start();
 
-            this.gameObject.layer = LayerController.Instance()._layerHUD;
-            this.gameObject.AddComponent<UIRoot>();
-            this.gameObject.AddComponent<UIPanel>();
-            this.gameObject.AddComponent<Rigidbody>();
-            this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-            this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
-            this.GetComponent<UIRoot>().scalingStyle = UIRoot.Scaling.FixedSize;
-            this.GetComponent<UIRoot>().manualHeight = CameraController.CAMERA_HEIGHT;
-
-            _camera = new GameObject();
-            _camera.name = "uiCamera";
-            _camera.AddComponent<Camera>();
-            _camera.AddComponent<UICamera>();
-            _camera.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
-            _camera.GetComponent<Camera>().cullingMask = LayerController.Instance()._maskHud;
-            _camera.GetComponent<Camera>().isOrthoGraphic = CameraController.ORTHOGRAPHIC;
-            _camera.GetComponent<Camera>().orthographicSize = CameraController.ORTHOGRAPHIC_SIZE;
-            _camera.GetComponent<Camera>().nearClipPlane = CameraController.NEAR_CLIP_PLANE;
-            _camera.GetComponent<Camera>().farClipPlane = CameraController.FAR_CLIP_PLANE;
-            _camera.transform.parent = this.gameObject.transform;
-
-            CreateLifeHud();
+            /*CreateLifeHud();
             CreateScoreHUD();
             CreateTimeHUD();
-            CreatePauseButton();
+            CreatePauseButton();*/
 
             _canUpdateHudPosition = true;
         }

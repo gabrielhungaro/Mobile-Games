@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class ConstantsPaths
     {
@@ -18,7 +18,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         public const string WINDOS_PATH = "WindowsPhone/";
         public const string RESOLUTION_PATH = "High/";
 
-        private static string _remotePath = "Balloon/";
         private static string _balloonAnimPath = "Animations/";
         private static string _balloonPath = "Balloons/";
         private static string _inGamePath = "Scenes/InGame/";
@@ -43,33 +42,11 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         private ConstantsPaths()
         {
-            MountPath();
-        }
-
-        private void MountPath()
-        {
-            //_choosedDevice = IOS_PATH;
-            if (Screen.width < 800 && Screen.height < 480)
-            {
-                Debug.Log("LOW RESOLUTION DETECTED");
-            }
-            else if (Screen.width == 800 && Screen.height == 480)
-            {
-                Debug.Log("MEDIUM RESOLUTION DETECTED");
-            }
-            else
-            {
-                Debug.Log("HIGH RESOLUTION DETECTED");
-            }
-            Debug.Log("WIDTH: " + Screen.width + " HEIGHT: " + Screen.height);
-            //RESOLUTION_PATH = "High/";
-            _choosedDevice += RESOLUTION_PATH;
-            _remotePath += _choosedDevice;
         }
 
         public static string GetBalloonsPath()
         {
-            return _remotePath + _balloonPath;
+            return _inGamePath + _balloonPath;
         }
 
         public static string GetStartPath()
@@ -79,27 +56,27 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
 
         public static string GetInGamePath()
         {
-            return _remotePath + _inGamePath;
+            return _inGamePath;
         }
 
         public static string GetResultPath()
         {
-            return _remotePath + _resultPath;
+            return _resultPath;
         }
 
         public static string GetChooseModePath()
         {
-            return _remotePath + _chooseModePath;
+            return _chooseModePath;
         }
 
         public static string GetCreditsPath()
         {
-            return _remotePath + _creditsPath;
+            return _creditsPath;
         }
 
         public static string GetBalloonAnimationsFolder()
         {
-            return _remotePath + _inGamePath + _balloonPath;
+            return _inGamePath + _balloonPath;
         }
 
     }

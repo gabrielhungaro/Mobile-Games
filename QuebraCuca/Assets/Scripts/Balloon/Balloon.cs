@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class Balloon : MonoBehaviour {
 

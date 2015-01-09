@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+using AquelaFrameWork.Core.Asset;
+
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class BalloonFactory : MonoBehaviour
     {
@@ -113,8 +115,10 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
                     break;
             }
 
+            string path = AFAssetManager.GetPathTargetPlatformWithResolution() + ConstantsPaths.GetBalloonAnimationsFolder();
+
             balloon.name = balloon.GetComponent<Balloon>().GetType();
-            balloon.GetComponent<Balloon>().SetSpritePath(ConstantsPaths.GetBalloonAnimationsFolder());
+            balloon.GetComponent<Balloon>().SetSpritePath(path);
             balloon.AddComponent<AnimationComponent>();
             balloon.GetComponent<Balloon>().LoadSprite();
             //_balloon.AddComponent<BoxCollider>().size = new Vector3(_balloon.GetComponent<SpriteRenderer>().sprite.bounds.size.x, _balloon.GetComponent<SpriteRenderer>().sprite.bounds.size.y);

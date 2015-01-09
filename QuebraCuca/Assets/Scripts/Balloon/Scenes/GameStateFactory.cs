@@ -6,7 +6,7 @@ using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.State;
 using AquelaFrameWork.Core.Factory;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class GameStateFactory : IStateFactory
     {
@@ -27,8 +27,8 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
                     return AFObject.Create<StartScene>();
                 case AState.EGameState.MENU_1:
                     return AFObject.Create<ChooseModeScene>();
-                /*case AState.EGameState.GAME:
-                    return AFObject.Create<>();*/
+                case AState.EGameState.GAME:
+                    return AFObject.Create<GameState>();
                 //case AState.EGameState.
             }
             return null;

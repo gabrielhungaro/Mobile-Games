@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-namespace Com.Globo.Sitio.MobileGames.Balloon
+
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class Explosion : MonoBehaviour
     {

@@ -9,7 +9,7 @@ using AquelaFrameWork.Core;
 using AquelaFrameWork.Core.Asset;
 using AquelaFrameWork.Core.State;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon.Controllers
+namespace com.globo.sitio.mobilegames.Balloon.Controllers
 {
     public class MainClass : AFEngine
     {

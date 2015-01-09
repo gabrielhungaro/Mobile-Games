@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Com.Globo.Sitio.MobileGames.Balloon
+namespace com.globo.sitio.mobilegames.Balloon
 {
     public class GameController : MonoBehaviour
     {
@@ -10,7 +10,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
         public static string SURVIVAL = "survival";
         private static string _gameMode = SURVIVAL;
         private BalloonFactory _balloonFactory;
-        private GameObject _background;
         private GameObject _pointsController;
         private GameObject _timeController;
         private GameObject _uiRoot;
@@ -51,13 +50,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
                 {
                     _soundManager = FindObjectOfType<SoundManager>().gameObject;
                 }
-            }
-            if (_background == null)
-            {
-                _background = new GameObject();
-                _background.name = "Background";
-                _background.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(ConstantsPaths.GetInGamePath() + "backGround");
-                //_background.GetComponent<SpriteRenderer>().
             }
 
             if (this.gameObject.GetComponent<BalloonFactory>() == null)
@@ -121,18 +113,6 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
                     _timeController.GetComponent<TimeController>().Start();
                 }
             }
-
-            if (_uiRoot == null)
-            {
-                _uiRoot = new GameObject();
-                _uiRoot.name = "_uiRoot";
-                _uiRoot.AddComponent<HudController>();
-            }
-            else
-            {
-                //_uiRoot.GetComponent<HudController>().
-            }
-
         }
 
         // Update is called once per frame
@@ -176,7 +156,7 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
             _hudController.LoadFont();
             _hudController.RemovePauseButtonListener();
 
-            _endGameAlert = new GameObject();
+            /*_endGameAlert = new GameObject();
             _endGameAlert.name = "EndGameAlert";
             _endGameAlert.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(ConstantsPaths.GetInGamePath() + "gameOverBackground");
             _endGameAlert.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -260,7 +240,7 @@ namespace Com.Globo.Sitio.MobileGames.Balloon
             _scoreLabel.transform.localPosition = new Vector3(0, Screen.height * .6f);
             _shadowScore.transform.localPosition = new Vector3(_scoreLabel.transform.localPosition.x - 3, _scoreLabel.transform.localPosition.y - 3);
             _recordLabel.transform.localPosition = new Vector3(0, _scoreLabel.transform.position.y - _scoreLabel.GetComponent<UILabel>().height);
-            _shadowRecord.transform.localPosition = new Vector3(_recordLabel.transform.localPosition.x - 3, _recordLabel.transform.localPosition.y - 3);
+            _shadowRecord.transform.localPosition = new Vector3(_recordLabel.transform.localPosition.x - 3, _recordLabel.transform.localPosition.y - 3);*/
         }
 
         private void OnClickRetry(GameObject g)
