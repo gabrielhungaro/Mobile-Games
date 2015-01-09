@@ -40,7 +40,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         private void DestroyOtherBalloons()
         {
-            List<GameObject> listOfBalloons = FindObjectOfType<BalloonFactory>().GetListOfBalloons();
+            List<Balloon> listOfBalloons = FindObjectOfType<BalloonFactory>().GetListOfBalloons();
             for (int i = 0; i < listOfBalloons.Count; i++)
             {
                 Destroy(listOfBalloons[i]);

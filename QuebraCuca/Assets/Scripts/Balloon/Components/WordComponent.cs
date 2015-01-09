@@ -29,7 +29,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                 _listOfChars.Add(_wordToCollect[i]);
             }
             _actualCharCollected = _listOfChars[_numberOfCharsCollected];
-            this.gameObject.GetComponent<AnimationComponent>().SetPath(this.gameObject.GetComponent<AnimationComponent>().GetPath() + "_" + _actualCharCollected);
+            //this.gameObject.GetComponent<AnimationComponent>().SetPath(this.gameObject.GetComponent<AnimationComponent>().GetPath() + "_" + _actualCharCollected);
             string path = this.gameObject.GetComponent<Balloon>().GetSpritePath();
             //this.gameObject.GetComponent<Balloon>().SetSpritePath(path + "Word_" + _actualCharCollected);
         }

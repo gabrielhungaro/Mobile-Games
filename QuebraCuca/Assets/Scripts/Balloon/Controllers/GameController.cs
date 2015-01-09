@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using AquelaFrameWork.Core;
+
 namespace com.globo.sitio.mobilegames.Balloon
 {
-    public class GameController : MonoBehaviour
+    public class GameController : AFObject
     {
 
         public static string TIME_TRIAL = "timeTrial";
@@ -25,7 +27,7 @@ namespace com.globo.sitio.mobilegames.Balloon
         private GameObject _soundManager;
         // Use this for initialization
 
-        void Start()
+        public void Initialize()
         {
             UnityEngine.Debug.Log("[ GAME_CONTROLLER ] - START");
 
@@ -60,7 +62,7 @@ namespace com.globo.sitio.mobilegames.Balloon
             else
             {
                 _balloonFactory.enabled = true;
-                _balloonFactory.Start();
+                _balloonFactory.Initialize();
             }
 
             if (this.gameObject.GetComponent<MovementSystem>() == null)

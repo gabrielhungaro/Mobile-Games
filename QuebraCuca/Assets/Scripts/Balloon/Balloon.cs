@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using AquelaFrameWork.Core;
+using AquelaFrameWork.Core.State;
+using AquelaFrameWork.Core.Asset;
+using AquelaFrameWork.View;
+
+using com.globo.sitio.mobilegames.Balloon.Factories;
+
 namespace com.globo.sitio.mobilegames.Balloon
 {
-    public class Balloon : MonoBehaviour {
+    public class Balloon : AFObject {
 
         private string _type;
         private float _velocity;
@@ -22,27 +29,42 @@ namespace com.globo.sitio.mobilegames.Balloon
         public bool _canBeDestroyed;
 
 
-	    // Use this for initialization
-	    void Start () {
+        private AFStatesController _ballonAnimations;
+
+        public void Initialize()
+        {
             _canBeDestroyed = false;
-	    }
+        }
 
         public void LoadSprite()
         {
-            _spritePath = _spritePath + _spriteName + "/";
+
+            _ballonAnimations = AFObject.Create<AFStatesController>();
+
+            string path = _spritePath + "Balloons";
+            AFMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName);
+            _ballonAnimations.Add("idle", animation, true);
+
+            _sprite = _ballonAnimations.GetCurrentState().GetSprite();
+            this.gameObject.AddComponent<BoxCollider>().size = new Vector3(_sprite.bounds.size.x, _sprite.bounds.size.y);
+
+
+            /*_spritePath = _spritePath + _spriteName + "/";
 
             _sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "0001");//_spriteName);
             //_sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "/" + _spriteName + "0001");//_spriteName);
 
             this.gameObject.AddComponent<SpriteRenderer>();
             this.gameObject.GetComponent<SpriteRenderer>().sprite = _sprite;
-            this.gameObject.AddComponent<BoxCollider>().size = new Vector3(this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x, this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+            this.gameObject.AddComponent<BoxCollider>().size = new Vector3(this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x, this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.y);*/
         }
 	
 	    // Update is called once per frame
-	    void Update () {
-	
-	    }
+
+        public override void AFUpdate(double time)
+        {
+            _ballonAnimations.AFUpdate(time);
+        }
 
         public void SetType(string value)
         {

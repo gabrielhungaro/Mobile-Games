@@ -20,7 +20,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         void Explode(GameObject g)
         {
-            List<GameObject> listOfBalloons = GameObject.FindObjectOfType<BalloonFactory>().GetListOfBalloons();
+            List<Balloon> listOfBalloons = GameObject.FindObjectOfType<BalloonFactory>().GetListOfBalloons();
 
             for (int i = 0; i < listOfBalloons.Count; i++)
             {

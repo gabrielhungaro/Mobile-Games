@@ -4,46 +4,45 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using AquelaFrameWork.Core;
+
 namespace com.globo.sitio.mobilegames.Balloon
 {
-    public class MovementSystem : MonoBehaviour
+    public class MovementSystem : ASingleton<MovementSystem>
     {
         private List<GameObject> _listOfObjectsWithMoveComponent;
         private GameController _gameController;
         private float _screenLimite;
         private float _velocity;
 
-        void Start()
+        public void Initialize()
         {
             _listOfObjectsWithMoveComponent = new List<GameObject>();
             _gameController = this.gameObject.GetComponent<GameController>();
             _screenLimite = (Screen.height / 50f);
         }
 
-        void Update()
+        public override void AFUpdate(double time)
         {
-            if (!_gameController.GetIsPaused())
+            foreach (GameObject obj in _listOfObjectsWithMoveComponent)
             {
-                foreach (GameObject obj in _listOfObjectsWithMoveComponent)
+                if (obj != null)
                 {
-                    if (obj != null)
+                    if (obj.activeInHierarchy == true)
                     {
-                        if (obj.activeInHierarchy == true)
+                        switch (TimeController.GetTimeMode())
                         {
-                            switch (TimeController.GetTimeMode())
-                            {
-                                case TimeController.FAST_TIME:
-                                    _velocity = obj.GetComponent<MoveComponent>().GetVelocity() * TimeController.GetTimeScaleFactor();
-                                    break;
-                                case TimeController.SLOW_TIME:
-                                    _velocity = obj.GetComponent<MoveComponent>().GetVelocity() / TimeController.GetTimeScaleFactor();
-                                    break;
-                                default:
-                                    _velocity = obj.GetComponent<MoveComponent>().GetVelocity();
-                                    break;
-                            }
-                            obj.transform.Translate(new Vector3(0, _velocity));
+                            case TimeController.FAST_TIME:
+                                _velocity = obj.GetComponent<MoveComponent>().GetVelocity() * TimeController.GetTimeScaleFactor();
+                                break;
+                            case TimeController.SLOW_TIME:
+                                _velocity = obj.GetComponent<MoveComponent>().GetVelocity() / TimeController.GetTimeScaleFactor();
+                                break;
+                            default:
+                                _velocity = obj.GetComponent<MoveComponent>().GetVelocity();
+                                break;
                         }
+                        obj.transform.Translate(new Vector3(0, _velocity));
                     }
                 }
             }

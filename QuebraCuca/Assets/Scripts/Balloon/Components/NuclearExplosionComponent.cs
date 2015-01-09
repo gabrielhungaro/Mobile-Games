@@ -25,7 +25,7 @@ namespace com.globo.sitio.mobilegames.Balloon
             //meController.SetEndedGame(true);
             explosion = new GameObject();
             explosion.name = "explosion";
-            explosion.AddComponent<Explosion>().SetPath(this.gameObject.GetComponent<AnimationComponent>().GetPath());
+            //explosion.AddComponent<Explosion>().SetPath(this.gameObject.GetComponent<AnimationComponent>().GetPath());
         }
 
         void Update()

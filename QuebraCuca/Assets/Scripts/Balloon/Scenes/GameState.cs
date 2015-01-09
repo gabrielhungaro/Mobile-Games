@@ -18,7 +18,7 @@ namespace com.globo.sitio.mobilegames.Balloon
     public class GameState : AState
     {
 
-        private GameObject _gameController;
+        private GameController _gameController;
         private GameObject _cameraGameObject;
         private Camera m_camera;
         private GameObject m_interface;
@@ -26,6 +26,11 @@ namespace com.globo.sitio.mobilegames.Balloon
         private GameObject _pauseButton;
         private GameObject _pointsText;
         private GameObject _recordText;
+
+        private float _timeToSpawnBalloon = 1;
+        private bool _canCreateBalloon;
+        private int _ticks;
+        private MovementSystem _movementSystem;
 
         protected override void Awake()
         {
@@ -92,11 +97,38 @@ namespace com.globo.sitio.mobilegames.Balloon
 
             Add(m_interface);
 
-            _gameController = new GameObject();
+            CreateBallons();
+            CreateSystens();
+
+            _gameController = AFObject.Create<GameController>();
             _gameController.name = "GameController";
-            _gameController.AddComponent<GameController>();
+            _gameController.Initialize();
+            Add(_gameController);
 
             base.BuildState();
+        }
+
+        private void CreateSystens()
+        {
+            MovementSystem.Instance.Initialize();
+        }
+
+        private void CreateBallons()
+        {
+            _canCreateBalloon = true;
+            BalloonFactory.Instance.Initialize();
+        }
+
+        public override void AFUpdate(double deltaTime)
+        {
+            _ticks++;
+            if (_ticks * Time.deltaTime > _timeToSpawnBalloon && _canCreateBalloon)
+            {
+                _ticks = 0;
+                BalloonFactory.Instance.CreateBalloon();
+            }
+            MovementSystem.Instance.AFUpdate(deltaTime);
+            base.AFUpdate(deltaTime);
         }
 
         override public void AFDestroy()
