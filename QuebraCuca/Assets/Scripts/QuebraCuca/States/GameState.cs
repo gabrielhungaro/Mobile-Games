@@ -302,6 +302,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private void SetCenterAnchor()
         {
+            const float characterScaleFactor = 1.3f;
+            //const float characterScaleFactor = 1;
+
             int col = 0;
             int line = 0;
             float characterScale;
@@ -313,13 +316,13 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             {
                 if (i < _listOfCharacters.Count)
                 {
-                    characterScale = 1  - ((totalOfcols - line) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - line) / 10);
                     if (line == 1 && col != 1)
                     {
                         //offsetX = 80;
                         offsetX = 1.2f;
                         if (col == 2)
-                            offsetX *= -1;
+                            offsetX *= -characterScaleFactor;
                     }
                     else if (line == 2 && col != 1)
                     {
@@ -365,6 +368,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             int col = 0;
             int line = 0;
+            const float characterScaleFactor = 1.3f;
             float characterScale;
             float totalOfcols = 3;
             float offsetX = 0;
@@ -375,7 +379,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             {
                 if ((i + _numberOfCharactersInCenter) < _listOfCharacters.Count)
                 {
-                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - col) / 10);
                     if (col == 1)
                     {
                         offsetY = 2f;
@@ -439,6 +443,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             int col = 0;
             int line = 0;
+            const float characterScaleFactor = 1.3f;
             float characterScale;
             float totalOfcols = 3;
             float offsetX = 0;
@@ -448,7 +453,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             {
                 if ((i + _numberOfCharactersInCenter + _numberOfCharactersInLeft) < _listOfCharacters.Count)
                 {
-                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - col) / 10);
                     if (col == 1)
                     {
                         offsetY = 2f;
