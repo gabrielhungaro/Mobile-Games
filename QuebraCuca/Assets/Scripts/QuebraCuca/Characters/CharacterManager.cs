@@ -23,7 +23,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
 
         public GameObject currentCharacterTweening;
         private float _timeInTween = 0.2f;
-        private float _distToTween = .8f;
+        private float _distToTween = 2.6f;
         private float _timeShowing = 2f;
         
         public void Initialize()
@@ -76,7 +76,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
                         posToTween = new Vector3(obj.GetInitialPosition().x - _distToTween, obj.GetInitialPosition().y, obj.GetInitialPosition().z);
                         break;
                 }
-
+                
                 TweenPosition objTween = TweenPosition.Begin(obj.gameObject, _timeInTween, posToTween);
 
                 EventDelegate.Parameter objToApplyTween = new EventDelegate.Parameter();
