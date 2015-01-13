@@ -121,6 +121,17 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             SetCenterAnchor();
             SetLeftAnchor();
             SetRightAnchor();
+            CreatePauseScreen();
+        }
+
+        private CucaPauseScreen m_pauseScreen;
+
+        private void CreatePauseScreen()
+        {
+            m_pauseScreen = AFObject.Create<CucaPauseScreen>();
+            m_pauseScreen.Initialize();
+            m_pauseScreen.Show();
+            Add(m_pauseScreen);
         }
 
         private void CreateCamera()
