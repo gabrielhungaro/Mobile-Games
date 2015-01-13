@@ -124,13 +124,19 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             CreatePauseScreen();
         }
 
+        public override void Pause()
+        {
+            m_pauseScreen.Show();
+            base.Pause();
+        }
+
         private CucaPauseScreen m_pauseScreen;
 
         private void CreatePauseScreen()
         {
             m_pauseScreen = AFObject.Create<CucaPauseScreen>();
             m_pauseScreen.Initialize();
-            m_pauseScreen.Show();
+            //m_pauseScreen.Show();
             Add(m_pauseScreen);
         }
 

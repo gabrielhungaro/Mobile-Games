@@ -26,7 +26,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         private GameObject m_backToGameBtn;
         private GameObject m_soundBtn;
         private GameObject m_pauseInterface;
-        
+
+        private bool m_isSoundOn = true;
+        private bool m_isVisible = false;
+
         public void Initialize()
         {
             string path = AFAssetManager.GetDirectoryOwner("Prefabs/CucaPauseScreen");
@@ -45,6 +48,10 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 LoadAssetAndAddSrpite(m_closeBtn, PathConstants.GetGameScenePath("closeBtn"));
                 LoadAssetAndAddSrpite(m_backToGameBtn, PathConstants.GetGameScenePath("backBtn"));
                 LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOnBtn"));
+
+                m_closeBtn.GetComponent<Button>().onClick.AddListener(OnCloseButtonClickHandler);
+                m_backToGameBtn.GetComponent<Button>().onClick.AddListener(OnBackButtonClickHandler);
+                m_soundBtn.GetComponent<Button>().onClick.AddListener(OnSoundButtonClickHandler);
             }
 
             Hide();
@@ -79,18 +86,51 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         public void Show()
         {
-            this.gameObject.SetActive(true);
+            m_isVisible = true;
+            this.m_pauseInterface.gameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            this.gameObject.SetActive(false);
+            m_isVisible = false;
+            AFEngine.Instance.UnPause();
+            this.m_pauseInterface.gameObject.SetActive(false);
+        }
+
+        public bool IsVisible()
+        {
+            return m_isVisible;
+        }
+
+        private void OnCloseButtonClickHandler()
+        {
+            Hide();
+            AFEngine.Instance.GetStateManger().GotoState(AState.EGameState.MENU);
+        }
+
+        private void OnBackButtonClickHandler()
+        {
+            Hide();
+        }
+
+        private void OnSoundButtonClickHandler()
+        {
+            if (m_isSoundOn)
+            {
+                LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOffBtn"));
+                m_isSoundOn = false;
+            }
+            else
+            {
+                LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOnBtn"));
+                m_isSoundOn = true;
+            }
+            
         }
 
         public override void AFDestroy()
         {
             base.AFDestroy();
         }
-
     }
 }

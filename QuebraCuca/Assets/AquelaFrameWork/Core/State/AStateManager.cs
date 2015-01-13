@@ -30,6 +30,11 @@ namespace AquelaFrameWork.Core.State
 
         protected IStateTransition m_transition;
 
+        virtual public IState GetCurrentState()
+        {
+            return m_currentState;
+        }
+
         virtual public void Initialize( IStateFactory factory )
         {
             //TODO: Verify if factory is null case yes throw some error

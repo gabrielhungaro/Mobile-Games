@@ -77,6 +77,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
                 AFDebug.LogError("Game Scene was not able to load the Pause Button Sprite");
             else
                 m_pauseBtn.GetComponent<Image>().sprite = L_sprite;
+
+
+            m_pauseBtn.GetComponent<Button>().onClick.AddListener(OnPauseButtonClickHandler);
+        }
+
+        private void OnPauseButtonClickHandler()
+        {
+            AFEngine.Instance.Pause();
         }
 
         void Update()
