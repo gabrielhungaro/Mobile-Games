@@ -26,6 +26,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         private GameObject m_backToGameBtn;
         private GameObject m_soundBtn;
         private GameObject m_pauseInterface;
+        private GameObject m_soundTextLabel;
 
         private bool m_isSoundOn = true;
         private bool m_isVisible = false;
@@ -43,12 +44,14 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                 m_closeBtn = GameObject.Find("closeBtn");
                 m_backToGameBtn = GameObject.Find("backToGameBtn");
                 m_soundBtn = GameObject.Find("soundBtn");
+                m_soundTextLabel = GameObject.Find("soundTextLable");
 
                 LoadAssetAndAddBackgroundSrpite(m_background, PathConstants.GetGameScenePath("jogocuca_pause_screen"));
                 LoadAssetAndAddSrpite(m_closeBtn, PathConstants.GetGameScenePath("closeBtn"));
                 LoadAssetAndAddSrpite(m_backToGameBtn, PathConstants.GetGameScenePath("backBtn"));
                 LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOnBtn"));
-
+                LoadAssetAndAddSrpite(m_soundTextLabel, PathConstants.GetGameScenePath("soundOnSpriteBtn"));
+                
                 m_closeBtn.GetComponent<Button>().onClick.AddListener(OnCloseButtonClickHandler);
                 m_backToGameBtn.GetComponent<Button>().onClick.AddListener(OnBackButtonClickHandler);
                 m_soundBtn.GetComponent<Button>().onClick.AddListener(OnSoundButtonClickHandler);
@@ -117,12 +120,16 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             if (m_isSoundOn)
             {
+                SoundManager.MuteAllSounds();
                 LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOffBtn"));
+                LoadAssetAndAddSrpite(m_soundTextLabel, PathConstants.GetGameScenePath("soundOffSpriteBtn"));
                 m_isSoundOn = false;
             }
             else
             {
+                SoundManager.UnMuteAllSounds();
                 LoadAssetAndAddSrpite(m_soundBtn, PathConstants.GetGameScenePath("soundOnBtn"));
+                LoadAssetAndAddSrpite(m_soundTextLabel, PathConstants.GetGameScenePath("soundOnSpriteBtn"));
                 m_isSoundOn = true;
             }
             
