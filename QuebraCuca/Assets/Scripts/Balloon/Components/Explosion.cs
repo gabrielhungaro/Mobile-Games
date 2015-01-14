@@ -9,19 +9,15 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         void Start()
         {
-            this.gameObject.AddComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_path + "/controllerExplosion");
+            /*this.gameObject.AddComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_path + "/controllerExplosion");
             this.gameObject.AddComponent<SpriteRenderer>();
 
             AnimationEvent animationPickupEvent = new AnimationEvent();
             animationPickupEvent.functionName = "OnFinishedExplosion";
 
-            UnityEditorInternal.AnimatorController animController = this.gameObject.GetComponent<Animator>().runtimeAnimatorController as UnityEditorInternal.AnimatorController;
-            UnityEditorInternal.StateMachine stateMachine = animController.GetLayer(0).stateMachine;
-            Debug.Log(animController.name);
 
             for (int i = 0; i < stateMachine.stateCount; i++)
             {
-                UnityEditorInternal.State state = stateMachine.GetState(i);
                 AnimationClip clip = state.GetMotion() as AnimationClip;
                 Debug.Log(clip.name);
                 if (clip.name == "explosion")
@@ -31,7 +27,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                     animationPickupEvent.stringParameter = clip.name;
                     clip.AddEvent(animationPickupEvent);
                 }
-            }
+            }*/
             this.gameObject.GetComponent<Animator>().Play("explosion");
 
             DestroyOtherBalloons();
