@@ -15,12 +15,12 @@ namespace com.globo.sitio.mobilegames.Balloon.Factories
     public class AnimationFactory : ASingleton<AnimationFactory>
     {
 
-        public AFMovieClip BuildAnimation(string spritePath, string animationStateName)
+        public AFMovieClip BuildAnimation(string spritePath, string spriteName, string animationStateName)
         {
             AFMovieClip L_animation;
             AFTextureAtlas L_heroAtlas = AFAssetManager.Instance.Load<AFTextureAtlas>(spritePath);
             L_animation = AFObject.Create<AFMovieClip>(animationStateName);
-            L_animation.Init(L_heroAtlas.GetSprites(animationStateName));
+            L_animation.Init(L_heroAtlas.GetSprites(spriteName + "_" + animationStateName));
             return L_animation;
         }
 

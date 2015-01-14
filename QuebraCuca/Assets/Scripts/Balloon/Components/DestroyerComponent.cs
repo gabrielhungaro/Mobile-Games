@@ -18,7 +18,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         void Start()
         {
-            _screenLimite = (Screen.height / 20f);
+            _screenLimite = (Screen.height / 50f);
         }
 
         void Update()
@@ -32,8 +32,14 @@ namespace com.globo.sitio.mobilegames.Balloon
 
                     DestroyBalloon(null);
                 }
-                if (this.gameObject.GetComponent<Balloon>().GetCanBeDestroyed() == true)
+                if (this.gameObject.GetComponent<Balloon>().GetIsTouching() == true)
+                {
                     DestroyBalloon(null);
+                }
+                if (this.gameObject.GetComponent<Balloon>().GetCanBeDestroyed() == true)
+                {
+                    DestroyBalloon(null);
+                }
             }
         }
 

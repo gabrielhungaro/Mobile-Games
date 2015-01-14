@@ -10,7 +10,7 @@ namespace com.globo.sitio.mobilegames.Balloon
     {
 
         private static int _life;
-        private static int _initialLife = 5;
+        private static int _initialLife = 3;
 
         public void Start()
         {
@@ -47,7 +47,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         public static void RemoveLife()
         {
-            //_life--;
+            _life--;
         }
     }
 }

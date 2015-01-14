@@ -12,14 +12,12 @@ namespace com.globo.sitio.mobilegames.Balloon
     {
         private List<GameObject> _listOfObjectsWithMoveComponent;
         private GameController _gameController;
-        private float _screenLimite;
         private float _velocity;
 
         public void Initialize()
         {
             _listOfObjectsWithMoveComponent = new List<GameObject>();
             _gameController = this.gameObject.GetComponent<GameController>();
-            _screenLimite = (Screen.height / 50f);
         }
 
         public override void AFUpdate(double time)

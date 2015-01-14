@@ -22,6 +22,7 @@ namespace com.globo.sitio.mobilegames.Balloon
         private int _ticks;
         private MovementSystem _movementSystem;
         private bool _canCreateBalloon;
+        private int _numberOfBalloons;
 
         // Use this for initialization
 
@@ -100,7 +101,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                 case ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME:
 
                     if (GameController.GetGameMode() == GameController.TIME_TRIAL)
-                        CreateSimpleAddTime(balloon);
+                        CreateSimpleRemoveTime(balloon);
                     else
                         CreateSimpleRemovePoint(balloon);
                     break;
@@ -109,18 +110,14 @@ namespace com.globo.sitio.mobilegames.Balloon
                     break;
             }
 
+            _numberOfBalloons++;
+
             string path = AFAssetManager.GetPathTargetPlatformWithResolution() + ConstantsPaths.GetBalloonAnimationsFolder();
 
-            balloon.name = balloon.GetComponent<Balloon>().GetType();
-            balloon.gameObject.GetComponent<Balloon>().SetSpritePath(path);
-            balloon.gameObject.GetComponent<Balloon>().LoadSprite();
-            //_balloon.AddComponent<BoxCollider>().size = new Vector3(_balloon.GetComponent<SpriteRenderer>().sprite.bounds.size.x, _balloon.GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+            balloon.name = balloon.GetType() + _numberOfBalloons.ToString();
+            balloon.SetSpritePath(path);
+            //balloon.Initialize();
 
-            //_balloon.AddComponent<AddPointComponent>().SetPointsToAdd(10);
-
-            int randomXPoint = Random.Range(-Screen.width, Screen.width);
-            float yPoint = Screen.height / 100f + balloon.GetComponent<Balloon>().GetSprite().bounds.size.y;
-            balloon.transform.position = new Vector3(randomXPoint / 100f, -yPoint);
             _listOfBalloons.Add(balloon);
             return balloon;
         }
@@ -128,10 +125,12 @@ namespace com.globo.sitio.mobilegames.Balloon
         public Balloon CreateEmptyBalloon()
         {
             Balloon balloon = AFObject.Create<Balloon>();
-            balloon.gameObject.AddComponent<MoveComponent>().SetVelocity(.1f);
-            MovementSystem.Instance.AddObjectToList(balloon.gameObject);
+
+            balloon.gameObject.AddComponent<MoveComponent>().SetVelocity(.05f);
             balloon.gameObject.AddComponent<ClickComponent>();
             balloon.gameObject.AddComponent<DestroyerComponent>();
+            //balloon.gameObject.AddComponent<AnimationController>();
+            MovementSystem.Instance.AddObjectToList(balloon.gameObject);
 
             return balloon;
         }
@@ -141,9 +140,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_SIMPLE_ADD_POINT);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_ADD_POINT);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(true);
+            balloon.SetType(ConstantsBalloons.TYPE_SIMPLE_ADD_POINT);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_ADD_POINT);
+            balloon.SetIsGood(true);
             balloon.gameObject.AddComponent<AddPointComponent>().SetPointsToAdd(10);
 
             return balloon;
@@ -154,9 +153,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<RemovePointComponent>().SetPointsToRemove(10);
 
             return balloon;
@@ -167,9 +166,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_SLOW_MOTION);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_SLOW_MOTION);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_SLOW_MOTION);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_SLOW_MOTION);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<SlowMotionComponent>().SetSlowMotionTime(10);
 
             return balloon;
@@ -181,9 +180,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_FAST_FOWARD);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_FAST_FOWARD);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_FAST_FOWARD);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_FAST_FOWARD);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<FastFowardComponent>().SetFastFowardTime(10);
 
             return balloon;
@@ -195,9 +194,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_EXPLOSIVE);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_EXPLOSIVE);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_EXPLOSIVE);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_EXPLOSIVE);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<ExplosionComponent>();
 
             return balloon;
@@ -209,9 +208,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_WORD);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_WORD);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_WORD);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_WORD);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<WordComponent>();
 
             return balloon;
@@ -223,9 +222,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_NUCLEAR_EXPLOSIVE);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_NUCLEAR_EXPLOSIVE);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_NUCLEAR_EXPLOSIVE);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_NUCLEAR_EXPLOSIVE);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<NuclearExplosionComponent>();
 
             return balloon;
@@ -236,9 +235,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_SIMLPE_ADD_TIME);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_SIMLPE_ADD_TIME);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(true);
+            balloon.SetType(ConstantsBalloons.TYPE_SIMLPE_ADD_TIME);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_SIMLPE_ADD_TIME);
+            balloon.SetIsGood(true);
             balloon.gameObject.AddComponent<AddTimeComponent>().SetTimeToAdd(20);
 
             return balloon;
@@ -250,9 +249,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (balloon == null)
                 balloon = CreateEmptyBalloon();
 
-            balloon.gameObject.GetComponent<Balloon>().SetType(ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME);
-            balloon.gameObject.GetComponent<Balloon>().SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME);
-            balloon.gameObject.GetComponent<Balloon>().SetIsGood(false);
+            balloon.SetType(ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME);
+            balloon.SetSpriteName(ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME);
+            balloon.SetIsGood(false);
             balloon.gameObject.AddComponent<RemoveTimeComponent>().SetTimeToRemove(10);
 
             return balloon;
@@ -260,20 +259,21 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         private string GetBalloonPercent()
         {
-            /*int random = Random.Range(0, 100);
+            int random = Random.Range(0, 100);
 
             if (random <= ConstantsBalloons.LOW_CHANCE)
             {
-                return ConstantsBalloons._listOfLowChanceBalloons[Random.Range(0, ConstantsBalloons._listOfLowChanceBalloons.Count)];
+                if (ConstantsBalloons._listOfLowChanceBalloons.Count > 0)
+                    return ConstantsBalloons._listOfLowChanceBalloons[Random.Range(0, ConstantsBalloons._listOfLowChanceBalloons.Count - 1)];
             }
             else if (random <= ConstantsBalloons.MEDIUM_CHANCE)
             {
-                return ConstantsBalloons._listOfMediumChanceBalloons[Random.Range(0, ConstantsBalloons._listOfMediumChanceBalloons.Count)];
+                return ConstantsBalloons._listOfMediumChanceBalloons[Random.Range(0, ConstantsBalloons._listOfMediumChanceBalloons.Count - 1)];
             }
             else if (random <= ConstantsBalloons.HIGH_CHANCE)
             {
-                return ConstantsBalloons._listOfHighChanceBalloons[Random.Range(0, ConstantsBalloons._listOfHighChanceBalloons.Count)];
-            }*/
+                return ConstantsBalloons._listOfHighChanceBalloons[Random.Range(0, ConstantsBalloons._listOfHighChanceBalloons.Count - 1)];
+            }
             return "";
         }
 

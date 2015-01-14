@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using AquelaFrameWork.Core;
+
 namespace com.globo.sitio.mobilegames.Balloon
 {
-    public class ConstantsBalloons
+    public class ConstantsBalloons : ASingleton<ConstantsBalloons>
     {
         public const string TYPE_SIMPLE_ADD_POINT = "AddPoint";
         public const string TYPE_SIMPLE_REMOVE_POINT = "RemovePoint";
@@ -28,14 +30,14 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         public static List<String> _listOfTypesNames;
 
-        public void Start()
+        public void Initialize()
         {
             _listOfTypesNames = new List<String>();
             _listOfTypesNames.Add(TYPE_SIMLPE_ADD_TIME);
             _listOfTypesNames.Add(TYPE_SIMPLE_ADD_POINT);
             _listOfTypesNames.Add(TYPE_SIMPLE_REMOVE_POINT);
             _listOfTypesNames.Add(TYPE_SIMPLE_REMOVE_TIME);
-            _listOfTypesNames.Add(TYPE_NUCLEAR_EXPLOSIVE);
+            //_listOfTypesNames.Add(TYPE_NUCLEAR_EXPLOSIVE);
             _listOfTypesNames.Add(TYPE_FAST_FOWARD);
             _listOfTypesNames.Add(TYPE_SLOW_MOTION);
 
@@ -48,7 +50,7 @@ namespace com.globo.sitio.mobilegames.Balloon
             _listOfMediumChanceBalloons.Add(TYPE_SIMPLE_REMOVE_TIME);
             _listOfMediumChanceBalloons.Add(TYPE_SLOW_MOTION);
             _listOfMediumChanceBalloons.Add(TYPE_FAST_FOWARD);
-            _listOfMediumChanceBalloons.Add(TYPE_EXPLOSIVE);
+            //_listOfMediumChanceBalloons.Add(TYPE_EXPLOSIVE);
             //_listOfMediumChanceBalloons.Add(TYPE_WORD);
 
             _listOfLowChanceBalloons = new List<string>();

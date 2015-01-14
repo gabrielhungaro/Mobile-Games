@@ -47,7 +47,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Characters
             animation = AnimationFactory.Instance.BuildAnimation(path, STATE_IDLE);
             _characterAnimations.Add(STATE_IDLE, animation , true);
             
-            
             _characterAnimations.gameObject.transform.parent = this.gameObject.transform;
             _sprite = _characterAnimations.GetCurrentState().GetSprite();
             this.gameObject.AddComponent<BoxColliderResizer>().Initialize();

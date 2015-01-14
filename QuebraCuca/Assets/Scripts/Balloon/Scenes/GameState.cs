@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,11 +26,21 @@ namespace com.globo.sitio.mobilegames.Balloon
         private GameObject _pauseButton;
         private GameObject _pointsText;
         private GameObject _recordText;
+        private GameObject _timeText;
+        private GameObject _timeIcon;
 
         private float _timeToSpawnBalloon = 1;
         private bool _canCreateBalloon;
         private int _ticks;
         private MovementSystem _movementSystem;
+        private int _numberOfCharacter = 0;
+        private Balloon _balloon;
+        private GameObject _lifeIcon1;
+        private GameObject _lifeIcon2;
+        private GameObject _lifeIcon3;
+        private PauseScreen _pauseScreen;
+        private EndGameScreen _endGame;
+        
 
         protected override void Awake()
         {
@@ -48,9 +58,18 @@ namespace com.globo.sitio.mobilegames.Balloon
             _cameraGameObject.name = "StateCam";
             m_camera = _cameraGameObject.AddComponent<MyCamera>().GetCamera();
 
-            string path = AFAssetManager.GetPathTargetPlatform() + "Prefabs/Balloon/InGameCanvas";
+            string path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetInGamePath() + "background");
+            _background = new GameObject();
+            _background.name = "Background";
+            Sprite L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
+            _background.AddComponent<SpriteRenderer>().sprite = L_sprite;
+            _background.GetComponent<SpriteRenderer>().sortingOrder = -1;
+
+            path = AFAssetManager.GetPathTargetPlatform() + "Prefabs/Balloon/InGameCanvas";
 
             GameObject gameStateToInstantiate = AFAssetManager.Instance.Load<GameObject>(path);
+
+            ConstantsBalloons.Instance.Initialize();
 
             if (!AFObject.IsNull(gameStateToInstantiate))
             {
@@ -70,19 +89,30 @@ namespace com.globo.sitio.mobilegames.Balloon
                         AFDebug.LogError("Canvas not found");
                     }
 
-                    _background = GameObject.Find("Background2");
                     _pauseButton = GameObject.Find("PauseButton");
                     _pointsText = GameObject.Find("PointsText");
                     _recordText = GameObject.Find("RecordText");
-
-                    path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetInGamePath() + "background");
-                    AFDebug.Log(path);
-                    Sprite L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
-                    _background.GetComponent<Image>().sprite = L_sprite;
+                    _timeText = GameObject.Find("TimeText");
+                    _timeIcon = GameObject.Find("TimeIcon");
+                    _lifeIcon1 = GameObject.Find("LifeIcon1");
+                    _lifeIcon2 = GameObject.Find("LifeIcon2");
+                    _lifeIcon3 = GameObject.Find("LifeIcon3");
 
                     path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetInGamePath() + "btnPause");
                     L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                     _pauseButton.GetComponent<Image>().sprite = L_sprite;
+                    //_pauseButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClickPauseButton(); });
+                    _pauseButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClickPauseButton);
+
+                    path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetInGamePath() + "lifeIcon_full");
+                    L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
+                    _lifeIcon1.GetComponent<Image>().sprite = L_sprite;
+                    _lifeIcon2.GetComponent<Image>().sprite = L_sprite;
+                    _lifeIcon3.GetComponent<Image>().sprite = L_sprite;
+
+                    path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetInGamePath() + "timeIcon");
+                    L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
+                    _timeIcon.GetComponent<Image>().sprite = L_sprite;
 
                 }
                 else
@@ -97,8 +127,10 @@ namespace com.globo.sitio.mobilegames.Balloon
 
             Add(m_interface);
 
-            CreateBallons();
             CreateSystens();
+            CreateBallons();
+            CreatePauseScreen();
+            CreateHud();
 
             _gameController = AFObject.Create<GameController>();
             _gameController.name = "GameController";
@@ -117,6 +149,49 @@ namespace com.globo.sitio.mobilegames.Balloon
         {
             _canCreateBalloon = true;
             BalloonFactory.Instance.Initialize();
+
+            /*_balloon = BalloonFactory.Instance.CreateBalloon();
+            _balloon.Initialize();
+            //_balloon.gameObject.GetComponent<AnimationController>().Initialize();
+            Add(_balloon);
+
+            int randomXPoint = Random.Range(-Screen.width, Screen.width);
+            float yPoint = Screen.height / 100f + _balloon.GetSprite().bounds.size.y;
+            _balloon.transform.position = new Vector3(randomXPoint / 100f, -yPoint);*/
+        }
+
+        private void CreateHud()
+        {
+            HudController.Instance.SetCanvas(m_interface.GetComponent<Canvas>());
+            HudController.Instance.SetTimeText(_timeText);
+            HudController.Instance.SetTimeIcon(_timeIcon);
+            HudController.Instance.AddLifeToList(_lifeIcon1);
+            HudController.Instance.AddLifeToList(_lifeIcon2);
+            HudController.Instance.AddLifeToList(_lifeIcon3);
+            HudController.Instance.SetPointsText(_pointsText);
+            HudController.Instance.SetRecordText(_recordText);
+            HudController.Instance.Initialize();
+        }
+
+        private void CreatePauseScreen()
+        {
+            _pauseScreen = AFObject.Create<PauseScreen>();
+            _pauseScreen.Initialize();
+            _pauseScreen.HideScreen();
+            Add(_pauseScreen);
+        }
+
+        private void OnClickPauseButton()
+        {
+            m_engine.Pause();
+            _pauseScreen.ShowScreen();
+        }
+
+        private void CreateEndGameScreen()
+        {
+            _endGame = AFObject.Create<EndGameScreen>();
+            _endGame.Initialize();
+            Add(_endGame);
         }
 
         public override void AFUpdate(double deltaTime)
@@ -125,9 +200,23 @@ namespace com.globo.sitio.mobilegames.Balloon
             if (_ticks * Time.deltaTime > _timeToSpawnBalloon && _canCreateBalloon)
             {
                 _ticks = 0;
-                BalloonFactory.Instance.CreateBalloon();
+                _balloon = BalloonFactory.Instance.CreateBalloon();
+                _balloon.Initialize();
+                Add(_balloon);
+
+                int randomXPoint = Random.Range(-Screen.width, Screen.width);
+                float yPoint = Screen.height / 100f + _balloon.GetSprite().bounds.size.y;
+                _balloon.transform.position = new Vector3(randomXPoint / 100f, -yPoint);
             }
-            MovementSystem.Instance.AFUpdate(deltaTime);
+
+            if (GameController.GetEndedGame())
+            {
+                m_engine.Pause();
+                CreateEndGameScreen();
+            }
+
+            //MovementSystem.Instance.AFUpdate(deltaTime);
+            HudController.Instance.AFUpdate(deltaTime);
             base.AFUpdate(deltaTime);
         }
 

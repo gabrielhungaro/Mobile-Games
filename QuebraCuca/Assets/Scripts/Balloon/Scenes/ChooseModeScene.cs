@@ -67,9 +67,9 @@ namespace com.globo.sitio.mobilegames.Balloon
                         AFDebug.LogError("Canvas not found!");
                     }
 
-                    _background = GameObject.Find("Background");
-                    _timeTrialButton = GameObject.Find("TimeTrialButton");
-                    _surviveButton = GameObject.Find("SurviveButton");
+                    _background = GameObject.Find("ChooseModeBG");
+                    _timeTrialButton = GameObject.Find("ChooseModeTimeTrialButton");
+                    _surviveButton = GameObject.Find("ChooseModeSurviveButton");
 
                     path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetChooseModePath() + "background");
                     Sprite L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
@@ -105,12 +105,26 @@ namespace com.globo.sitio.mobilegames.Balloon
         {
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
             GameController.SetGameMode(GameController.TIME_TRIAL);
+            m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
         }
 
         private void OnClickSurviveButton()
         {
             GameController.SetGameMode(GameController.SURVIVAL);
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
+            m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
+        }
+
+        public override void AFDestroy()
+        {
+            GameObject.Destroy(_background);
+            GameObject.Destroy(_cameraGameObject);
+            GameObject.Destroy(_returnButton);
+            GameObject.Destroy(_soundManager);
+            GameObject.Destroy(_surviveButton);
+            GameObject.Destroy(_timeTrialButton);
+            GameObject.Destroy(m_camera);
+            base.AFDestroy();
         }
     }
 }

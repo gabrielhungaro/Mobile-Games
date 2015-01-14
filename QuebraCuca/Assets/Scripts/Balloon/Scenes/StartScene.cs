@@ -78,17 +78,18 @@ namespace com.globo.sitio.mobilegames.Balloon
                     path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetStartPath() + "startButton");
                     L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                     _startButton.GetComponent<Image>().sprite = L_sprite;
-                    _startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClickStart(); });
+                    //_startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClickStart(); });
+                    _startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClickStart);
 
                     path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetStartPath() + "soundButton_On");
                     L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                     _soundButton.GetComponent<Image>().sprite = L_sprite;
-                    _soundButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClickSoundButton(); });
+                    _soundButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClickSoundButton);
 
                     path = AFAssetManager.GetPathTargetPlatformWithResolution(ConstantsPaths.GetStartPath() + "creditsButton");
                     L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                     _creditsButton.GetComponent<Image>().sprite = L_sprite;
-                    _creditsButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { OnClickCreditsButton(); });
+                    _creditsButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClickCreditsButton);
                 }
                 else
                 {
@@ -124,7 +125,7 @@ namespace com.globo.sitio.mobilegames.Balloon
         private void OnClickStart()
         {
             SoundManager.PlaySoundByName(ConstantsSounds.SFX_BUTTON);
-            m_engine.GetStateManger().GotoState(AState.EGameState.GAME);
+            m_engine.GetStateManger().GotoState(AState.EGameState.MENU_1);
         }
 
         private void OnClickSoundButton()
@@ -138,7 +139,6 @@ namespace com.globo.sitio.mobilegames.Balloon
                 L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                 _soundButton.GetComponent<Image>().sprite = L_sprite;
 
-                //_soundButton.GetComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(ConstantsPaths.GetStartPath() + "btnSound_Off");
                 SoundManager.MuteAllSounds();
             }
             else
@@ -147,10 +147,8 @@ namespace com.globo.sitio.mobilegames.Balloon
                 L_sprite = AFAssetManager.Instance.Load<Sprite>(path);
                 _soundButton.GetComponent<Image>().sprite = L_sprite;
 
-                //_soundButton.GetComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(ConstantsPaths.GetStartPath() + "btnSound_On");
                 SoundManager.UnMuteAllSounds();
             }
-            _soundButton.GetComponent<UI2DSprite>().MakePixelPerfect();
         }
 
         private void OnClickCreditsButton()

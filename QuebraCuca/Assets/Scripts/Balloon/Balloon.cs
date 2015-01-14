@@ -12,6 +12,9 @@ namespace com.globo.sitio.mobilegames.Balloon
 {
     public class Balloon : AFObject {
 
+        public static readonly string STATE_IDLE = "Idle";
+        public static readonly string STATE_EXPLODE = "Explode";
+
         private string _type;
         private float _velocity;
         private int _touchesToExplode;
@@ -28,35 +31,31 @@ namespace com.globo.sitio.mobilegames.Balloon
         private bool _canExplode = true;
         public bool _canBeDestroyed;
 
-
         private AFStatesController _ballonAnimations;
 
         public void Initialize()
         {
             _canBeDestroyed = false;
-        }
-
-        public void LoadSprite()
-        {
 
             _ballonAnimations = AFObject.Create<AFStatesController>();
 
             string path = _spritePath + "Balloons";
-            AFMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName);
-            _ballonAnimations.Add("idle", animation, true);
+            AMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_IDLE);
+            _ballonAnimations.Add(STATE_IDLE, animation, true);
+
+            animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_EXPLODE);
+            _ballonAnimations.Add(STATE_EXPLODE, animation, false);
+
+            _ballonAnimations.gameObject.transform.parent = this.gameObject.transform;
 
             _sprite = _ballonAnimations.GetCurrentState().GetSprite();
             this.gameObject.AddComponent<BoxCollider>().size = new Vector3(_sprite.bounds.size.x, _sprite.bounds.size.y);
+        }
 
+        public void LoadSprite()
+        {
+            
 
-            /*_spritePath = _spritePath + _spriteName + "/";
-
-            _sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "0001");//_spriteName);
-            //_sprite = Resources.Load<Sprite>(_spritePath + _spriteName + "/" + _spriteName + "0001");//_spriteName);
-
-            this.gameObject.AddComponent<SpriteRenderer>();
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = _sprite;
-            this.gameObject.AddComponent<BoxCollider>().size = new Vector3(this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x, this.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.y);*/
         }
 	
 	    // Update is called once per frame
@@ -166,5 +165,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             return _canBeDestroyed;
         }
 
+        public AFStatesController GetBalloonAnimations()
+        {
+            return _ballonAnimations;
+        }
     }
 }
