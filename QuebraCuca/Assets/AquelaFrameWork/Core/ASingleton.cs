@@ -30,7 +30,7 @@ namespace AquelaFrameWork.Core
         {
             get
             {
-                if (m_instance == null)
+                if (AFObject.IsNull(m_instance))
                 {
                     m_instance = AFObject.Create<T>();
                     GameObject.DontDestroyOnLoad(m_instance);

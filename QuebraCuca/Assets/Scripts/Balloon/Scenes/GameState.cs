@@ -150,6 +150,23 @@ namespace com.globo.sitio.mobilegames.Balloon
             _canCreateBalloon = true;
             BalloonFactory.Instance.Initialize();
 
+            m_AddPoint = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_SIMPLE_ADD_POINT, 20);
+            m_AddTime = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_SIMLPE_ADD_TIME,20);
+            
+            m_RemovePoint = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT, 20);
+            m_RemoveTime = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME, 20);
+            
+            m_SlowMotion = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_SLOW_MOTION, 20);
+            m_FastForward = BalloonFactory.Instance.CreatePool(ConstantsBalloons.TYPE_FAST_FOWARD, 20);
+
+            AddBalloonList(m_AddPoint);
+            AddBalloonList(m_AddTime);
+            AddBalloonList(m_RemovePoint);
+            AddBalloonList(m_RemoveTime);
+            AddBalloonList(m_SlowMotion);
+            AddBalloonList(m_FastForward);
+
+
             /*_balloon = BalloonFactory.Instance.CreateBalloon();
             _balloon.Initialize();
             //_balloon.gameObject.GetComponent<AnimationController>().Initialize();
@@ -158,6 +175,12 @@ namespace com.globo.sitio.mobilegames.Balloon
             int randomXPoint = Random.Range(-Screen.width, Screen.width);
             float yPoint = Screen.height / 100f + _balloon.GetSprite().bounds.size.y;
             _balloon.transform.position = new Vector3(randomXPoint / 100f, -yPoint);*/
+        }
+
+        private void AddBalloonList( List<Balloon> list )
+        {
+            for (int i = 0; i < list.Count; ++i)
+                Add(list[i]);
         }
 
         private void CreateHud()
@@ -197,13 +220,10 @@ namespace com.globo.sitio.mobilegames.Balloon
         public override void AFUpdate(double deltaTime)
         {
             _ticks++;
-            if (_ticks * Time.deltaTime > _timeToSpawnBalloon && _canCreateBalloon)
+            if (_ticks * deltaTime > _timeToSpawnBalloon && _canCreateBalloon)
             {
                 _ticks = 0;
-                _balloon = BalloonFactory.Instance.CreateBalloon();
-                _balloon.Initialize();
-                Add(_balloon);
-
+                _balloon = GetBallonAvailable();
                 int randomXPoint = Random.Range(-Screen.width, Screen.width);
                 float yPoint = Screen.height / 100f + _balloon.GetSprite().bounds.size.y;
                 _balloon.transform.position = new Vector3(randomXPoint / 100f, -yPoint);
@@ -220,6 +240,67 @@ namespace com.globo.sitio.mobilegames.Balloon
             base.AFUpdate(deltaTime);
         }
 
+
+        private List<Balloon> m_AddPoint = new List<Balloon>();
+        private int m_AddPointIndex = 0;
+        
+        private List<Balloon> m_RemovePoint= new List<Balloon>();
+        private int m_RemovePointIndex = 0;
+
+        private List<Balloon> m_AddTime = new List<Balloon>();
+        private int m_AddTimeIndex = 0;
+        
+        private List<Balloon> m_RemoveTime = new List<Balloon>();
+        private int m_RemoveTimeIndex = 0;
+        
+        private List<Balloon> m_FastForward = new List<Balloon>();
+        private int m_FastForwardIndex = 0;
+        
+        private List<Balloon> m_SlowMotion = new List<Balloon>();
+        private int m_SlowMotionIndex = 0;
+
+
+        public Balloon GetBallonAvailable()
+        {
+            Balloon L_balloon;
+
+            switch( BalloonFactory.Instance.GetBalloonPercent() )
+            {
+                case ConstantsBalloons.TYPE_SIMPLE_REMOVE_POINT :
+                    L_balloon = m_RemovePoint[m_AddPointIndex];
+                    m_AddPointIndex = AddOrResetPoolIndex(m_AddPointIndex, m_RemovePoint.Count);
+                    break;
+                case ConstantsBalloons.TYPE_SIMLPE_ADD_TIME:
+                    L_balloon = m_AddTime[m_AddTimeIndex];
+                    m_AddTimeIndex = AddOrResetPoolIndex(m_AddTimeIndex, m_AddTime.Count);
+                    break;
+                case ConstantsBalloons.TYPE_SLOW_MOTION:
+                    L_balloon = m_SlowMotion[m_SlowMotionIndex];
+                    m_SlowMotionIndex = AddOrResetPoolIndex(m_SlowMotionIndex, m_SlowMotion.Count);
+                    break;
+                case ConstantsBalloons.TYPE_FAST_FOWARD:
+                    L_balloon = m_FastForward[m_FastForwardIndex];
+                    m_FastForwardIndex = AddOrResetPoolIndex(m_FastForwardIndex, m_FastForward.Count);
+                    break;
+                case ConstantsBalloons.TYPE_SIMPLE_REMOVE_TIME:
+                    L_balloon = m_RemoveTime[m_RemoveTimeIndex];
+                    m_RemoveTimeIndex = AddOrResetPoolIndex(m_RemoveTimeIndex, m_RemoveTime.Count);
+                    break;
+                default :
+                    L_balloon = m_AddPoint[m_AddPointIndex];
+                    m_AddPointIndex = AddOrResetPoolIndex(m_AddPointIndex, m_AddPoint.Count);
+                    break;
+            }
+
+            L_balloon.gameObject.SetActive(true);
+            return L_balloon;
+        }
+
+        public int AddOrResetPoolIndex(int index, int maxIndex)
+        {
+            return index >= (maxIndex - 1) ? 0 : ++index;
+        }
+
         override public void AFDestroy()
         {
             GameObject.Destroy(_background);
@@ -228,6 +309,9 @@ namespace com.globo.sitio.mobilegames.Balloon
             GameObject.Destroy(_pointsText);
             GameObject.Destroy(_recordText);
             GameObject.Destroy(_gameController);
+            GameObject.Destroy(_pauseScreen);
+            HudController.DestroyInstance();
+            BalloonFactory.DestroyInstance();
             base.Destroy();
         }
     }

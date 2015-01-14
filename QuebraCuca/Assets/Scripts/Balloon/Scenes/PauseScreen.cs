@@ -84,7 +84,9 @@ namespace com.globo.sitio.mobilegames.Balloon
         private void OnClickExitButton()
         {
             HideScreen();
+            AFEngine.Instance.UnPause();
             AFEngine.Instance.GetStateManger().GotoState(AState.EGameState.MENU_1);
+            
         }
 
         private void OnClickBackButton()

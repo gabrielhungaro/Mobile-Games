@@ -25,6 +25,8 @@ namespace AquelaFrameWork.Core.State
         [SerializeField]
         protected AState.EGameState m_nextStateID;
 
+        [SerializeField]
+        protected int ID;
 
         protected IStateFactory m_factory;
 
@@ -37,6 +39,7 @@ namespace AquelaFrameWork.Core.State
 
         virtual public void Initialize( IStateFactory factory )
         {
+            ID = this.GetHashCode();
             //TODO: Verify if factory is null case yes throw some error
             m_factory = factory;
             m_engine = AFEngine.Instance;

@@ -11,7 +11,7 @@ using AquelaFrameWork.Core.State;
 
 namespace com.globo.sitio.mobilegames.Balloon.Controllers
 {
-    public class MainClass : AFEngine
+    public class BalloonMainClass : AFEngine
     {
         ConstantsPaths _paths;
         ConstantsSounds _soundsPaths;

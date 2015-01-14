@@ -40,11 +40,11 @@ namespace com.globo.sitio.mobilegames.Balloon
             _ballonAnimations = AFObject.Create<AFStatesController>();
 
             string path = _spritePath + "Balloons";
-            AMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_IDLE);
-            _ballonAnimations.Add(STATE_IDLE, animation, true);
-
-            animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_EXPLODE);
+            AMovieClip animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_EXPLODE);
             _ballonAnimations.Add(STATE_EXPLODE, animation, false);
+
+            animation = AnimationFactory.Instance.BuildAnimation(path, _spriteName, STATE_IDLE);
+            _ballonAnimations.Add(STATE_IDLE, animation, true); 
 
             _ballonAnimations.gameObject.transform.parent = this.gameObject.transform;
 
@@ -63,6 +63,8 @@ namespace com.globo.sitio.mobilegames.Balloon
         public override void AFUpdate(double time)
         {
             _ballonAnimations.AFUpdate(time);
+
+            base.AFUpdate(time);
         }
 
         public void SetType(string value)
