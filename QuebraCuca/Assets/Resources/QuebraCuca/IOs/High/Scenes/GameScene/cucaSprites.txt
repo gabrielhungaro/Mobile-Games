@@ -3,7 +3,7 @@
 #
 #
 # Sprite sheet: cucaSprites.png (1024 x 2048)
-# $TexturePacker:SmartUpdate:3cdcf12c9481d52cdd5974798466d08f:a473400e67c493d2a62d14fc1b084c39:0409d62a68fc75d3363e0f9d3592e1be$
+# $TexturePacker:SmartUpdate:c27859770ff1b66595e36a9e39e0079a:b030ec769540682a9dbf3a185eea0095:0409d62a68fc75d3363e0f9d3592e1be$
 #
 
 angry/angry_0000;2;1786;200;260;0.5;0.5

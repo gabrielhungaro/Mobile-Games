@@ -423,7 +423,7 @@ namespace AquelaFrameWork.Core.Asset
 
         public static string GetResolutionFolder()
         {
-            UnityEngine.Debug.Log("DPI DA TELA: " + Screen.dpi);
+           //UnityEngine.Debug.Log("DPI DA TELA: " + Screen.dpi);
             float DPI;
 
 #if UNITY_EDITOR

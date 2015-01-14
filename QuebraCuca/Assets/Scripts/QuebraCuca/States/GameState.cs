@@ -121,6 +121,23 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             SetCenterAnchor();
             SetLeftAnchor();
             SetRightAnchor();
+            CreatePauseScreen();
+        }
+
+        public override void Pause()
+        {
+            m_pauseScreen.Show();
+            base.Pause();
+        }
+
+        private CucaPauseScreen m_pauseScreen;
+
+        private void CreatePauseScreen()
+        {
+            m_pauseScreen = AFObject.Create<CucaPauseScreen>();
+            m_pauseScreen.Initialize();
+            //m_pauseScreen.Show();
+            Add(m_pauseScreen);
         }
 
         private void CreateCamera()
@@ -217,7 +234,8 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
             Resources.UnloadUnusedAssets();
 
-            /*_pointsBg = new GameObject();
+            /*
+            _pointsBg = new GameObject();
             _pointsBg.name = "_pointsBg";
             _pointsBg.AddComponent<UI2DSprite>().sprite2D = Resources.Load<Sprite>(PathConstants.GetGameScenePath() + "pointsBg");
             _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
@@ -228,7 +246,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
             _pointsBg.GetComponent<UI2DSprite>().topAnchor.absolute = -3063;
             _pointsBg.GetComponent<UI2DSprite>().UpdateAnchors();
             _pointsBg.GetComponent<UI2DSprite>().MakePixelPerfect();
-            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsBg, 3);*/
+            FindObjectOfType<IndexController>().AddObjectToLIstByIndex(_pointsBg, 3);
+             
+             */
         }
 
         void OnMouseDown()
@@ -302,24 +322,29 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         private void SetCenterAnchor()
         {
+            const float characterScaleFactor = 1.3f;
+            //const float characterScaleFactor = 1;
+
             int col = 0;
             int line = 0;
             float characterScale;
             float totalOfcols = 3;
             float offsetX = 0;
+            float offsetY = 1.8f;
+
             Character charObj;
 
             for (int i = 0; i < _numberOfCharactersInCenter; i++)
             {
                 if (i < _listOfCharacters.Count)
                 {
-                    characterScale = 1  - ((totalOfcols - line) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - line) / 10);
                     if (line == 1 && col != 1)
                     {
                         //offsetX = 80;
                         offsetX = 1.2f;
                         if (col == 2)
-                            offsetX *= -1;
+                            offsetX *= -characterScaleFactor;
                     }
                     else if (line == 2 && col != 1)
                     {
@@ -342,7 +367,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         charObj.name = "center_" + _listOfCharacters[i].name;
                     }
                     Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
-                    charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x) + (col * charSpr.bounds.size.x) -offsetX, (-charSpr.bounds.size.y * 1.2f) - (line * (charSpr.bounds.size.y / 2)), 0);
+                    charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x) + (col * charSpr.bounds.size.x) - offsetX, (-charSpr.bounds.size.y * offsetY) - (line * (charSpr.bounds.size.y / 2)), 0);
                     charObj.gameObject.transform.localScale = new Vector3(characterScale, characterScale, 1);
                     charObj.SetInitialPosition(charObj.transform.localPosition);
                     charObj.SetScale(characterScale);
@@ -365,17 +390,21 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             int col = 0;
             int line = 0;
+            const float characterScaleFactor = 1.3f;
             float characterScale;
             float totalOfcols = 3;
             float offsetX = 0;
             float offsetY = 0;
+
+            Vector2 initialPosition = new Vector2(3.8f, 1.5f);
+
             Character charObj;
 
             for (int i = 0; i < _numberOfCharactersInLeft; i++)
             {
                 if ((i + _numberOfCharactersInCenter) < _listOfCharacters.Count)
                 {
-                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - col) / 10);
                     if (col == 1)
                     {
                         offsetY = 2f;
@@ -403,7 +432,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         }
 
                         Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
-                        charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x * 3f) - (col * ((charSpr.bounds.size.x / 2f) + offsetX)), (charSpr.bounds.size.y * 1.5f) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
+                        charObj.transform.localPosition = new Vector3((-charSpr.bounds.size.x * initialPosition.x) - (col * ((charSpr.bounds.size.x * 0.5f) + offsetX)), (charSpr.bounds.size.y * initialPosition.y) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
 
                         if (!charObj.GetIsRotated())
                         {
@@ -439,16 +468,20 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
         {
             int col = 0;
             int line = 0;
+            const float characterScaleFactor = 1.3f;
             float characterScale;
             float totalOfcols = 3;
             float offsetX = 0;
-            float offsetY = 0;
+            float offsetY = 4.0f;
+
+            Vector2 initialPosition = new Vector2(3.8f, 1.5f);
+
             Character charObj;
             for (int i = 0; i < _numberOfCharactersInRight; i++)
             {
                 if ((i + _numberOfCharactersInCenter + _numberOfCharactersInLeft) < _listOfCharacters.Count)
                 {
-                    characterScale = 1 - ((totalOfcols - col) / 10);
+                    characterScale = characterScaleFactor - ((totalOfcols - col) / 10);
                     if (col == 1)
                     {
                         offsetY = 2f;
@@ -468,7 +501,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                     {
                         charObj = _listOfCharacters[i + _numberOfCharactersInCenter + _numberOfCharactersInLeft];
 
-
                         string[] charPosition = charObj.name.Split(char.Parse("_"));
 
                         if (charPosition[0] != "right")
@@ -477,7 +509,7 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
                         }
 
                         Sprite charSpr = charObj.GetCharacterAnimation().GetCurrentState().GetSprite();
-                        charObj.transform.localPosition = new Vector3((charSpr.bounds.size.x * 2.8f) + (col * ((charSpr.bounds.size.x / 2f) + offsetX)), (charSpr.bounds.size.y * 1.5f) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
+                        charObj.transform.localPosition = new Vector3((charSpr.bounds.size.x * initialPosition.x) + (col * ((charSpr.bounds.size.x * 0.5f) + offsetX)), (charSpr.bounds.size.y * initialPosition.y) - (line * (charSpr.bounds.size.y)) - offsetY, 0);
 
                         if (!charObj.GetIsRotated())
                         {

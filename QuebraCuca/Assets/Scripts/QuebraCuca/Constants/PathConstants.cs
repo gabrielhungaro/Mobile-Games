@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using AquelaFrameWork.Core.Asset;
+
 using com.globo.sitio.mobilegames.QuebraCuca.Controllers;
 
 namespace com.globo.sitio.mobilegames.QuebraCuca.Constants
@@ -54,9 +56,9 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Constants
             return _remotePath + _scenesPath + _startScenePath;
         }
 
-        public static string GetGameScenePath()
+        public static string GetGameScenePath( string path = "")
         {
-            return _remotePath + _scenesPath + _gameScenePath;
+            return AFAssetManager.GetPathTargetPlatformWithResolution( _scenesPath + _gameScenePath + path);
         }
     }
 }
