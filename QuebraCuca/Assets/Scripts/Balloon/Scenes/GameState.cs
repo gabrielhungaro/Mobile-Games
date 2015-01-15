@@ -235,7 +235,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                 CreateEndGameScreen();
             }
 
-            //MovementSystem.Instance.AFUpdate(deltaTime);
+            MovementSystem.Instance.AFUpdate(deltaTime);
             HudController.Instance.AFUpdate(deltaTime);
             base.AFUpdate(deltaTime);
         }
@@ -262,7 +262,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         public Balloon GetBallonAvailable()
         {
-            Balloon L_balloon;
+            Balloon L_balloon = null;
 
             switch( BalloonFactory.Instance.GetBalloonPercent() )
             {
@@ -289,10 +289,13 @@ namespace com.globo.sitio.mobilegames.Balloon
                 default :
                     L_balloon = m_AddPoint[m_AddPointIndex];
                     m_AddPointIndex = AddOrResetPoolIndex(m_AddPointIndex, m_AddPoint.Count);
-                    break;
+                    break;  
             }
-
+            
+//             L_balloon = m_SlowMotion[m_SlowMotionIndex];
+//             m_SlowMotionIndex = AddOrResetPoolIndex(m_SlowMotionIndex, m_SlowMotion.Count);
             L_balloon.gameObject.SetActive(true);
+
             return L_balloon;
         }
 

@@ -28,7 +28,9 @@ namespace com.globo.sitio.mobilegames.Balloon
                 {
                     if (obj.activeInHierarchy == true)
                     {
-                        switch (TimeController.GetTimeMode())
+                        _velocity = obj.GetComponent<MoveComponent>().GetVelocity() * TimeController.GetTimeScaleFactor();
+
+                       /* switch (TimeController.GetTimeMode())
                         {
                             case TimeController.FAST_TIME:
                                 _velocity = obj.GetComponent<MoveComponent>().GetVelocity() * TimeController.GetTimeScaleFactor();
@@ -39,7 +41,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                             default:
                                 _velocity = obj.GetComponent<MoveComponent>().GetVelocity();
                                 break;
-                        }
+                        }*/
                         obj.transform.Translate(new Vector3(0, _velocity));
                     }
                 }

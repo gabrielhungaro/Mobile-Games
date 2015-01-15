@@ -101,8 +101,8 @@ namespace com.globo.sitio.mobilegames.Balloon
                 }
             }
 
-            if (_gameMode == TIME_TRIAL)
-            {
+//             if (_gameMode == TIME_TRIAL)
+//             {
                 if (_timeController == null)
                 {
                     _timeController = new GameObject();
@@ -114,7 +114,7 @@ namespace com.globo.sitio.mobilegames.Balloon
                     _timeController.SetActive(true);
                     _timeController.GetComponent<TimeController>().Start();
                 }
-            }
+            //}
         }
 
         // Update is called once per frame

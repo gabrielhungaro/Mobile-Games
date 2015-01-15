@@ -46,6 +46,8 @@ namespace com.globo.sitio.mobilegames.Balloon
         public void DestroyBalloon(GameObject g)
         {
             this.gameObject.SetActive(false);
+            this.gameObject.GetComponent<Balloon>().SetCanBeDestroyed(false);
+            this.gameObject.GetComponent<Balloon>().SetIsTouching(false);
         }
     }
 }

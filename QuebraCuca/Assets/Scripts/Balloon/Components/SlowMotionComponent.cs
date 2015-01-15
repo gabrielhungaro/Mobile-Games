@@ -25,7 +25,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         private void ApplySlowMotion(GameObject g)
         {
-            TimeController.ActiveSlowMotion(2f);
+            TimeController.ActiveSlowMotion(.5f);
         }
 
         public void SetSlowMotionTime(int value)

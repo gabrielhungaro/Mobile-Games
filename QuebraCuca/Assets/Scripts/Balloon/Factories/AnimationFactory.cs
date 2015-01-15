@@ -14,7 +14,7 @@ namespace com.globo.sitio.mobilegames.Balloon.Factories
 {
     public class AnimationFactory : ASingleton<AnimationFactory>
     {
-        public static readonly int FRAME_RATE = 24;
+        public static readonly int FRAME_RATE = 60;
 
         public AFMovieClip BuildAnimation(string spritePath, string spriteName, string animationStateName)
         {

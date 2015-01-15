@@ -114,7 +114,7 @@ namespace AquelaFrameWork.Core.Asset
                         }
                     }
 
-                    AFDebug.Log("I'll store an object of: " + typeof(T).ToString());
+                    //AFDebug.Log("I'll store an object of: " + typeof(T).ToString());
                 }
             }
             catch( NullReferenceException nullEx )

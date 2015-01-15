@@ -62,7 +62,7 @@ namespace com.globo.sitio.mobilegames.Balloon
 
         public override void AFUpdate(double time)
         {
-            _ballonAnimations.AFUpdate(time);
+            _ballonAnimations.AFUpdate(time * TimeController.GetTimeScaleFactor());
 
             base.AFUpdate(time);
         }

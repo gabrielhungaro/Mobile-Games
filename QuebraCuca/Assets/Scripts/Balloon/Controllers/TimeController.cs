@@ -28,7 +28,7 @@ namespace com.globo.sitio.mobilegames.Balloon
         public const string NORMAL_TIME = "normal";
         public const string FAST_TIME = "fast";
         public const string SLOW_TIME = "slow";
-        private static float _timeScaleFactor;
+        private static float _timeScaleFactor = 1;
 
 
         public void Start()
@@ -204,10 +204,10 @@ namespace com.globo.sitio.mobilegames.Balloon
             _timeMode = SLOW_TIME;
             _isTimeScaleActive = true;
             _timeScaleFactor = timeFactor;
-            _countWithScaledTime = 0;
-            Time.timeScale = _originalTimeScale / timeFactor;
-            Time.fixedDeltaTime = _originalFixedDeltaTime / timeFactor;
-            Time.maximumDeltaTime = _originalMaximumDeltaTime / timeFactor;
+            //_countWithScaledTime = 0;
+//             Time.timeScale = _originalTimeScale / timeFactor;
+//             Time.fixedDeltaTime = _originalFixedDeltaTime / timeFactor;
+//             Time.maximumDeltaTime = _originalMaximumDeltaTime / timeFactor;
         }
 
         public static void ActiveFastFoward(float timeFactor)
@@ -216,18 +216,20 @@ namespace com.globo.sitio.mobilegames.Balloon
             _isTimeScaleActive = true;
             _timeScaleFactor = timeFactor;
             _countWithScaledTime = 0;
-            Time.timeScale = _originalTimeScale * timeFactor;
-            Time.fixedDeltaTime = _originalFixedDeltaTime * timeFactor;
-            Time.maximumDeltaTime = _originalMaximumDeltaTime * timeFactor;
+//             Time.timeScale = _originalTimeScale * timeFactor;
+//             Time.fixedDeltaTime = _originalFixedDeltaTime * timeFactor;
+//             Time.maximumDeltaTime = _originalMaximumDeltaTime * timeFactor;
         }
 
         public static void DeactiveTimeScale()
         {
             _timeMode = NORMAL_TIME;
             _isTimeScaleActive = false;
-            Time.timeScale = _originalTimeScale;
-            Time.fixedDeltaTime = _originalFixedDeltaTime;
-            Time.maximumDeltaTime = _originalMaximumDeltaTime;
+//             Time.timeScale = _originalTimeScale;
+//             Time.fixedDeltaTime = _originalFixedDeltaTime;
+//             Time.maximumDeltaTime = _originalMaximumDeltaTime;
+
+            _timeScaleFactor = 1.0f;
         }
 
         public static bool GetTimeScaleActive()
