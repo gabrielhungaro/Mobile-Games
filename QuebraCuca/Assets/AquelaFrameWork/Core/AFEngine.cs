@@ -130,6 +130,7 @@ namespace AquelaFrameWork.Core
 
         protected AStateManager m_stateManager;
 
+        protected AFAssetManager m_assetManager;
 
         /// <summary>
         /// <para> 
@@ -186,15 +187,31 @@ namespace AquelaFrameWork.Core
             OnApplicationDestroy.RemoveAll();
             OnApplicationDestroy = null;
 
-            m_input.AFDestroy();
-            m_input = null;
+            if (!AFObject.IsNull(m_input))
+            {
+                m_input.AFDestroy();
+                m_input = null;
+            }
 
-            m_soundManager.AFDestroy();
-            m_soundManager = null;
+            if (!AFObject.IsNull(m_soundManager))
+            {
+                m_soundManager.AFDestroy();
+                m_soundManager = null;
+            }
+            AFSoundManager.DestroyInstance();
 
-            m_stateManager.AFDestroy();
-            m_stateManager = null;
+            if (!AFObject.IsNull(m_stateManager))
+            {
+                m_stateManager.AFDestroy();
+                m_stateManager = null;
+            }
 
+            if (!AFObject.IsNull(m_assetManager))
+            {
+                m_assetManager.AFDestroy();
+                m_assetManager = null;
+            }
+            AFAssetManager.DestroyInstance();
         }
 
         /// <summary>
@@ -204,9 +221,10 @@ namespace AquelaFrameWork.Core
         /// </summary>
         virtual public void Initialize()
         {
-            AFAssetManager.Instance.gameObject.transform.parent = gameObject.transform;
+            m_assetManager = AFAssetManager.Instance;
+            m_assetManager.gameObject.transform.parent = gameObject.transform;
             m_stateManager.gameObject.transform.parent = gameObject.transform;
-
+            
             SetRunning( true );
         }
 
@@ -321,11 +339,10 @@ namespace AquelaFrameWork.Core
             //OnPause.Dispatch(pauseStatus);
          }
 
-
-
         void OnDestroy()
         {
             OnApplicationDestroy.Dispatch();
+            Destroy();
         }
     }
 }
