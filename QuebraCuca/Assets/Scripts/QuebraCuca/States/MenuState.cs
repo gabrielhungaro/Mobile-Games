@@ -34,10 +34,6 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.States
 
         public override void BuildState()
         {
-#if UNITY_EDITOR
-            AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
-            AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
-#endif
             _cameraGameObject = new GameObject();
             _cameraGameObject.name = "StateCam";
             m_camera = _cameraGameObject.AddComponent<MyCamera>().GetCamera();

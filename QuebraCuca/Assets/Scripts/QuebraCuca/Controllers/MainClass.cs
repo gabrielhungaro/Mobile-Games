@@ -31,6 +31,12 @@ namespace com.globo.sitio.mobilegames.QuebraCuca.Controllers
             _paths = PathConstants.Instance();
             _sounds = SoundConstants.Instance();
 
+
+#if UNITY_EDITOR
+            AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
+            AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
+#endif
+
             GameObject _soundManager = new GameObject();
             _soundManager.name = "SoundManager";
             _soundManager.AddComponent<SoundManager>().Init();

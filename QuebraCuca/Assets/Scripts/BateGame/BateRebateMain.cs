@@ -16,6 +16,11 @@ namespace BateRebate
             //AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPAD_RETINA;
             //AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
 
+#if UNITY_EDITOR
+            AFAssetManager.SimulatedDPI = AFAssetManager.DPI_IPHONE_4_5;
+            AFAssetManager.SimulatePlatform = AFAssetManager.EPlataform.IOS;
+#endif
+
             m_stateManager = AFObject.Create<AFStateManager>();
             m_stateManager.Initialize(new BateStateFactory());
 
